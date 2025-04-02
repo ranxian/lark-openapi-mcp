@@ -1,0 +1,51 @@
+{
+  "name": "@larksuiteoapi/lark-mcp",
+  "version": "0.2.1",
+  "description": "Feishu/Lark OpenAPI MCP",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "chenli.idevlab",
+  "license": "MIT",
+  "bin": {
+    "lark-mcp": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "CHANGELOG.md",
+    "README.md",
+    "README_ZH.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "yarn build"
+  },
+  "keywords": [
+    "feishu",
+    "lark",
+    "mcp",
+    "open-api",
+    "ai"
+  ],
+  "homepage": "https://github.com/larksuite/lark-openapi-mcp",
+  "engines": {
+    "node": ">=16.20.0"
+  },
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.45.0",
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "commander": "^13.1.0",
+    "express": "^5.1.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "@types/express": "^5.0.1",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+}
