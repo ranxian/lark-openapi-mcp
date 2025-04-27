@@ -370,7 +370,6 @@ export const taskV1TaskCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -495,7 +494,6 @@ export const taskV1TaskList = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -670,7 +668,6 @@ export const taskV1TaskReminderCreate = {
           '相对于截止时间的提醒时间（如提前 30 分钟，截止时间后 30 分钟，则为 -30） 任务没有截止时间则为全天任务(截止时间为0)',
         ),
     }),
-
     path: z.object({ task_id: z.string().describe('任务 ID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },

@@ -22,7 +22,6 @@ export const applicationV5ApplicationFavourite = {
         .optional(),
       page_size: z.number().describe('单页需求最大个数（最大 100），不传默认10个').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -54,7 +53,6 @@ export const applicationV5ApplicationRecommend = {
         .optional(),
       page_size: z.number().describe('单页需求最大个数（最大 100），不传默认10个').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

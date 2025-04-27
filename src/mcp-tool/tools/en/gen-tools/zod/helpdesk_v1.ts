@@ -88,7 +88,6 @@ export const helpdeskV1AgentScheduleCreate = {
         .describe('New agent schedule')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -159,7 +158,6 @@ export const helpdeskV1AgentSkillCreate = {
         .optional(),
       agent_ids: z.array(z.string()).describe('Agent IDs').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -242,7 +240,6 @@ export const helpdeskV1AgentSkillPatch = {
         .describe('Update skills')
         .optional(),
     }),
-
     path: z.object({ agent_skill_id: z.string().describe('agent skill id') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -269,7 +266,6 @@ export const helpdeskV1AgentPatch = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ status: z.number().describe('agent status, 1: Online; 2: Offline').optional() }),
-
     path: z.object({ agent_id: z.string().describe('Agent ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -333,7 +329,6 @@ export const helpdeskV1AgentSchedulesPatch = {
         .describe('Work schedule list')
         .optional(),
     }),
-
     path: z.object({ agent_id: z.string().describe('Agent ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -382,7 +377,6 @@ export const helpdeskV1CategoryCreate = {
       parent_id: z.string().describe('Parent FAQs category ID'),
       language: z.string().describe('Language').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -445,7 +439,6 @@ export const helpdeskV1CategoryPatch = {
       name: z.string().describe('Name').optional(),
       parent_id: z.string().describe('Parent FAQs category ID').optional(),
     }),
-
     path: z.object({ id: z.string().describe('category id') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -508,7 +501,6 @@ export const helpdeskV1FaqCreate = {
         .describe('FAQs details')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -599,7 +591,6 @@ export const helpdeskV1FaqPatch = {
         .describe('Modified FAQs content')
         .optional(),
     }),
-
     path: z.object({ id: z.string().describe('FAQs ID').optional() }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -664,7 +655,6 @@ export const helpdeskV1NotificationCancelSend = {
         .boolean()
         .describe('Whether to recall the sent message, also applicable to the message for new staff'),
     }),
-
     path: z.object({ notification_id: z.string().describe('Unique ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -769,7 +759,6 @@ export const helpdeskV1NotificationCreate = {
       ext: z.string().describe('Optional, extended field reserved').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -784,7 +773,6 @@ export const helpdeskV1NotificationExecuteSend = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ send_at: z.string().describe('Send the timestamp (in ms)') }),
-
     path: z.object({ notification_id: z.string().describe('The unique ID returned by the "Create push" API') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -934,7 +922,6 @@ export const helpdeskV1NotificationSubmitApprove = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ reason: z.string().describe('Submit reasons for approval') }),
-
     path: z.object({ notification_id: z.string().describe('The unique ID returned by the "Create push" API') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -961,7 +948,6 @@ export const helpdeskV1TicketCustomizedFieldCreate = {
       required: z.boolean(),
       dropdown_allow_multiple: z.boolean().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1023,7 +1009,6 @@ export const helpdeskV1TicketCustomizedFieldPatch = {
       visible: z.boolean().optional(),
       required: z.boolean().optional(),
     }),
-
     path: z.object({ ticket_customized_field_id: z.string().describe('Work order custom field ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -1050,7 +1035,6 @@ export const helpdeskV1TicketAnswerUserQuery = {
         .describe('List of FAQs')
         .optional(),
     }),
-
     path: z.object({ ticket_id: z.string().describe('Ticket ID') }),
   },
 };
@@ -1150,7 +1134,6 @@ export const helpdeskV1TicketMessageCreate = {
           '- Plain text, (see content in )- Rich text (see content in )',
         ),
     }),
-
     path: z.object({ ticket_id: z.string().describe('Ticket ID').optional() }),
   },
 };
@@ -1241,7 +1224,6 @@ export const helpdeskV1TicketUpdate = {
       solved: z.number().describe('Specifies whether the ticket is resolved, 1: not resolved, 2: resolved').optional(),
       channel: z.number().describe('ID of the ticket source channel').optional(),
     }),
-
     path: z.object({ ticket_id: z.string().describe('Ticket ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },

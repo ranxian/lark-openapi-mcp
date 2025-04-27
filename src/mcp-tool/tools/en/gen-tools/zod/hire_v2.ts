@@ -36,7 +36,6 @@ export const hireV2InterviewRecordList = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

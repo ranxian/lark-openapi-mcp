@@ -163,7 +163,6 @@ export const apaasV1ApplicationEnvironmentVariableQuery = {
       limit: z.number().describe('限制的条数，默认为 500，不可超过 500').optional(),
       offset: z.number().describe('返回记录的偏移量，默认为 0，即从查询到的第一个记录开始返回').optional(),
     }),
-
     path: z.object({ namespace: z.string().describe('应用命名空间') }),
   },
 };
@@ -185,7 +184,6 @@ export const apaasV1ApplicationFlowExecute = {
         .string()
         .describe('操作人（_id和email至少填一个，低代码平台用户的 id和email，需要从低代码平台获取，json字符串）'),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间(低代码平台->我的应用->应用管理->可查看到)'),
       flow_id: z.string().describe('流程API名称（低代码平台->我的应用->开发->流程->展开为表格->可查看到）'),
@@ -202,7 +200,6 @@ export const apaasV1ApplicationFunctionInvoke = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ params: z.string().describe('函数输入参数（JSON 序列化后的字符串）').optional() }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       function_api_name: z.string().describe('函数 API 名称'),
@@ -223,7 +220,6 @@ export const apaasV1ApplicationObjectOqlQuery = {
       args: z.string().describe('用于指定 OQL 语句中匿名参数的具体值').optional(),
       named_args: z.string().describe('用于指定 OQL 语句中具名参数的具体值').optional(),
     }),
-
     path: z.object({ namespace: z.string().describe('应用命名空间') }),
   },
 };
@@ -239,7 +235,6 @@ export const apaasV1ApplicationObjectRecordBatchCreate = {
     data: z.object({
       records: z.string().describe('记录详情列表，格式为 List<Map<string, ANY>>，操作记录数上限为 500 条'),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       object_api_name: z.string().describe('对象唯一标识'),
@@ -256,7 +251,6 @@ export const apaasV1ApplicationObjectRecordBatchDelete = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ ids: z.array(z.string()).describe('记录 ID 列表，操作记录数上限为 500') }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       object_api_name: z.string().describe('对象唯一标识'),
@@ -354,7 +348,6 @@ export const apaasV1ApplicationObjectRecordBatchQuery = {
         .describe('是否返回符合条件的记录总数（Total）。默认为 False，不返回记录总数')
         .optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('命名空间'),
       object_api_name: z.string().describe('目标对象的唯一标识符'),
@@ -373,7 +366,6 @@ export const apaasV1ApplicationObjectRecordBatchUpdate = {
     data: z.object({
       records: z.string().describe('记录详情列表，格式为 List<Map<string, ANY>>，操作记录数上限为 500 条'),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       object_api_name: z.string().describe('对象唯一标识'),
@@ -392,7 +384,6 @@ export const apaasV1ApplicationObjectRecordCreate = {
     data: z.object({
       record: z.string().describe('创建对象使用的数据，键为字段 API 名称，值为字段值，格式可参考字段值格式'),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       object_api_name: z.string().describe('对象唯一标识'),
@@ -427,7 +418,6 @@ export const apaasV1ApplicationObjectRecordPatch = {
     data: z.object({
       record: z.string().describe('创建对象使用的数据，键为字段 API 名称，值为字段值，格式可参考字段值格式'),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       object_api_name: z.string().describe('对象唯一标识'),
@@ -450,7 +440,6 @@ export const apaasV1ApplicationObjectRecordQuery = {
         .describe('需要获取的字段，使用字段唯一标识符进行查询，关联字段可使用 . 进行下钻')
         .optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       object_api_name: z.string().describe('对象唯一标识'),
@@ -540,7 +529,6 @@ export const apaasV1ApplicationObjectSearch = {
         )
         .optional(),
     }),
-
     path: z.object({ namespace: z.string().describe('应用命名空间') }),
   },
 };
@@ -556,7 +544,6 @@ export const apaasV1ApplicationRecordPermissionMemberBatchCreateAuthorization = 
     data: z.object({
       user_ids: z.array(z.string()).describe('需要新增的用户 ID 列表，使用飞书低代码平台的用户 ID').optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       record_permission_api_name: z.string().describe('记录权限 API 名称'),
@@ -575,7 +562,6 @@ export const apaasV1ApplicationRecordPermissionMemberBatchRemoveAuthorization = 
     data: z.object({
       user_ids: z.array(z.string()).describe('需要删除的用户 ID 列表，使用飞书低代码平台的用户 ID').optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       record_permission_api_name: z.string().describe('记录权限 API 名称'),
@@ -595,7 +581,6 @@ export const apaasV1ApplicationRoleMemberBatchCreateAuthorization = {
       user_ids: z.array(z.string()).describe('需要新增的用户 ID 列表，使用飞书低代码平台的用户 ID').optional(),
       department_ids: z.array(z.string()).describe('需要新增的部门 ID 列表，使用飞书低代码平台的部门 ID').optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       role_api_name: z.string().describe('角色 API 名称'),
@@ -615,7 +600,6 @@ export const apaasV1ApplicationRoleMemberBatchRemoveAuthorization = {
       user_ids: z.array(z.string()).describe('需要删除的用户 ID 列表，使用飞书低代码平台的用户 ID').optional(),
       department_ids: z.array(z.string()).describe('需要删除的部门 ID 列表，使用飞书低代码平台的部门 ID').optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('应用命名空间'),
       role_api_name: z.string().describe('角色 API 名称'),
@@ -654,7 +638,6 @@ export const apaasV1ApprovalInstanceCancel = {
       user_id: z.string().describe('操作用户的kunlunUserID,可通过Apaas用户管理页面获取'),
       opinion: z.string().describe('撤销原因'),
     }),
-
     path: z.object({
       approval_instance_id: z
         .string()
@@ -680,7 +663,6 @@ export const apaasV1ApprovalTaskAddAssignee = {
         .optional(),
       opinion: z.string().describe('加签原因').optional(),
     }),
-
     path: z.object({ approval_task_id: z.string().describe('人工任务 ID') }),
   },
 };
@@ -694,7 +676,6 @@ export const apaasV1ApprovalTaskAgree = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ user_id: z.string().describe('操作人 ID'), opinion: z.string().describe('审批意见').optional() }),
-
     path: z.object({ approval_task_id: z.string().describe('人工任务 ID') }),
   },
 };
@@ -708,7 +689,6 @@ export const apaasV1ApprovalTaskReject = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ user_id: z.string().describe('操作人 ID'), opinion: z.string().describe('审批意见').optional() }),
-
     path: z.object({ approval_task_id: z.string().describe('人工任务 ID') }),
   },
 };
@@ -727,7 +707,6 @@ export const apaasV1ApprovalTaskTransfer = {
       to_user_ids: z.array(z.string()).describe('新审批人id').optional(),
       opinion: z.string().describe('转交原因').optional(),
     }),
-
     path: z.object({ approval_task_id: z.string().describe('人工任务 ID') }),
   },
 };
@@ -755,7 +734,6 @@ export const apaasV1SeatActivityList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -783,7 +761,6 @@ export const apaasV1SeatAssignmentList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -800,7 +777,6 @@ export const apaasV1UserTaskCc = {
       cc_user_ids: z.array(z.string()).describe('抄送人的kunlunID列表,可通过Apaas用户管理页面获取'),
       operator_user_id: z.string().describe('操作人kunlunUserID,可通过Apaas用户管理页面获取'),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -823,7 +799,6 @@ export const apaasV1UserTaskChatGroup = {
       chat_id: z.string().describe('要拉入的群openID，为空则新建群').optional(),
       chat_name: z.string().describe('要加入的群名称，当chat_id为空时用该名称创建群聊').optional(),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -845,7 +820,6 @@ export const apaasV1UserTaskExpediting = {
       expediting_user_ids: z.array(z.string()).describe('催办人的kunlunID列表,可通过Apaas用户管理页面获取'),
       opinion: z.string().describe('催办理由').optional(),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -892,7 +866,6 @@ export const apaasV1UserTaskRollback = {
         ),
       opinion: z.string().describe('退回原因'),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -910,7 +883,6 @@ export const apaasV1UserTaskRollbackPoints = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ operator_user_id: z.string().describe('操作人kunlunUserID,可通过Apaas用户管理页面获取') }),
-
     path: z.object({
       task_id: z
         .string()

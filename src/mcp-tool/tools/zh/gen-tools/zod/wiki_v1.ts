@@ -26,7 +26,6 @@ export const wikiV1NodeSearch = {
         .optional(),
       page_size: z.number().describe('分页大小').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

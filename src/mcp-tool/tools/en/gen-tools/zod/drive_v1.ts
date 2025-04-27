@@ -82,7 +82,6 @@ export const driveV1ExportTaskCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -437,7 +436,6 @@ export const driveV1FileCreateFolder = {
           'Parent folder token. This parameter can be an empty string, which means the folder will be created in the root folder. You can refer to  to get other level folder. For details, see ',
         ),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -473,7 +471,6 @@ export const driveV1FileCreateShortcut = {
         .describe('source file information'),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -598,7 +595,6 @@ export const driveV1FileList = {
       direction: z.enum(['ASC', 'DESC']).describe('Options:ASC(Ascending order),DESC(Descending order)').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -626,7 +622,6 @@ export const driveV1FileMove = {
         )
         .optional(),
     }),
-
     path: z.object({
       file_token: z
         .string()
@@ -716,7 +711,6 @@ export const driveV1FileSubscriptionCreate = {
         .enum(['doc', 'docx', 'wiki'])
         .describe('document type Options:doc(Doc),docx(Upgraded Docs),wiki(Wiki)'),
     }),
-
     path: z.object({ file_token: z.string().describe('file token') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -734,7 +728,6 @@ export const driveV1FileSubscriptionGet = {
     data: z.object({
       file_type: z.enum(['doc', 'docx', 'wiki']).describe('file type Options:doc(Docs),docx(Upgraded Docs),wiki(Wiki)'),
     }),
-
     path: z.object({
       file_token: z.string().describe('file token').optional(),
       subscription_id: z.string().describe('Subscription ID').optional(),
@@ -756,7 +749,6 @@ export const driveV1FileSubscriptionPatch = {
       is_subscribe: z.boolean().describe('Whether to subscribe'),
       file_type: z.enum(['doc', 'docx', 'wiki']).describe('file type Options:doc(Doc),docx(Upgraded Docs),wiki(Wiki)'),
     }),
-
     path: z.object({
       file_token: z.string().describe('File token').optional(),
       subscription_id: z.string().describe('Subscription ID').optional(),
@@ -781,7 +773,6 @@ export const driveV1FileTaskCheck = {
           'File-related asynchronous `task_id`. See  or  to get the `task_id`',
         ),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -807,7 +798,6 @@ export const driveV1FileUploadFinish = {
           'Number of blocks. You can call the  to get the number of blocks',
         ),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -835,7 +825,6 @@ export const driveV1FileUploadPrepare = {
         ),
       size: z.number().describe('File size. The units are in bytes'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1044,7 +1033,6 @@ export const driveV1ImportTaskCreate = {
         })
         .describe('Mount point (the location of the imported cloud document)'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1091,7 +1079,6 @@ export const driveV1MediaBatchGetTmpDownloadUrl = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1117,7 +1104,6 @@ export const driveV1MediaUploadFinish = {
           'The number of blocks. Obtain this by calling the [Preupload media](ssl:ttdoc/uAjLw4CM/ukTMukTMukTM/reference/drive-v1/media/upload_prepare) interface',
         ),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1163,7 +1149,6 @@ export const driveV1MediaUploadPrepare = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1197,7 +1182,6 @@ export const driveV1MetaBatchQuery = {
       with_url: z.boolean().describe("Whether to get File's URL").optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

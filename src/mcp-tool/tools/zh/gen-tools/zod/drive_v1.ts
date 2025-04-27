@@ -82,7 +82,6 @@ export const driveV1ExportTaskCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -438,7 +437,6 @@ export const driveV1FileCreateFolder = {
           '父文件夹的 token。参数为空字符串时，表示在根目录下创建文件夹。你可参考获取某个文件夹的 token。了解更多，参考',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -473,7 +471,6 @@ export const driveV1FileCreateShortcut = {
         .describe('源文件的信息'),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -601,7 +598,6 @@ export const driveV1FileList = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -628,7 +624,6 @@ export const driveV1FileMove = {
         )
         .optional(),
     }),
-
     path: z.object({
       file_token: z
         .string()
@@ -714,7 +709,6 @@ export const driveV1FileSubscriptionCreate = {
       is_subcribe: z.boolean().describe('是否订阅').optional(),
       file_type: z.enum(['doc', 'docx', 'wiki']).describe('文档类型 Options:doc(文档),docx(新版文档),wiki(知识库wiki)'),
     }),
-
     path: z.object({ file_token: z.string().describe('文档token') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -733,7 +727,6 @@ export const driveV1FileSubscriptionGet = {
         .enum(['doc', 'docx', 'wiki'])
         .describe('文档类型 Options:doc(Docs 旧版文档),docx(Upgraded Docs 新版文档),wiki(云空间)'),
     }),
-
     path: z.object({
       file_token: z.string().describe('文档token').optional(),
       subscription_id: z.string().describe('订阅关系ID').optional(),
@@ -754,7 +747,6 @@ export const driveV1FileSubscriptionPatch = {
       is_subscribe: z.boolean().describe('是否订阅'),
       file_type: z.enum(['doc', 'docx', 'wiki']).describe('文档类型 Options:doc(文档),docx(新版文档),wiki(知识库wiki)'),
     }),
-
     path: z.object({
       file_token: z.string().describe('文档token').optional(),
       subscription_id: z.string().describe('订阅关系ID').optional(),
@@ -779,7 +771,6 @@ export const driveV1FileTaskCheck = {
           '异步任务的 ID。目前支持查询删除文件夹和移动文件夹的异步任务。可通过调用或获取任务 ID',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -805,7 +796,6 @@ export const driveV1FileUploadFinish = {
           '分片的数量。通过调用接口获取',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -831,7 +821,6 @@ export const driveV1FileUploadPrepare = {
         ),
       size: z.number().describe('文件的大小，单位为字节'),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1029,7 +1018,6 @@ export const driveV1ImportTaskCreate = {
         })
         .describe('挂载点（导入后的云文档所在位置）'),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1076,7 +1064,6 @@ export const driveV1MediaBatchGetTmpDownloadUrl = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1102,7 +1089,6 @@ export const driveV1MediaUploadFinish = {
           '分片数量。通过调用接口获取',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1148,7 +1134,6 @@ export const driveV1MediaUploadPrepare = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1182,7 +1167,6 @@ export const driveV1MetaBatchQuery = {
       with_url: z.boolean().describe('是否获取文件的访问链接').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

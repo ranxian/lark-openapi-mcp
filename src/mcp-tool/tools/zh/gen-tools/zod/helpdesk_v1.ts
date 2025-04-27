@@ -88,7 +88,6 @@ export const helpdeskV1AgentScheduleCreate = {
         .describe('新客服日程')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -154,7 +153,6 @@ export const helpdeskV1AgentSkillCreate = {
         .optional(),
       agent_ids: z.array(z.string()).describe('客服 ids').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -237,7 +235,6 @@ export const helpdeskV1AgentSkillPatch = {
         .describe('更新技能')
         .optional(),
     }),
-
     path: z.object({ agent_skill_id: z.string().describe('agent skill id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -262,7 +259,6 @@ export const helpdeskV1AgentPatch = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ status: z.number().describe('agent status，1：在线；2：离线').optional() }),
-
     path: z.object({ agent_id: z.string().describe('客服id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -324,7 +320,6 @@ export const helpdeskV1AgentSchedulesPatch = {
         .describe('工作日程列表')
         .optional(),
     }),
-
     path: z.object({ agent_id: z.string().describe('客服 id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -373,7 +368,6 @@ export const helpdeskV1CategoryCreate = {
       parent_id: z.string().describe('父知识库分类ID'),
       language: z.string().describe('语言').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -431,7 +425,6 @@ export const helpdeskV1CategoryPatch = {
       name: z.string().describe('名称').optional(),
       parent_id: z.string().describe('父知识库分类ID').optional(),
     }),
-
     path: z.object({ id: z.string().describe('category id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -494,7 +487,6 @@ export const helpdeskV1FaqCreate = {
         .describe('知识库详情')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -577,7 +569,6 @@ export const helpdeskV1FaqPatch = {
         .describe('修改的知识库内容')
         .optional(),
     }),
-
     path: z.object({ id: z.string().describe('知识库ID').optional() }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -632,7 +623,6 @@ export const helpdeskV1NotificationCancelSend = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ is_recall: z.boolean().describe('是否召回已发送的消息,新人入职消息同样适用') }),
-
     path: z.object({ notification_id: z.string().describe('唯一ID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -734,7 +724,6 @@ export const helpdeskV1NotificationCreate = {
       ext: z.string().describe('非必填，预留扩展字段').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -748,7 +737,6 @@ export const helpdeskV1NotificationExecuteSend = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ send_at: z.string().describe('发送时间戳(毫秒)') }),
-
     path: z.object({ notification_id: z.string().describe('创建接口返回的唯一id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -892,7 +880,6 @@ export const helpdeskV1NotificationSubmitApprove = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ reason: z.string().describe('提交审批理由') }),
-
     path: z.object({ notification_id: z.string().describe('创建接口返回的唯一id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -918,7 +905,6 @@ export const helpdeskV1TicketCustomizedFieldCreate = {
       required: z.boolean().describe('if the field is required'),
       dropdown_allow_multiple: z.boolean().describe('if the dropdown field supports multi-select').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -984,7 +970,6 @@ export const helpdeskV1TicketCustomizedFieldPatch = {
       visible: z.boolean().describe('if the field is visible').optional(),
       required: z.boolean().describe('if the field is required').optional(),
     }),
-
     path: z.object({ ticket_customized_field_id: z.string().describe('工单自定义字段ID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -1011,7 +996,6 @@ export const helpdeskV1TicketAnswerUserQuery = {
         .describe('faq结果列表')
         .optional(),
     }),
-
     path: z.object({ ticket_id: z.string().describe('工单ID') }),
   },
 };
@@ -1101,7 +1085,6 @@ export const helpdeskV1TicketMessageCreate = {
           '- 纯文本，参考中的content；- 富文本，参考中的content',
         ),
     }),
-
     path: z.object({ ticket_id: z.string().describe('工单ID').optional() }),
   },
 };
@@ -1187,7 +1170,6 @@ export const helpdeskV1TicketUpdate = {
       solved: z.number().describe('工单是否解决，1: 未解决, 2: 已解决').optional(),
       channel: z.number().describe('工单来源渠道ID').optional(),
     }),
-
     path: z.object({ ticket_id: z.string().describe('工单ID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },

@@ -34,7 +34,7 @@ A complete list of all supported Feishu/Lark tools can be found in [tools.md](./
 Before using the lark-mcp tool, you need to create a Feishu/Lark application:
 
 1. Visit the [Feishu Open Platform](https://open.feishu.cn/) or [Lark Open Platform](https://open.larksuite.com/) and log in
-2. Click "Get Started" and create a new application
+2. Click "Console" and create a new application
 3. Obtain the App ID and App Secret, which will be used for API authentication
 4. Add the necessary permissions for your application based on your usage scenario
 5. If you need to call APIs as a user, set up OAuth 2.0 redirect URLs and obtain user access tokens
@@ -155,6 +155,7 @@ The `lark-mcp` tool provides various command line parameters for flexible MCP se
 | `--tool-name-case` | `-c` | Tool name format, options are snake, camel, dot, or kebab, default is snake | `-c camel` |
 | `--language` | `-l` | Tools language, options are zh or en, default is en | `-l zh` |
 | `--user-access-token` | `-u` | User access token for calling APIs as a user | `-u u-xxxx` |
+| `--token-mode` |  | API token type, options are auto, tenant_access_token, or user_access_token, default is auto | `--token-mode user_access_token` |
 | `--mode` | `-m` | Transport mode, options are stdio or sse, default is stdio | `-m sse` |
 | `--host` |  | Listening host in SSE mode, default is localhost | `--host 0.0.0.0` |
 | `--port` | `-p` | Listening port in SSE mode, default is 3000 | `-p 3000` |
@@ -174,29 +175,45 @@ The `lark-mcp` tool provides various command line parameters for flexible MCP se
    lark-mcp mcp -a cli_xxxx -s yyyyy -u u-zzzz
    ```
 
-3. **Specifying Lark International Domain**:
+3. **Setting Specific Token Mode**:
+   ```bash
+   lark-mcp mcp -a cli_xxxx -s yyyyy --token-mode user_access_token
+   ```
+   
+   > **Note**: This option allows you to explicitly specify which token type to use when calling APIs. The `auto` mode (default) will be determined by the LLM when calling the API.
+
+4. **Specifying Lark International Domain**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -d https://open.larksuite.com
    ```
 
-4. **Enabling Only Specific API Tools**:
+5. **Enabling Only Specific API Tools**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -t im.v1.chat.create,im.v1.message.create
    ```
 
-5. **Using SSE Mode with Specific Port and Host**:
+   > **Note**: The `-t` parameter supports the following preset tool collections:
+   > - `preset.default` - Default tool set containing all preset tools
+   > - `preset.im.default` - Instant messaging related tools, such as group management, message sending, etc.
+   > - `preset.bitable.default` - Bitable related tools, such as table creation, record management, etc.
+   > - `preset.bitable.batch` - Bitable batch operation tools, including batch create and update record functions
+   > - `preset.doc.default` - Document related tools, such as document content reading, permission management, etc.
+   > - `preset.task.default` - Task management related tools, such as task creation, member management, etc.
+   > - `preset.calendar.default` - Calendar event management tools, such as creating calendar events, querying free/busy status, etc.
+
+6. **Using SSE Mode with Specific Port and Host**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -m sse --host 0.0.0.0 -p 3000
    ```
 
-6. **Setting Tools Language to Chinese**:
+7. **Setting Tools Language to Chinese**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -l zh
    ```
    
    > **Note**: Setting the language to Chinese (`-l zh`) may consume more tokens. If you encounter token limit issues when integrating with large language models, consider using the default English setting (`-l en`).
 
-7. **Setting Tool Name Format to Camel Case**:
+8. **Setting Tool Name Format to Camel Case**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -c camel
    ```
@@ -207,7 +224,7 @@ The `lark-mcp` tool provides various command line parameters for flexible MCP se
    > - kebab format: `im-v1-message-create`
    > - dot format: `im.v1.message.create`
 
-8. **Using Environment Variables Instead of Command Line Parameters**:
+9. **Using Environment Variables Instead of Command Line Parameters**:
    ```bash
    # Set environment variables
    export APP_ID=cli_xxxx
@@ -236,6 +253,7 @@ Configuration file example (config.json):
   "toolNameCase": "snake",
   "language": "zh",
   "userAccessToken": "",
+  "tokenMode": "auto",
   "mode": "stdio",
   "host": "localhost",
   "port": "3000"
@@ -295,31 +313,45 @@ By default, the MCP service enables common APIs. To enable other tools or only s
 lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1.message.list,im.v1.chat.create
 ```
 
-### Default Supported API List
+### Preset Tool Collections in Detail
 
-By default, the MCP service enables the following APIs:
+The following table details each API tool and its inclusion in different preset collections, helping you choose the appropriate preset for your needs:
 
-| Tool Name | Function Description |
-| --------------------------------- | -------------------------- |
-| im.v1.chat.create | Create a group chat |
-| im.v1.chat.list | Get group chat list |
-| im.v1.chatMembers.get | Get group members |
-| im.v1.message.create | Send messages |
-| im.v1.message.list | Get message list |
-| wiki.v2.space.getNode | Get Wiki node |
-| wiki.v1.node.search | Search Wiki nodes |
-| docx.v1.document.rawContent | Get document content |
-| drive.v1.permissionMember.create | Add collaborator permissions |
-| docx.builtin.import | Import documents |
-| docx.builtin.search | Search documents |
-| bitable.v1.app.create | Create Bitable |
-| bitable.v1.appTable.create | Create Bitable data table |
-| bitable.v1.appTable.list | Get Bitable data table list |
-| bitable.v1.appTableField.list | Get Bitable data table field list |
-| bitable.v1.appTableRecord.search | Search Bitable data table records |
-| bitable.v1.appTableRecord.create | Create Bitable data table records |
-| bitable.v1.appTableRecord.update | Update Bitable data table records |
-| contact.v3.user.batchGetId | Batch get user IDs |
+| Tool Name | Function Description | preset.default (Default) | preset.im.default | preset.bitable.default | preset.bitable.batch | preset.doc.default | preset.task.default | preset.calendar.default |
+| --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| im.v1.chat.create | Create a group chat | ✓ | ✓ | | | | | |
+| im.v1.chat.list | Get group chat list | ✓ | ✓ | | | | | |
+| im.v1.chatMembers.get | Get group members | ✓ | ✓ | | | | | |
+| im.v1.chatMembers.create | Add group members | ✓ | ✓ | | | | | |
+| im.v1.message.create | Send messages | ✓ | ✓ | | | | | |
+| im.v1.message.list | Get message list | ✓ | ✓ | | | | | |
+| bitable.v1.app.create | Create Bitable | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.create | Create Bitable data table | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.list | Get Bitable data table list | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableField.list | Get Bitable data table field list | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.search | Search Bitable data table records | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.create | Create Bitable data table records | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchCreate | Batch create Bitable data table records | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.update | Update Bitable data table records | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchUpdate | Batch update Bitable data table records | ✓ | | | ✓ | | | |
+| docx.v1.document.rawContent | Get document content | ✓ | | | | ✓ | | |
+| docx.builtin.import | Import documents | ✓ | | | | ✓ | | |
+| docx.builtin.search | Search documents | ✓ | | | | ✓ | | |
+| drive.v1.permissionMember.create | Add collaborator permissions | ✓ | | | | ✓ | | |
+| wiki.v2.space.getNode | Get Wiki node | ✓ | | | | ✓ | | |
+| wiki.v1.node.search | Search Wiki nodes | ✓ | | | | ✓ | | |
+| contact.v3.user.batchGetId | Batch get user IDs | ✓ | | | | | | |
+| task.v2.task.create | Create task | | | | | | ✓ | |
+| task.v2.task.patch | Modify task | | | | | | ✓ | |
+| task.v2.task.addMembers | Add task members | | | | | | ✓ | |
+| task.v2.task.addReminders | Add task reminders | | | | | | ✓ | |
+| calendar.v4.calendarEvent.create | Create calendar event | | | | | | | ✓ |
+| calendar.v4.calendarEvent.patch | Modify calendar event | | | | | | | ✓ |
+| calendar.v4.calendarEvent.get | Get calendar event | | | | | | | ✓ |
+| calendar.v4.freebusy.list | Query free/busy status | | | | | | | ✓ |
+| calendar.v4.calendar.primary | Get primary calendar | | | | | | | ✓ |
+
+> **Note**: In the table, "✓" indicates the tool is included in that preset. Using `-t preset.xxx` will only enable tools marked with "✓" in the corresponding column.
 
 ## FAQ
 
@@ -327,7 +359,7 @@ By default, the MCP service enables the following APIs:
   **Solution**: Check your network connection and ensure your APP_ID and APP_SECRET are correct. Verify that you can access the Feishu/Lark Open Platform API; you may need to configure a proxy.
 
 - **Issue**: Error when using user_access_token
-  **Solution**: Check if the token has expired. user_access_token usually has a validity period of 2 hours and needs to be refreshed periodically. You can implement an automatic token refresh mechanism or use app_access_token instead.
+  **Solution**: Check if the token has expired. user_access_token usually has a validity period of 2 hours and needs to be refreshed periodically. You can implement an automatic token refresh mechanism.
 
 - **Issue**: Unable to call certain APIs after starting the MCP service, with insufficient permissions errors
   **Solution**: Check if your application has obtained the corresponding API permissions. Some APIs require additional high-level permissions, which can be configured in the [Developer Console](https://open.feishu.cn/app) or [Lark Developer Console](https://open.larksuite.com/app). Ensure that permissions have been approved.

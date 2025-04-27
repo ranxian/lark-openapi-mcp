@@ -32,7 +32,6 @@ export const cardkitV1CardBatchUpdate = {
           '操作列表，可选值有：- `partial_update_setting`：更新卡片配置，支持更新卡片的 config 和 card_link 字段。参数结构可参考；- `add_elements`：添加组件，支持 type、 target_element_id、elements 字段。参数结构可参考接口请求体；- `delete_elements`：删除组件，支持 element_ids 字段。参数值为组件 ID 数组。参数结构可参考； - `partial_update_element`：更新组件的属性，支持 element_id 和 partial_element 字段。参数结构可参考接口的路径参数 element_id 和请求体 partial_element 字段 ; - `update_element`：全量更新组件，支持 element_id 和 element 字段。参数结构可参考接口的路径参数 element_id 和请求体 element 字段',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -78,7 +77,6 @@ export const cardkitV1CardElementContent = {
           '卡片处于流式更新模式时，操作卡片的序号。用于保证多次更新的时序性。该序号的值应为正整数，由开发者自定义。取值范围为 int32 范围内的值。**注意**：在卡片的单次流式更新开启期间，若多次更新卡片，你需确保 `sequence` 逐次递增，否则将报 300317 错误码',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -118,7 +116,6 @@ export const cardkitV1CardElementCreate = {
         ),
       elements: z.string().describe('添加的组件列表。以下示例值未转义，使用时请注意将其转为 JSON 序列化后的字符串'),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -143,7 +140,6 @@ export const cardkitV1CardElementDelete = {
           '卡片处于流式更新模式时，操作卡片的序号。用于保证多次更新的时序性。该序号的值应为正整数，由开发者自定义。取值范围为 int32 范围内的值。**注意**：在卡片的单次流式更新开启期间，若多次更新卡片，你需确保 `sequence` 逐次递增，否则将报 300317 错误码',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -174,7 +170,6 @@ export const cardkitV1CardElementPatch = {
           '卡片处于流式更新模式时，操作卡片的序号。用于保证多次更新的时序性。该序号的值应为正整数，由开发者自定义。取值范围为 int32 范围内的值。**注意**：在卡片的单次流式更新开启期间，若多次更新卡片，你需确保 `sequence` 逐次递增，否则将报 300317 错误码',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -203,7 +198,6 @@ export const cardkitV1CardElementUpdate = {
           '卡片处于流式更新模式时，操作卡片的序号。用于保证多次更新的时序性。该序号的值应为正整数，由开发者自定义。取值范围为 int32 范围内的值。**注意**：在卡片的单次流式更新开启期间，若多次更新卡片，你需确保 `sequence` 逐次递增，否则将报 300317 错误码',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -253,7 +247,6 @@ export const cardkitV1CardSettings = {
           '卡片处于流式更新模式时，操作卡片的序号。用于保证多次更新的时序性。该序号的值应为正整数，由开发者自定义。取值范围为 int32 范围内的值。**注意**：在卡片的单次流式更新开启期间，若多次更新卡片，你需确保 `sequence` 逐次递增，否则将报 300317 错误码',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -288,7 +281,6 @@ export const cardkitV1CardUpdate = {
           '卡片处于流式更新模式时，操作卡片的序号。用于保证多次更新的时序性。该序号的值应为正整数，由开发者自定义。取值范围为 int32 范围内的值。**注意**：在卡片的单次流式更新开启期间，若多次更新卡片，你需确保 `sequence` 逐次递增，否则将报 300317 错误码',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()

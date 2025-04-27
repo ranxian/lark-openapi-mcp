@@ -121,7 +121,6 @@ export const acsV1RuleExternalCreate = {
       rule_id: z.string().describe('rule id,create if null,update if no null').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -135,7 +134,6 @@ export const acsV1RuleExternalDelete = {
   accessTokens: ['user'],
   schema: {
     params: z.object({ rule_id: z.string() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -152,7 +150,6 @@ export const acsV1RuleExternalDeviceBind = {
       device_id: z.string().describe('device id'),
       rule_ids: z.array(z.string()).describe('rule list'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -169,7 +166,6 @@ export const acsV1RuleExternalGet = {
       device_id: z.string().optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -239,7 +235,6 @@ export const acsV1VisitorCreate = {
         .describe('visitor info'),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

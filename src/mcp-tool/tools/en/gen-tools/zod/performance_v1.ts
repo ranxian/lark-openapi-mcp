@@ -64,7 +64,6 @@ export const performanceV1ReviewDataQuery = {
     params: z.object({
       user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_admin_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -199,7 +198,6 @@ export const performanceV1StageTaskFindByUserList = {
     params: z.object({
       user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_admin_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

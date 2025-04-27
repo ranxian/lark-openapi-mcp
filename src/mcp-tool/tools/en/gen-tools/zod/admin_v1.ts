@@ -505,7 +505,6 @@ export const adminV1BadgeUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({ badge_id: z.string().describe('Badge ID') }),
   },
 };

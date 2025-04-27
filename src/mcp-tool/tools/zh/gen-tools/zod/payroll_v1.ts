@@ -29,7 +29,6 @@ export const payrollV1AcctItemList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -126,7 +125,6 @@ export const payrollV1DatasourceRecordQuery = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -180,7 +178,6 @@ export const payrollV1DatasourceRecordSave = {
         )
         .describe('需保存的记录列表'),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -203,7 +200,6 @@ export const payrollV1DatasourceList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -259,7 +255,6 @@ export const payrollV1PaymentActivityDetailList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -280,7 +275,6 @@ export const payrollV1PaymentActivityArchive = {
           '发薪活动ID，可通过获取',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -315,7 +309,6 @@ export const payrollV1PaymentActivityList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -366,7 +359,6 @@ export const payrollV1PaymentDetailQuery = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

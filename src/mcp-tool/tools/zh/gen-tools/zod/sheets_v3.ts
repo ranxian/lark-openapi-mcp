@@ -46,7 +46,6 @@ export const sheetsV3SpreadsheetCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -88,7 +87,6 @@ export const sheetsV3SpreadsheetPatch = {
         .describe('新的电子表格标题。参数为空时，表格标题将显示为“未命名表格”或本地语言环境对应内容')
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -131,7 +129,6 @@ export const sheetsV3SpreadsheetSheetFilterViewConditionCreate = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -285,7 +282,6 @@ export const sheetsV3SpreadsheetSheetFilterViewConditionUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -332,7 +328,6 @@ export const sheetsV3SpreadsheetSheetFilterViewCreate = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -432,7 +427,6 @@ export const sheetsV3SpreadsheetSheetFilterViewPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -511,7 +505,6 @@ export const sheetsV3SpreadsheetSheetFilterCreate = {
         })
         .describe('设置筛选条件'),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -614,7 +607,6 @@ export const sheetsV3SpreadsheetSheetFilterUpdate = {
         })
         .describe('设置筛选条件'),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -673,7 +665,6 @@ export const sheetsV3SpreadsheetSheetFind = {
         .describe('指定查找单元格的条件'),
       find: z.string().describe('查找的字符串。当`search_by_regex` 字段为 true 时，你需填入正则表达式'),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -744,7 +735,6 @@ export const sheetsV3SpreadsheetSheetFloatImageCreate = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -868,7 +858,6 @@ export const sheetsV3SpreadsheetSheetFloatImagePatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -974,7 +963,6 @@ export const sheetsV3SpreadsheetSheetMoveDimension = {
         .optional(),
       destination_index: z.number().describe('移动的目标位置行或者列').optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -1055,7 +1043,6 @@ export const sheetsV3SpreadsheetSheetReplace = {
       find: z.string().describe('查找的字符串。当`search_by_regex` 字段为 true 时，你需填入正则表达式'),
       replacement: z.string().describe('替换的字符串'),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()

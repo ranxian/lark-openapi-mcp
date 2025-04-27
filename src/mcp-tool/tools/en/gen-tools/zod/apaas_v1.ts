@@ -184,7 +184,6 @@ export const apaasV1ApplicationEnvironmentVariableQuery = {
         )
         .optional(),
     }),
-
     path: z.object({ namespace: z.string() }),
   },
 };
@@ -219,7 +218,6 @@ export const apaasV1ApplicationFlowExecute = {
           'Operator (fill in at least one _id and email, the id and email of the user of the low-code platform, need to be obtained from the low-code platform, json string)',
         ),
     }),
-
     path: z.object({
       namespace: z
         .string()
@@ -245,7 +243,6 @@ export const apaasV1ApplicationFunctionInvoke = {
     data: z.object({
       params: z.string().describe('Function input parameters (a string after JSON marshal)').optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('Application namespace'),
       function_api_name: z.string().describe('Function API name'),
@@ -266,7 +263,6 @@ export const apaasV1ApplicationObjectOqlQuery = {
       args: z.string().describe('Specify the value of anonymous parameters in an OQL statement').optional(),
       named_args: z.string().describe('Specify the value of named parameters in an OQL statement').optional(),
     }),
-
     path: z.object({ namespace: z.string() }),
   },
 };
@@ -280,7 +276,6 @@ export const apaasV1ApplicationObjectRecordBatchCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ records: z.string().describe('The list to be created, create up to 500 records at a time') }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string() }),
   },
 };
@@ -296,7 +291,6 @@ export const apaasV1ApplicationObjectRecordBatchDelete = {
     data: z.object({
       ids: z.array(z.string()).describe('The record ID list you want to delete, delete up to 500 pieces at a time'),
     }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string() }),
   },
 };
@@ -403,7 +397,6 @@ export const apaasV1ApplicationObjectRecordBatchQuery = {
         )
         .optional(),
     }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string() }),
   },
 };
@@ -417,7 +410,6 @@ export const apaasV1ApplicationObjectRecordBatchUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ records: z.string().describe('The list to be updated, up to 500 updates at a time') }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string() }),
   },
 };
@@ -431,7 +423,6 @@ export const apaasV1ApplicationObjectRecordCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ record: z.string().describe('Record details') }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string() }),
   },
 };
@@ -457,7 +448,6 @@ export const apaasV1ApplicationObjectRecordPatch = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ record: z.string().describe('Record details') }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string(), id: z.string() }),
   },
 };
@@ -478,7 +468,6 @@ export const apaasV1ApplicationObjectRecordQuery = {
         )
         .optional(),
     }),
-
     path: z.object({ namespace: z.string(), object_api_name: z.string(), id: z.string() }),
   },
 };
@@ -584,7 +573,6 @@ export const apaasV1ApplicationObjectSearch = {
         )
         .optional(),
     }),
-
     path: z.object({ namespace: z.string() }),
   },
 };
@@ -604,7 +592,6 @@ export const apaasV1ApplicationRecordPermissionMemberBatchCreateAuthorization = 
         .describe('List of user IDs to be added, using user IDs of the Feishu Low-Code Platform')
         .optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('namespace'),
       record_permission_api_name: z.string().describe('Record permission API name'),
@@ -627,7 +614,6 @@ export const apaasV1ApplicationRecordPermissionMemberBatchRemoveAuthorization = 
         .describe('List of user IDs to be deleted, using user IDs of the Feishu Low-Code Platform')
         .optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('namespace'),
       record_permission_api_name: z.string().describe('Record permission API name'),
@@ -654,7 +640,6 @@ export const apaasV1ApplicationRoleMemberBatchCreateAuthorization = {
         .describe('List of department IDs to be added, using department IDs of the Feishu Low-Code Platform')
         .optional(),
     }),
-
     path: z.object({
       namespace: z.string().describe('namespace'),
       role_api_name: z.string().describe('Role API name'),
@@ -681,7 +666,6 @@ export const apaasV1ApplicationRoleMemberBatchRemoveAuthorization = {
         .describe('List of department IDs to be deleted, using department IDs of the Feishu Low-Code Platform')
         .optional(),
     }),
-
     path: z.object({ namespace: z.string(), role_api_name: z.string().describe('Role API name') }),
   },
 };
@@ -728,7 +712,6 @@ export const apaasV1ApprovalInstanceCancel = {
         .describe('The kunlunUserID of the operating user can be obtained through the Apaas user management page'),
       opinion: z.string().describe('Reason for revocation'),
     }),
-
     path: z.object({
       approval_instance_id: z
         .string()
@@ -759,7 +742,6 @@ export const apaasV1ApprovalTaskAddAssignee = {
         .optional(),
       opinion: z.string().describe('Reason for approver addition').optional(),
     }),
-
     path: z.object({ approval_task_id: z.string().describe('User task ID') }),
   },
 };
@@ -777,7 +759,6 @@ export const apaasV1ApprovalTaskAgree = {
       user_id: z.string().describe('Operator ID'),
       opinion: z.string().describe('Approval comment').optional(),
     }),
-
     path: z.object({ approval_task_id: z.string().describe('User task ID') }),
   },
 };
@@ -795,7 +776,6 @@ export const apaasV1ApprovalTaskReject = {
       user_id: z.string().describe('Operator ID'),
       opinion: z.string().describe('Approval comment').optional(),
     }),
-
     path: z.object({ approval_task_id: z.string().describe('User task ID') }),
   },
 };
@@ -815,7 +795,6 @@ export const apaasV1ApprovalTaskTransfer = {
       to_user_ids: z.array(z.string()).describe('New Approver ID').optional(),
       opinion: z.string().describe('Reason for transfer').optional(),
     }),
-
     path: z.object({ approval_task_id: z.string().describe('User task ID') }),
   },
 };
@@ -841,7 +820,6 @@ export const apaasV1SeatActivityList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -867,7 +845,6 @@ export const apaasV1SeatAssignmentList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -886,7 +863,6 @@ export const apaasV1UserTaskCc = {
         .describe("The list of CC's kunlunIDs, available through the Apaas user management page"),
       operator_user_id: z.string().describe('Operator kunlunUserID, available through the Apaas user management page'),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -918,7 +894,6 @@ export const apaasV1UserTaskChatGroup = {
         .describe('The name of the group to join, which is used to create a group chat when the chat_id is empty')
         .optional(),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -945,7 +920,6 @@ export const apaasV1UserTaskExpediting = {
         .describe('The kunlunID list of the sponsor can be obtained through the Apaas user management page'),
       opinion: z.string().describe('Reason for urging').optional(),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -997,7 +971,6 @@ export const apaasV1UserTaskRollback = {
         ),
       opinion: z.string().describe('Reason for return'),
     }),
-
     path: z.object({
       task_id: z
         .string()
@@ -1020,7 +993,6 @@ export const apaasV1UserTaskRollbackPoints = {
     data: z.object({
       operator_user_id: z.string().describe('Operator kunlunUserID, available through the Apaas user management page'),
     }),
-
     path: z.object({
       task_id: z
         .string()

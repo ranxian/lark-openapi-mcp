@@ -30,7 +30,6 @@ export const baikeV1ClassificationList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -183,7 +182,6 @@ export const baikeV1DraftCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -412,7 +410,6 @@ export const baikeV1EntityCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -434,7 +431,6 @@ export const baikeV1EntityExtract = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -472,7 +468,6 @@ export const baikeV1EntityHighlight = {
         .string()
         .describe('A sentence that requires the content of the entity word to be recognized (no more than 1000 words)'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -497,7 +492,6 @@ export const baikeV1EntityList = {
       provider: z.string().describe('Data provider [can be used to filter data]').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -512,7 +506,6 @@ export const baikeV1EntityMatch = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ word: z.string().describe('Entity word main keyword, full name, alias full match') }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -551,7 +544,6 @@ export const baikeV1EntitySearch = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

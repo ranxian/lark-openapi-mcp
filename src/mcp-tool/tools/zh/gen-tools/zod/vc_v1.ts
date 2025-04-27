@@ -125,7 +125,6 @@ export const vcV1ExportMeetingList = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -153,7 +152,6 @@ export const vcV1ExportParticipantList = {
       room_id: z.string().describe('按参会Rooms筛选（最多一个筛选条件）').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -176,7 +174,6 @@ export const vcV1ExportParticipantQualityList = {
       room_id: z.string().describe('参会人为Rooms时填入，room_id和user_id必须只填一个').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -197,7 +194,6 @@ export const vcV1ExportResourceReservationList = {
       room_ids: z.array(z.string()).describe('待筛选的会议室id列表').optional(),
       is_exclude: z.boolean().describe('若为true表示导出room_ids范围外的会议室，默认为false').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -238,7 +234,6 @@ export const vcV1MeetingListGet = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -358,7 +353,6 @@ export const vcV1MeetingListByNo = {
         .optional(),
       page_size: z.number().describe('分页大小').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -422,7 +416,6 @@ export const vcV1MeetingRecordingStart = {
   accessTokens: ['user'],
   schema: {
     data: z.object({ timezone: z.number().describe('录制文件时间显示使用的时区[-12,12]').optional() }),
-
     path: z.object({
       meeting_id: z.string().describe('会议ID（视频会议的唯一标识，视频会议开始后才会产生）').optional(),
     }),
@@ -516,7 +509,6 @@ export const vcV1ParticipantListGet = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -546,7 +538,6 @@ export const vcV1ParticipantQualityListGet = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -948,7 +939,6 @@ export const vcV1ReserveApply = {
         .describe('会议设置'),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1133,7 +1123,6 @@ export const vcV1ResourceReservationListGet = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1408,7 +1397,6 @@ export const vcV1RoomLevelPatch = {
       parent_id: z.string().describe('父层级ID'),
       custom_group_id: z.string().describe('自定义层级ID').optional(),
     }),
-
     path: z.object({ room_level_id: z.string().describe('层级ID') }),
   },
 };
@@ -1600,7 +1588,6 @@ export const vcV1RoomSearch = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

@@ -100,7 +100,6 @@ export const payrollV1DatasourceRecordQuery = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -156,7 +155,6 @@ export const payrollV1DatasourceRecordSave = {
         )
         .describe('List of records to be saved'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -179,7 +177,6 @@ export const payrollV1DatasourceList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

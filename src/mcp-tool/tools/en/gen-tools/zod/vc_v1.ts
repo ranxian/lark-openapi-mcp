@@ -124,7 +124,6 @@ export const vcV1ExportMeetingList = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -156,7 +155,6 @@ export const vcV1ExportParticipantList = {
       room_id: z.string().describe('Filter by Rooms (maximum one filter)').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -191,7 +189,6 @@ export const vcV1ExportParticipantQualityList = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -218,7 +215,6 @@ export const vcV1ExportResourceReservationList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -259,7 +255,6 @@ export const vcV1MeetingListGet = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -394,7 +389,6 @@ export const vcV1MeetingListByNo = {
         .optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -472,7 +466,6 @@ export const vcV1MeetingRecordingStart = {
     data: z.object({
       timezone: z.number().describe('Time zone used for displaying the file recording time [-12,12]').optional(),
     }),
-
     path: z.object({
       meeting_id: z
         .string()
@@ -581,7 +574,6 @@ export const vcV1ParticipantListGet = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -623,7 +615,6 @@ export const vcV1ParticipantQualityListGet = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1062,7 +1053,6 @@ export const vcV1ReserveApply = {
         .describe('Meeting settings'),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1268,7 +1258,6 @@ export const vcV1ResourceReservationListGet = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1570,7 +1559,6 @@ export const vcV1RoomLevelPatch = {
       parent_id: z.string().describe('Parent room level ID'),
       custom_group_id: z.string().describe('Custom room level ID').optional(),
     }),
-
     path: z.object({ room_level_id: z.string().describe('Room level ID') }),
   },
 };
@@ -1768,7 +1756,6 @@ export const vcV1RoomSearch = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

@@ -25,7 +25,6 @@ export const okrV1OkrBatchGet = {
       okr_ids: z.array(z.string()).describe('OKR ID 列表，最多10个'),
       lang: z.string().describe('请求OKR的语言版本（比如@的人名），lang=en_us/zh_cn，请求 Query中').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -89,7 +88,6 @@ export const okrV1PeriodPatch = {
         .number()
         .describe('周期显示状态 Options:1(normal_status 正常状态),2(mark_invalid 标记失效),3(hidden_period 隐藏周期)'),
     }),
-
     path: z.object({ period_id: z.string().describe('周期id') }),
   },
 };
@@ -234,7 +232,6 @@ export const okrV1ProgressRecordCreate = {
       source_url_mobile: z.string().describe('mobile进展来源链接').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

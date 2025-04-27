@@ -44,7 +44,27 @@ export type mailV1ToolName =
   | 'mail.v1.userMailboxAlias.delete'
   | 'mail.v1.userMailboxAlias.list'
   | 'mail.v1.userMailbox.delete'
+  | 'mail.v1.userMailboxEvent.subscribe'
+  | 'mail.v1.userMailboxEvent.subscription'
+  | 'mail.v1.userMailboxEvent.unsubscribe'
+  | 'mail.v1.userMailboxFolder.create'
+  | 'mail.v1.userMailboxFolder.delete'
+  | 'mail.v1.userMailboxFolder.list'
+  | 'mail.v1.userMailboxFolder.patch'
+  | 'mail.v1.userMailboxMailContact.create'
+  | 'mail.v1.userMailboxMailContact.delete'
+  | 'mail.v1.userMailboxMailContact.list'
+  | 'mail.v1.userMailboxMailContact.patch'
+  | 'mail.v1.userMailboxMessageAttachment.downloadUrl'
+  | 'mail.v1.userMailboxMessage.get'
+  | 'mail.v1.userMailboxMessage.getByCard'
+  | 'mail.v1.userMailboxMessage.list'
   | 'mail.v1.userMailboxMessage.send'
+  | 'mail.v1.userMailboxRule.create'
+  | 'mail.v1.userMailboxRule.delete'
+  | 'mail.v1.userMailboxRule.list'
+  | 'mail.v1.userMailboxRule.reorder'
+  | 'mail.v1.userMailboxRule.update'
   | 'mail.v1.user.query';
 export const mailV1MailgroupAliasCreate = {
   project: 'mail',
@@ -57,7 +77,6 @@ export const mailV1MailgroupAliasCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ email_alias: z.string().describe('Alias address').optional() }),
-
     path: z.object({ mailgroup_id: z.string().describe('Mailing list ID or mailing list address').optional() }),
   },
 };
@@ -300,7 +319,6 @@ export const mailV1MailgroupMemberBatchDelete = {
     data: z.object({
       member_id_list: z.array(z.string()).describe('List of member IDs deleted by this call').optional(),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('The unique ID or email address of a mail group').optional() }),
   },
 };
@@ -441,7 +459,6 @@ export const mailV1MailgroupPatch = {
         )
         .optional(),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('Mailing list ID or mailing list address').optional() }),
   },
 };
@@ -517,7 +534,6 @@ export const mailV1MailgroupPermissionMemberBatchDelete = {
     data: z.object({
       permission_member_id_list: z.array(z.string()).describe('List of permission member IDs deleted by this call'),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('The unique ID or email address of a mail group').optional() }),
   },
 };
@@ -656,7 +672,6 @@ export const mailV1MailgroupUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('Mailing list ID or mailing list address').optional() }),
   },
 };
@@ -671,7 +686,6 @@ export const mailV1PublicMailboxAliasCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ email_alias: z.string().describe('Alias address').optional() }),
-
     path: z.object({
       public_mailbox_id: z.string().describe('Public mailbox ID or public mailbox address').optional(),
     }),
@@ -775,7 +789,6 @@ export const mailV1PublicMailboxList = {
         .optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -823,7 +836,6 @@ export const mailV1PublicMailboxMemberBatchDelete = {
     data: z.object({
       member_id_list: z.array(z.string()).describe('List of public mailbox member IDs deleted by this call'),
     }),
-
     path: z.object({
       public_mailbox_id: z.string().describe('The unique ID or email address of a public mailbox').optional(),
     }),
@@ -951,7 +963,6 @@ export const mailV1PublicMailboxPatch = {
       email: z.string().describe('Public mailbox address').optional(),
       name: z.string().describe('Public mailbox name').optional(),
     }),
-
     path: z.object({
       public_mailbox_id: z
         .string()
@@ -974,7 +985,6 @@ export const mailV1PublicMailboxUpdate = {
       email: z.string().describe('Public mailbox address').optional(),
       name: z.string().describe('Public mailbox name').optional(),
     }),
-
     path: z.object({
       public_mailbox_id: z
         .string()
@@ -993,7 +1003,6 @@ export const mailV1UserMailboxAliasCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ email_alias: z.string().describe('Alias address').optional() }),
-
     path: z.object({ user_mailbox_id: z.string().describe("Member's email address").optional() }),
   },
 };
@@ -1049,6 +1058,355 @@ export const mailV1UserMailboxDelete = {
     path: z.object({ user_mailbox_id: z.string().describe('The email address to be released') }),
   },
 };
+export const mailV1UserMailboxEventSubscribe = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxEvent.subscribe',
+  sdkName: 'mail.v1.userMailboxEvent.subscribe',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/event/subscribe',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-Email-Event-Subscribe Event-Subscribe Event',
+  accessTokens: ['user'],
+  schema: {
+    data: z.object({ event_type: z.number().describe('Event type Options:1(Message Mail message related events)') }),
+    path: z.object({ user_mailbox_id: z.string().describe('User email address, use me when using user_access_token') }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxEventSubscription = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxEvent.subscription',
+  sdkName: 'mail.v1.userMailboxEvent.subscription',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/event/subscription',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-Event-Get Subscription Status-Get Subscription Status',
+  accessTokens: ['user'],
+  schema: {
+    path: z.object({ user_mailbox_id: z.string().describe('User email address, use me when using user_access_token') }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxEventUnsubscribe = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxEvent.unsubscribe',
+  sdkName: 'mail.v1.userMailboxEvent.unsubscribe',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/event/unsubscribe',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-Email-Event-Cancel Subscribe-Cancel Subscribe',
+  accessTokens: ['user'],
+  schema: {
+    data: z.object({ event_type: z.number().describe('Event type Options:1(Message Mail message related events)') }),
+    path: z.object({ user_mailbox_id: z.string().describe('User email address, use me when using user_access_token') }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxFolderCreate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.create',
+  sdkName: 'mail.v1.userMailboxFolder.create',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-Email-Mail Folder-Create Email Folder-Create Email Folder',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe('Name'),
+      parent_folder_id: z
+        .string()
+        .describe(
+          'Parent folder ID, where a value of 0 indicates the root folder. The method for obtaining ID is shown in ',
+        ),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxFolderDelete = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.delete',
+  sdkName: 'mail.v1.userMailboxFolder.delete',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders/:folder_id',
+  httpMethod: 'DELETE',
+  description: '[Feishu/Lark]-Email-Mail Folder-Delete Email Folder-Delete Email Folder',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+      folder_id: z
+        .string()
+        .describe(
+          'Folder ID. The method for obtaining ID is shown in ',
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxFolderList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.list',
+  sdkName: 'mail.v1.userMailboxFolder.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-Mail Folder-List Email Folders-List Email Folders',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      folder_type: z.number().describe('Folder type Options:1(System System Folder),2(User User folder)').optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxFolderPatch = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.patch',
+  sdkName: 'mail.v1.userMailboxFolder.patch',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders/:folder_id',
+  httpMethod: 'PATCH',
+  description: '[Feishu/Lark]-Email-Mail Folder-Update Email Folder-Update Email Folder',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe('Name').optional(),
+      parent_folder_id: z
+        .string()
+        .describe(
+          'Parent folder ID, where a value of 0 indicates the root folder. The method for obtaining ID is shown in ',
+        )
+        .optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+      folder_id: z
+        .string()
+        .describe(
+          'Folder ID. The method for obtaining ID is shown in ',
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactCreate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.create',
+  sdkName: 'mail.v1.userMailboxMailContact.create',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-Email-Email Contact-Create Email Contact-Create A Email Contact',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe("Email Contact's Name"),
+      company: z.string().describe("Email Contact's Company").optional(),
+      phone: z.string().describe("Email Contact's Phone Number").optional(),
+      mail_address: z.string().describe("Email Contact's Mail Address").optional(),
+      tag: z.string().describe("Email Contact's Tag").optional(),
+      remark: z.string().describe("Email Contact's Remark").optional(),
+      position: z.string().describe("Email Contact's Position").optional(),
+    }),
+    path: z.object({ user_mailbox_id: z.string() }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactDelete = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.delete',
+  sdkName: 'mail.v1.userMailboxMailContact.delete',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts/:mail_contact_id',
+  httpMethod: 'DELETE',
+  description: '[Feishu/Lark]-Email-Email Contact-Delete Email Contact-Delete An Email Contact',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address or enter "me" to represent the current user making the API call'),
+      mail_contact_id: z
+        .string()
+        .describe(
+          "Email Contact's ID. For the acquisition method, see ",
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.list',
+  sdkName: 'mail.v1.userMailboxMailContact.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-Email Contact-List Email Contacts-List Email Contacts',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      page_size: z.number().describe('paging size'),
+      page_token: z
+        .string()
+        .describe(
+          'Page identifier. It is not filled in the first request, indicating traversal from the beginning; when there will be more groups, the new page_token will be returned at the same time, and the next traversal can use the page_token to get more groups',
+        )
+        .optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactPatch = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.patch',
+  sdkName: 'mail.v1.userMailboxMailContact.patch',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts/:mail_contact_id',
+  httpMethod: 'PATCH',
+  description:
+    "[Feishu/Lark]-Email-Email Contact-Modify Email Contact's Info-When using the tenant_access_token, it is necessary to apply for data permissions for accessing email contacts resources",
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe("Email Contact's Name"),
+      company: z.string().describe("Email Contact's Company").optional(),
+      phone: z.string().describe("Email Contact's Phone Number").optional(),
+      mail_address: z.string().describe("Email Contact's Mail Address").optional(),
+      tag: z.string().describe("Email Contact's Tag").optional(),
+      remark: z.string().describe("Email Contact's Remark").optional(),
+      position: z.string().describe("Email Contact's Position").optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address or enter "me" to represent the current user making the API call'),
+      mail_contact_id: z
+        .string()
+        .describe(
+          "Email Contact's ID. For the acquisition method, see ",
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMessageAttachmentDownloadUrl = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessageAttachment.downloadUrl',
+  sdkName: 'mail.v1.userMailboxMessageAttachment.downloadUrl',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages/:message_id/attachments/download_url',
+  httpMethod: 'GET',
+  description:
+    '[Feishu/Lark]-Email-User Message-Attachment-Get Attachment Download Links-Get Attachment Download Links',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({ attachment_ids: z.array(z.string()).describe('Attachment ID list') }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+      message_id: z
+        .string()
+        .describe(
+          'Message ID, the method for obtaining ID is shown in ',
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMessageGet = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessage.get',
+  sdkName: 'mail.v1.userMailboxMessage.get',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages/:message_id',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-User Message-Get Email Details-Get Email Details',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+      message_id: z
+        .string()
+        .describe(
+          'Message ID, the method for obtaining ID is shown in ',
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMessageGetByCard = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessage.getByCard',
+  sdkName: 'mail.v1.userMailboxMessage.getByCard',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages/get_by_card',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-User Message-list mail of card-list mail of mail card',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      card_id: z
+        .string()
+        .describe(
+          'Mail card ID, available via [Receive message]( https://open.feishu.cn/document/server-docs/im-v1/message/events/receive) events',
+        ),
+      owner_id: z
+        .string()
+        .describe(
+          'Mail card OwnerID, available via [Receive message]( https://open.feishu.cn/document/server-docs/im-v1/message/events/receive) events (independent of `user_id_type`)',
+        ),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxMessageList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessage.list',
+  sdkName: 'mail.v1.userMailboxMessage.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-User Message-List Emails-List Emails',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      page_size: z.number().describe('page size'),
+      page_token: z
+        .string()
+        .describe(
+          'Page identifier. It is not filled in the first request, indicating traversal from the beginning; when there will be more groups, the new page_token will be returned at the same time, and the next traversal can use the page_token to get more groups',
+        )
+        .optional(),
+      folder_id: z
+        .string()
+        .describe(
+          'Folder ID. The method for obtaining ID is shown in ',
+        ),
+      only_unread: z.boolean().describe('Only query unread emails').optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
 export const mailV1UserMailboxMessageSend = {
   project: 'mail',
   name: 'mail.v1.userMailboxMessage.send',
@@ -1096,11 +1454,198 @@ export const mailV1UserMailboxMessageSend = {
         .describe('Mail Attachment List')
         .optional(),
     }),
-
     path: z.object({
       user_mailbox_id: z
         .string()
         .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxRuleCreate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.create',
+  sdkName: 'mail.v1.userMailboxRule.create',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-Email-Auto Filter-Create Auto FIlter-Create Auto Filter',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      condition: z
+        .object({
+          match_type: z
+            .number()
+            .describe('Match type Options:1(MatchAll Meet all conditions),2(MatchAny Meet any condition)'),
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    'Match condition left value Options:1(From Sender),2(To Recipient),3(Cc CC recipient),4(ToOrCc To or Cc recipient),6(Subject),7(Body),8(AttachmentName Attachment name),9(AttachmentType Attachment type),10(AnyAddress Any recipient),12(MatchAllMessage All mails),13(IsExternal Mail Is external),14(IsSpam Mail is spam),15(IsNotSpam Mail is not spam),16(HasAttachment Mail has attachment)',
+                  ),
+                operator: z
+                  .number()
+                  .describe(
+                    'Match condition operator Options:1(Contains),2(DoesNotContains Does not contains),3(StartsWith Starts with),4(EndsWith Ends with),5(Is),6(IsNot Is not),7(IncludesMe Include me),10(IsEmpty Is empty)',
+                  ),
+                input: z.string().describe('Match condition right value').optional(),
+              }),
+            )
+            .describe('Match rule list'),
+        })
+        .describe('Match condition'),
+      action: z
+        .object({
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    'Operation type Options:1(ArchiveMessage Archive),2(DeleteMessage Delete it),3(MarkAsRead Mark as read),4(MarkAsSpam Mark as spam),5(NeverMarkAsSpam Never mark as spam),8(ApplyLabel Label as (not support now)),9(Flag),10(NeverPushNotification No notification),11(MoveToFolder Move to user folder),12(AutoTransfer Automatically forward (not support now)),13(SendToChat Share to chat (not support now))',
+                  ),
+                input: z
+                  .string()
+                  .describe('When the type is "Move to folder," fill this field with the ID of the folder')
+                  .optional(),
+              }),
+            )
+            .describe('List of actions after matching rules'),
+        })
+        .describe('Action after match hit'),
+      ignore_the_rest_of_rules: z.boolean().describe('Is terminal filter'),
+      name: z.string().describe('Name'),
+      is_enable: z.boolean().describe('Is enable'),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('User email address, use me when using user_access_token') }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxRuleDelete = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.delete',
+  sdkName: 'mail.v1.userMailboxRule.delete',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules/:rule_id',
+  httpMethod: 'DELETE',
+  description: '[Feishu/Lark]-Email-Auto Filter-Delete Auto Filter-Delete Auto Filter',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z.string(),
+      rule_id: z
+        .string()
+        .describe(
+          'Rule ID. The method for obtaining ID is shown in ',
+        ),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxRuleList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.list',
+  sdkName: 'mail.v1.userMailboxRule.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-Email-Auto Filter-List Auto FIlters-List Auto Filters',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+    }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxRuleReorder = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.reorder',
+  sdkName: 'mail.v1.userMailboxRule.reorder',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules/reorder',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-Email-Auto Filter-Reorder Auto Filters-Reorder Auto Filters',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      rule_ids: z
+        .array(z.string())
+        .describe(
+          'Auto filter ID list. The method for obtaining ID is shown in ',
+        ),
+    }),
+    path: z.object({ user_mailbox_id: z.string() }),
+    useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
+  },
+};
+export const mailV1UserMailboxRuleUpdate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.update',
+  sdkName: 'mail.v1.userMailboxRule.update',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules/:rule_id',
+  httpMethod: 'PUT',
+  description: '[Feishu/Lark]-Email-Auto Filter-Update Auto FIlter-Update Auto Filter',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      condition: z
+        .object({
+          match_type: z
+            .number()
+            .describe('Match type Options:1(MatchAll Meet all conditions),2(MatchAny Meet any condition)'),
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    'Match condition left value Options:1(From Sender),2(To Recipient),3(Cc CC recipient),4(ToOrCc To or CC recipient),6(Subject),7(Body),8(AttachmentName Attachment name),9(AttachmentType Attachment type),10(AnyAddress Any recipient),12(MatchAllMessage All mails),13(IsExternal Mail is external),14(IsSpam Mail is spam),15(IsNotSpam Mail is not spam),16(HasAttachment Mail has attachment)',
+                  ),
+                operator: z
+                  .number()
+                  .describe(
+                    'Match condition operator Options:1(Contains),2(DoesNotContains Does not contains),3(StartsWith Starts with),4(EndsWith Ends with),5(Is),6(IsNot Is not),7(IncludesMe Include me),10(IsEmpty Is empty)',
+                  ),
+                input: z.string().describe('Match condition right value').optional(),
+              }),
+            )
+            .describe('Match rule list'),
+        })
+        .describe('Match condition'),
+      action: z
+        .object({
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    'Operation type Options:1(ArchiveMessage Archive),2(DeleteMessage Delete it),3(MarkAsRead Mark as read),4(MarkAsSpam Mark as spam),5(NeverMarkAsSpam Never mark as spam),8(ApplyLabel Label as (not support now)),9(Flag),10(NeverPushNotification No notification),11(MoveToFolder Move to user folder),12(AutoTransfer Automatically forward (not support now)),13(SendToChat Share to chat (not support now))',
+                  ),
+                input: z
+                  .string()
+                  .describe('When the type is "Move to folder," fill this field with the ID of the folder')
+                  .optional(),
+              }),
+            )
+            .describe('List of actions after matching rules'),
+        })
+        .describe('Action after match hit'),
+      ignore_the_rest_of_rules: z.boolean().describe('Is terminal filter'),
+      name: z.string().describe('Name'),
+      is_enable: z.boolean().describe('Is enable'),
+    }),
+    path: z.object({
+      user_mailbox_id: z
+        .string()
+        .describe('User email address, or enter me to represent the current calling interface user'),
+      rule_id: z
+        .string()
+        .describe(
+          'Rule ID. The method for obtaining ID is shown in ',
+        ),
     }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -1163,6 +1708,26 @@ export const mailV1Tools = [
   mailV1UserMailboxAliasDelete,
   mailV1UserMailboxAliasList,
   mailV1UserMailboxDelete,
+  mailV1UserMailboxEventSubscribe,
+  mailV1UserMailboxEventSubscription,
+  mailV1UserMailboxEventUnsubscribe,
+  mailV1UserMailboxFolderCreate,
+  mailV1UserMailboxFolderDelete,
+  mailV1UserMailboxFolderList,
+  mailV1UserMailboxFolderPatch,
+  mailV1UserMailboxMailContactCreate,
+  mailV1UserMailboxMailContactDelete,
+  mailV1UserMailboxMailContactList,
+  mailV1UserMailboxMailContactPatch,
+  mailV1UserMailboxMessageAttachmentDownloadUrl,
+  mailV1UserMailboxMessageGet,
+  mailV1UserMailboxMessageGetByCard,
+  mailV1UserMailboxMessageList,
   mailV1UserMailboxMessageSend,
+  mailV1UserMailboxRuleCreate,
+  mailV1UserMailboxRuleDelete,
+  mailV1UserMailboxRuleList,
+  mailV1UserMailboxRuleReorder,
+  mailV1UserMailboxRuleUpdate,
   mailV1UserQuery,
 ];

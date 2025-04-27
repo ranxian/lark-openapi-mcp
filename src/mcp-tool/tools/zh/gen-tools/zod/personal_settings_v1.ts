@@ -331,7 +331,6 @@ export const personalSettingsV1SystemStatusPatch = {
         )
         .describe('需要更新的字段'),
     }),
-
     path: z.object({
       system_status_id: z
         .string()

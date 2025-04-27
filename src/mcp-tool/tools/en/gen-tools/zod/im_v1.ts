@@ -155,7 +155,6 @@ export const imV1ChatAnnouncementPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -380,7 +379,6 @@ export const imV1ChatLink = {
         )
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -420,7 +418,6 @@ export const imV1ChatList = {
         .describe('The paging size is used to limit the number of data items returned in one request')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -733,7 +730,6 @@ export const imV1ChatMenuItemPatch = {
         })
         .describe('Item info'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -905,7 +901,6 @@ export const imV1ChatMenuTreeCreate = {
         })
         .describe('The menu to add to the chat'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -933,7 +928,6 @@ export const imV1ChatMenuTreeDelete = {
           'The top level menu ID. The ID can be obtained through the  interface',
         ),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -981,7 +975,6 @@ export const imV1ChatMenuTreeSort = {
           'Sort by the ID of the top level menu. The order of the elements in the array corresponds to the order of the top level menu in the group from left to right. The ID can be obtained through the  interface.**Note**: The ID list to be sorted needs to be aligned with the ID list of the top level menu in the group',
         ),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1095,7 +1088,6 @@ export const imV1ChatSearch = {
         .describe('The paging size is used to limit the number of data items returned in one request')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1172,7 +1164,6 @@ export const imV1ChatTabCreate = {
         )
         .describe('Chat tags**Note**: A maximum of 20 custom group tabs are allowed to be added in a group'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1200,7 +1191,6 @@ export const imV1ChatTabDeleteTabs = {
           'Chat tag ID list. Tab ID can be found in  and  return value',
         ),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1249,7 +1239,6 @@ export const imV1ChatTabSortTabs = {
         )
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1338,7 +1327,6 @@ export const imV1ChatTabUpdateTabs = {
         .describe('Chat tags')
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1399,7 +1387,6 @@ export const imV1ChatTopNoticePutTopNotice = {
         )
         .describe('Group Pin configuration'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1578,7 +1565,7 @@ export const imV1MessageCreate = {
       msg_type: z
         .string()
         .describe(
-          'Message type.**Optional values**:- text- post- image- file- audio- media- sticker- interactive- share_chat- share_user- systemFor detailed description of different message types, see ',
+          'Message type.**Optional values**:- text- post- image- file- audio- media- sticker- interactive- share_chat- share_user- system: This type only supports pushing system messages in bot single chats and not in group chats. For example, as shown in the image below to highlight a new conversation. For detailed description of different message types, see ',
         ),
       content: z
         .string()
@@ -1782,7 +1769,6 @@ export const imV1MessagePatch = {
           'Message card content. Cards constructed with Card JSON or the  are supported. - To use card JSON, refer to . When passing the value, you need to compress and escape the JSON as a string. - To use the card template built by the , you need to pass in the `type` and `data` parameters. Refer to the field descriptions at the end of the  document for instructions on passing values. **Note**:- The updated card message must not exceed 30 KB. If the message contains a large number of style tags, it will make the actual message body length larger than the input request body length.- The following example values ​​are not escaped. Please pay attention to convert them into JSON serialized strings when using them',
         ),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -1842,7 +1828,6 @@ export const imV1MessagePushFollowUp = {
         )
         .describe('Follow-ups list'),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -1873,7 +1858,6 @@ export const imV1MessageReactionCreate = {
         })
         .describe('Reaction type'),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -2014,7 +1998,6 @@ export const imV1MessageReply = {
         )
         .optional(),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -2042,7 +2025,6 @@ export const imV1MessageUpdate = {
           'Message content, a string serialized from a JSON structure. The value of this parameter corresponds to `msg_type`. For example, if the value of `msg_type` is `text`, this parameter needs to pass in text type content.**Note:**- JSON strings need to be escaped, such as `\\` after line break escape- The maximum size of a text message request body cannot exceed 150 KB- The maximum size of a rich text message request body cannot exceed 30 KB- If the message contains style tags, the actual message body length will be greater than the request body length you enter.For information about different types of message content formats and usage restrictions, see ',
         ),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -2150,7 +2132,6 @@ export const imV1PinCreate = {
           'Message ID to be pinned. How to get the ID:- After calling the  interface, get it from the `message_id` parameter of the response result.- Listen to the  event. When the event is triggered, you can get the `message_id` of the message from the event body.- Call the  interface and get it from the `message_id` parameter of the response result',
         ),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -2212,7 +2193,6 @@ export const imV1PinList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

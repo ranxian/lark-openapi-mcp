@@ -118,7 +118,6 @@ export const taskV2AttachmentList = {
         ),
       user_id_type: z.string().describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -139,7 +138,6 @@ export const taskV2CommentCreate = {
       resource_id: z.string().describe('评论归属的资源ID。当归属资源类型为"task"时，这里应填写任务的GUID').optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -199,7 +197,6 @@ export const taskV2CommentList = {
         .optional(),
       user_id_type: z.string().describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -245,7 +242,6 @@ export const taskV2CustomFieldAdd = {
       resource_type: z.string().describe('要将自定义字段添加到一个资源的资源类型。目前只支持tasklist'),
       resource_id: z.string().describe('要将自定义字段添加到的资源id，目前只支持tasklist_guid'),
     }),
-
     path: z.object({
       custom_field_guid: z
         .string()
@@ -368,7 +364,6 @@ export const taskV2CustomFieldCreate = {
       text_setting: z.record(z.any()).describe('文本类型设置（目前文本类型没有可设置项）').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -417,7 +412,6 @@ export const taskV2CustomFieldList = {
         .optional(),
       resource_id: z.string().describe('要查询自定义字段的归属resource_id').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -438,7 +432,6 @@ export const taskV2CustomFieldOptionCreate = {
       insert_after: z.string().describe('要放到某个option之后的option_guid').optional(),
       is_hidden: z.boolean().describe('是否隐藏').optional(),
     }),
-
     path: z.object({ custom_field_guid: z.string().describe('要添加选项的自定义字段GUID，该字段必须是') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -471,7 +464,6 @@ export const taskV2CustomFieldOptionPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       custom_field_guid: z.string().describe('要更新的选项的自定义字段GUID'),
       option_guid: z.string().describe('要更新的选项的GUID'),
@@ -607,7 +599,6 @@ export const taskV2CustomFieldRemove = {
         .string()
         .describe('要从某个资源移除自定义字段的资源id，`resource_type`为"tasklist"时，需填写清单的GUID'),
     }),
-
     path: z.object({
       custom_field_guid: z
         .string()
@@ -651,7 +642,6 @@ export const taskV2SectionCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -713,7 +703,6 @@ export const taskV2SectionList = {
         .optional(),
       user_id_type: z.string().describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -793,7 +782,6 @@ export const taskV2TaskAddDependencies = {
         .describe('要添加的依赖')
         .optional(),
     }),
-
     path: z.object({ task_guid: z.string().describe('任务GUID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -1145,7 +1133,6 @@ export const taskV2TaskCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1203,7 +1190,6 @@ export const taskV2TaskList = {
       type: z.string().describe('列取任务的类型，目前只支持"my_tasks"，即“我负责的”').optional(),
       user_id_type: z.string().describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1415,7 +1401,6 @@ export const taskV2TaskRemoveDependencies = {
     data: z.object({
       dependencies: z.array(z.object({ task_guid: z.string().describe('依赖任务的GUID') })).describe('要移除的依赖'),
     }),
-
     path: z.object({ task_guid: z.string().describe('要移除依赖的任务GUID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -1957,7 +1942,6 @@ export const taskV2TasklistCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -2008,7 +1992,6 @@ export const taskV2TasklistList = {
         .optional(),
       user_id_type: z.string().describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

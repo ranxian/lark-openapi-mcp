@@ -126,7 +126,6 @@ export const acsV1RuleExternalCreate = {
       rule_id: z.string().describe('权限组id-为空创建,不为空则更新').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -140,7 +139,6 @@ export const acsV1RuleExternalDelete = {
   accessTokens: ['user'],
   schema: {
     params: z.object({ rule_id: z.string().describe('权限组id') }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -157,7 +155,6 @@ export const acsV1RuleExternalDeviceBind = {
       device_id: z.string().describe('设备id'),
       rule_ids: z.array(z.string()).describe('权限组id列表'),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -174,7 +171,6 @@ export const acsV1RuleExternalGet = {
       device_id: z.string().describe('设备id').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -254,7 +250,6 @@ export const acsV1VisitorCreate = {
         .describe('访客信息'),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
