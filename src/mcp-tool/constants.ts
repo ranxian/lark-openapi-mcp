@@ -14,13 +14,13 @@ export enum PresetName {
    */
   IM_DEFAULT = 'preset.im.default',
   /**
-   * Bitable standard tools for table operations
+   * Base preset for base operations
    */
-  BITABLE_DEFAULT = 'preset.bitable.default',
+  BASE_DEFAULT = 'preset.base.default',
   /**
-   * Bitable tools with batch record operations
+   * Base tools with batch operations
    */
-  BITABLE_BATCH = 'preset.bitable.batch',
+  BASE_BATCH = 'preset.base.batch',
   /**
    * Document related tools for content and permission operations
    */
@@ -45,7 +45,7 @@ export const presetImToolNames: ToolName[] = [
   'im.v1.message.list',
 ];
 
-export const presetBitableCommonToolNames: ToolName[] = [
+export const presetBaseCommonToolNames: ToolName[] = [
   'bitable.v1.app.create',
   'bitable.v1.appTable.create',
   'bitable.v1.appTable.list',
@@ -53,14 +53,14 @@ export const presetBitableCommonToolNames: ToolName[] = [
   'bitable.v1.appTableRecord.search',
 ];
 
-export const presetBitableToolNames: ToolName[] = [
-  ...presetBitableCommonToolNames,
+export const presetBaseToolNames: ToolName[] = [
+  ...presetBaseCommonToolNames,
   'bitable.v1.appTableRecord.create',
   'bitable.v1.appTableRecord.update',
 ];
 
-export const presetBitableRecordBatchToolNames: ToolName[] = [
-  ...presetBitableCommonToolNames,
+export const presetBaseRecordBatchToolNames: ToolName[] = [
+  ...presetBaseCommonToolNames,
   'bitable.v1.appTableRecord.batchCreate',
   'bitable.v1.appTableRecord.batchUpdate',
 ];
@@ -91,7 +91,7 @@ export const presetCalendarToolNames: ToolName[] = [
 
 export const defaultToolNames: ToolName[] = [
   ...presetImToolNames,
-  ...presetBitableToolNames,
+  ...presetBaseToolNames,
   ...presetDocToolNames,
   ...presetContactToolNames,
 ];
@@ -99,8 +99,8 @@ export const defaultToolNames: ToolName[] = [
 export const presetTools: Record<PresetName, ToolName[]> = {
   [PresetName.DEFAULT]: defaultToolNames,
   [PresetName.IM_DEFAULT]: presetImToolNames,
-  [PresetName.BITABLE_DEFAULT]: presetBitableToolNames,
-  [PresetName.BITABLE_BATCH]: presetBitableRecordBatchToolNames,
+  [PresetName.BASE_DEFAULT]: presetBaseToolNames,
+  [PresetName.BASE_BATCH]: presetBaseRecordBatchToolNames,
   [PresetName.DOC_DEFAULT]: presetDocToolNames,
   [PresetName.TASK_DEFAULT]: presetTaskToolNames,
   [PresetName.CALENDAR_DEFAULT]: presetCalendarToolNames,

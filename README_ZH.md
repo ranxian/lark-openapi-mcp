@@ -317,7 +317,7 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 
 下表详细列出了每个API工具所属的预设工具集，便于您根据实际需求选择合适的preset：
 
-| 工具名称 | 功能描述 | preset.default (默认) | preset.im.default | preset.bitable.default | preset.bitable.batch | preset.doc.default | preset.task.default | preset.calendar.default |
+| 工具名称 | 功能描述 | preset.default (默认) | preset.im.default | preset.base.default | preset.base.batch | preset.doc.default | preset.task.default | preset.calendar.default |
 | --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | im.v1.chat.create | 创建群 | ✓ | ✓ | | | | | |
 | im.v1.chat.list | 获取群列表 | ✓ | ✓ | | | | | |
