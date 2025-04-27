@@ -48,7 +48,6 @@ export const ailyV1AilySessionAilyMessageCreate = {
         .describe('@entity')
         .optional(),
     }),
-
     path: z.object({ aily_session_id: z.string().describe('Session ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -109,7 +108,6 @@ export const ailyV1AilySessionCreate = {
       channel_context: z.string().describe('Channel context').optional(),
       metadata: z.string().describe('Other transparent information').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -171,7 +169,6 @@ export const ailyV1AilySessionRunCreate = {
       skill_input: z.string().describe('When specifying a skill ID, you can also specify a skill input').optional(),
       metadata: z.string().describe('Other transparent information').optional(),
     }),
-
     path: z.object({ aily_session_id: z.string().describe('Session ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -227,7 +224,6 @@ export const ailyV1AilySessionUpdate = {
       channel_context: z.string().describe('Channel context').optional(),
       metadata: z.string().describe('Other transparent information').optional(),
     }),
-
     path: z.object({ aily_session_id: z.string().describe('Session ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -313,7 +309,6 @@ export const ailyV1AppKnowledgeAsk = {
         .describe('The Scope of Data Knowledge Classification Based on Control Knowledge Question Answering')
         .optional(),
     }),
-
     path: z.object({ app_id: z.string().describe('AppID of Feishu Smart Partner Building Platform') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -411,7 +406,6 @@ export const ailyV1AppSkillStart = {
         .optional(),
       input: z.string().describe('Custom variables for skills').optional(),
     }),
-
     path: z.object({
       app_id: z
         .string()

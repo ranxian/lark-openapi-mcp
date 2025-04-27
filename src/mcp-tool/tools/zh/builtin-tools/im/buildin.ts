@@ -7,6 +7,7 @@ export type imBuiltinToolName = 'im.builtin.batchSend';
 export const larkImBuiltinBatchSendTool: McpTool = {
   project: 'im',
   name: 'im.builtin.batchSend',
+  accessTokens: ['tenant'],
   description: '[飞书/Lark] - 批量发送消息 - 支持给多个用户、部门批量发送消息，支持文本和卡片',
   schema: {
     data: z.object({

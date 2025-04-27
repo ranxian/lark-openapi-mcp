@@ -52,7 +52,6 @@ export const ailyV1AilySessionAilyMessageCreate = {
         .describe('被@的实体')
         .optional(),
     }),
-
     path: z.object({
       aily_session_id: z
         .string()
@@ -138,7 +137,6 @@ export const ailyV1AilySessionCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -217,7 +215,6 @@ export const ailyV1AilySessionRunCreate = {
         .describe('其他扩展的参数（JSON String）> 备注：`metadata` 传递的参数，可以在后续 `GetRun` 调用中原样读取获得')
         .optional(),
     }),
-
     path: z.object({
       aily_session_id: z
         .string()
@@ -296,7 +293,6 @@ export const ailyV1AilySessionUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({ aily_session_id: z.string().describe('会话 ID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -374,7 +370,6 @@ export const ailyV1AppKnowledgeAsk = {
       data_asset_ids: z.array(z.string()).describe('控制知识问答所依据的数据知识范围').optional(),
       data_asset_tag_ids: z.array(z.string()).describe('控制知识问答所依据的数据知识分类范围').optional(),
     }),
-
     path: z.object({ app_id: z.string().describe('飞书智能伙伴搭建平台的AppID') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -447,7 +442,6 @@ export const ailyV1AppSkillStart = {
         .optional(),
       input: z.string().describe('技能的自定义变量').optional(),
     }),
-
     path: z.object({
       app_id: z.string().describe('Aily 应用 ID（`spring_xxx__c`），可以在 Aily 应用开发页面的浏览器地址里获取'),
       skill_id: z.string().describe('技能 ID；可通过技能编辑页面的浏览器地址栏获取（`skill_xxx`）'),

@@ -25,7 +25,6 @@ export const docsV1ContentGet = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

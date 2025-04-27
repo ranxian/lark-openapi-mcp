@@ -37,7 +37,6 @@ export const cardkitV1CardBatchUpdate = {
           "List of operations, optional values are:- 'partial_update_setting': Update card configuration, support updating card config and card_link fields. For parameter structure, please refer to ;- 'add_elements': Add components, support type, target_element_id, elements fields. The parameter structure can refer to the  interface request body;- delete_elements: Delete the component, support element_ids fields. The parameter value is the component ID array. The parameter structure can refer to ;- 'partial_update_element': Update the properties of the component, support element_id and partial_element fields. The parameter structure can refer to the path parameters of the  interface element_id and request body partial_element fields;- update_element: full update component, support element_id and element fields. The parameter structure can refer to the path parameter element_id and request body element field of the  interface",
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -89,7 +88,6 @@ export const cardkitV1CardElementContent = {
           'Sequence number, used to ensure the timing of updating text content. During the single streaming mode cycle of the card (steaming state from start to stop), this value needs to be an increasing positive integer, otherwise an error will be reported',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -134,7 +132,6 @@ export const cardkitV1CardElementCreate = {
         ),
       elements: z.string().describe('Component List'),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -166,7 +163,6 @@ export const cardkitV1CardElementDelete = {
           'When the card is in streaming update mode, the sequence number of the card operation is used to ensure the timing of multiple updates. The value is a positive integer, and multiple updates of a streaming state (streaming_mode a period from true to false) need to ensure that the sequence is incremented, otherwise an error will be reported. Timestamp is recommended',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -204,7 +200,6 @@ export const cardkitV1CardElementPatch = {
           'When the card is in streaming update mode, the sequence number of the card operation is used to ensure the timing of multiple updates. The value is a positive integer, and multiple updates of a streaming state (streaming_mode a period from true to false) need to ensure that the sequence is incremented, otherwise an error will be reported. Timestamp is recommended',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -238,7 +233,6 @@ export const cardkitV1CardElementUpdate = {
           'When the card is in streaming update mode, the sequence number of the card operation is used to ensure the timing of multiple updates. The value is a positive integer, and multiple updates of a streaming state (streaming_mode a period from true to false) need to ensure that the sequence is incremented, otherwise an error will be reported. Timestamp is recommended',
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -295,7 +289,6 @@ export const cardkitV1CardSettings = {
           "When the card is in streaming update mode, operate the serial number of the card. Used to ensure the timing of multiple updates. The value of this serial number should be a positive integer, customized by the developer.**Attention**:If you update the card multiple times during the single stream update of the card, you need to ensure that the'sequence 'is incremented one by one, otherwise an error code of 300317 will be reported",
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()
@@ -339,7 +332,6 @@ export const cardkitV1CardUpdate = {
           "When the card is in streaming update mode, operate the serial number of the card. It is used to ensure the timing of multiple updates. The value of this serial number should be a positive integer, customized by the developer, and timestamp is recommended.**Attention**:If you update the card multiple times during the single stream update of the card, you need to ensure that the'sequence 'is incremented one by one, otherwise an error will be reported",
         ),
     }),
-
     path: z.object({
       card_id: z
         .string()

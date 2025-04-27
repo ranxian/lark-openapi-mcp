@@ -118,7 +118,6 @@ export const contactV3DepartmentBatch = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -363,7 +362,6 @@ export const contactV3DepartmentList = {
       page_token: z.string().optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -401,7 +399,6 @@ export const contactV3DepartmentParent = {
         .describe('Paging size, used to limit the number of data entries returned in one request')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -549,7 +546,6 @@ export const contactV3DepartmentSearch = {
         .describe('Paging size, used to limit the number of data entries returned in one request')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -845,7 +841,6 @@ export const contactV3EmployeeTypeEnumUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       enum_id: z
         .string()
@@ -1069,7 +1064,6 @@ export const contactV3FunctionalRoleUpdate = {
     data: z.object({
       role_name: z.string().describe('Role name. The role name is unique in the same tenant and cannot be repeated'),
     }),
-
     path: z.object({
       role_id: z
         .string()
@@ -1230,7 +1224,6 @@ export const contactV3GroupMemberAdd = {
           'The added user ID, the ID type is consistent with the value of member_id_type. For different types of ID acquisition methods, see:- - - ',
         ),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1273,7 +1266,6 @@ export const contactV3GroupMemberBatchAdd = {
         .describe('Member information to be added')
         .optional(),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1315,7 +1307,6 @@ export const contactV3GroupMemberBatchRemove = {
         )
         .describe('Member information to be removed'),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1350,7 +1341,6 @@ export const contactV3GroupMemberRemove = {
           "When `member_type` is set to `user`, this parameter is used to set the user ID type. Options:open_id(OpenID Identifies a user's identity in an application. The Open ID of the same user in different applications is different.),union_id(UnionID Identifies the identity of a user under a certain application developer. The Union ID of the same user in applications under the same developer is the same, and the Union ID of applications under different developers is different. Through the Union ID, application developers can associate the identities of the same user in multiple applications.),user_id(UserID Identifies a user's identity in a tenant. The User ID of the same user in tenant A and tenant B is different. In the same tenant, the User ID of a user remains consistent in all applications. The User ID is mainly used to connect user data between different applications.)",
         ),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1655,7 +1645,6 @@ export const contactV3JobFamilyUpdate = {
         .describe('Multilingual job family description**Default value**: empty, indicating no update')
         .optional(),
     }),
-
     path: z.object({
       job_family_id: z
         .string()
@@ -1860,7 +1849,6 @@ export const contactV3JobLevelUpdate = {
         .describe('Multilingual description')
         .optional(),
     }),
-
     path: z.object({
       job_level_id: z
         .string()
@@ -1913,7 +1901,6 @@ export const contactV3JobTitleList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -2123,7 +2110,6 @@ export const contactV3UnitPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       unit_id: z
         .string()
@@ -2187,7 +2173,6 @@ export const contactV3UserBatch = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -2592,7 +2577,6 @@ export const contactV3UserFindByDepartment = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -2646,7 +2630,6 @@ export const contactV3UserList = {
       page_token: z.string().optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -3157,7 +3140,6 @@ export const contactV3WorkCityList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

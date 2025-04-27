@@ -73,7 +73,6 @@ export const bitableV1AppCopy = {
         .describe('文档时区，详情参考')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('多维表格 App 的唯一标识') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -101,7 +100,6 @@ export const bitableV1AppCreate = {
         .describe('文档时区，详情参考')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -115,7 +113,6 @@ export const bitableV1AppDashboardCopy = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ name: z.string().describe('新的仪表盘名称') }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       block_id: z
@@ -169,7 +166,7 @@ export const bitableV1AppRoleCreate = {
   sdkName: 'bitable.v1.appRole.create',
   path: '/open-apis/bitable/v1/apps/:app_token/roles',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-多维表格-高级权限-自定义角色-新增自定义角色-新增多维表格高级权限中自定义的角色',
+  description: '[Feishu/Lark]-云文档-多维表格-自定义角色-新增自定义角色-新增多维表格高级权限中自定义的角色',
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({
@@ -246,7 +243,6 @@ export const bitableV1AppRoleCreate = {
         .describe('针对仪表盘的权限设置')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('多维表格 App 的唯一标识').optional() }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -278,7 +274,7 @@ export const bitableV1AppRoleList = {
   sdkName: 'bitable.v1.appRole.list',
   path: '/open-apis/bitable/v1/apps/:app_token/roles',
   httpMethod: 'GET',
-  description: '[Feishu/Lark]-多维表格-高级权限-自定义角色-列出自定义角色-列出多维表格高级权限中用户自定义的角色',
+  description: '[Feishu/Lark]-云文档-多维表格-自定义角色-列出自定义角色-列出多维表格高级权限中用户自定义的角色',
   accessTokens: ['tenant', 'user'],
   schema: {
     params: z.object({
@@ -318,7 +314,6 @@ export const bitableV1AppRoleMemberBatchCreate = {
         )
         .describe('协作者列表'),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       role_id: z
@@ -354,7 +349,6 @@ export const bitableV1AppRoleMemberBatchDelete = {
         )
         .describe('协作者列表'),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       role_id: z
@@ -471,7 +465,7 @@ export const bitableV1AppRoleUpdate = {
   sdkName: 'bitable.v1.appRole.update',
   path: '/open-apis/bitable/v1/apps/:app_token/roles/:role_id',
   httpMethod: 'PUT',
-  description: '[Feishu/Lark]-多维表格-高级权限-自定义角色-更新自定义角色-更新多维表格高级权限中自定义的角色',
+  description: '[Feishu/Lark]-云文档-多维表格-自定义角色-更新自定义角色-更新多维表格高级权限中自定义的角色',
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({
@@ -548,7 +542,6 @@ export const bitableV1AppRoleUpdate = {
         .describe('针对仪表盘的权限设置')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识').optional(),
       role_id: z
@@ -609,7 +602,6 @@ export const bitableV1AppTableBatchDelete = {
         )
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('多维表格 App 的唯一标识') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -791,7 +783,6 @@ export const bitableV1AppTableCreate = {
         .describe('数据表')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('多维表格 App 的唯一标识') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -1275,7 +1266,6 @@ export const bitableV1AppTableFieldUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       table_id: z.string().describe('多维表格数据表的唯一标识'),
@@ -1338,7 +1328,6 @@ export const bitableV1AppTableFormFieldPatch = {
         .describe('该问题是否可见。当值为 false 时，不允许更新其他字段。可选值：- true：可见- false：不可见')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       table_id: z.string().describe('多维表格数据表的唯一标识'),
@@ -1401,7 +1390,6 @@ export const bitableV1AppTableFormPatch = {
         .describe('是否将填写次数限制为一次。可选值：- true：设置表单仅支持填写一次- false：不限制表单填写次数')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       table_id: z.string().describe('多维表格数据表的唯一标识'),
@@ -1453,7 +1441,6 @@ export const bitableV1AppTablePatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       table_id: z.string().describe('多维表格数据表的唯一标识'),
@@ -1528,7 +1515,6 @@ export const bitableV1AppTableRecordBatchDelete = {
           '删除的多条记录 ID 列表。通过接口获取',
         ),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       table_id: z.string().describe('多维表格数据表的唯一标识'),
@@ -1564,7 +1550,6 @@ export const bitableV1AppTableRecordBatchGet = {
         )
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识'),
       table_id: z.string().describe('多维表格数据表的唯一标识'),
@@ -1905,7 +1890,6 @@ export const bitableV1AppTableViewCreate = {
         .describe('视图类型 Options:grid(表格视图),kanban(看板视图),gallery(画册视图),gantt(甘特视图),form(表单视图)')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识').optional(),
       table_id: z.string().describe('多维表格数据表的唯一标识').optional(),
@@ -2038,7 +2022,6 @@ export const bitableV1AppTableViewPatch = {
         .describe('视图属性')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识').optional(),
       table_id: z.string().describe('多维表格数据表的唯一标识').optional(),
@@ -2064,7 +2047,6 @@ export const bitableV1AppUpdate = {
         .describe('多维表格是否开启高级权限。不传则不更新设置。可选值：- true：开启高级权限- false：关闭高级权限')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('多维表格 App 的唯一标识') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -2103,7 +2085,6 @@ export const bitableV1AppWorkflowUpdate = {
     data: z.object({
       status: z.string().describe('自动化状态。可选值：- Enable：开启自动化流程- Disable：关闭自动化流程'),
     }),
-
     path: z.object({
       app_token: z.string().describe('多维表格 App 的唯一标识').optional(),
       workflow_id: z

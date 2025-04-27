@@ -390,7 +390,6 @@ export const taskV1TaskCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -516,7 +515,6 @@ export const taskV1TaskList = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -691,7 +689,6 @@ export const taskV1TaskReminderCreate = {
           'Reminder time relative to the due time. For example, if the reminder time is 30 minutes in advance or 30 minutes after the due time, the value is –30',
         ),
     }),
-
     path: z.object({ task_id: z.string().describe('Task ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },

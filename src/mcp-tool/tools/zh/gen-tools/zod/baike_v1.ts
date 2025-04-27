@@ -30,7 +30,6 @@ export const baikeV1ClassificationList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -149,7 +148,6 @@ export const baikeV1DraftCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -379,7 +377,6 @@ export const baikeV1EntityCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -394,7 +391,6 @@ export const baikeV1EntityExtract = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ text: z.string().describe('需要被提取词条的文本（不会过滤租户中已成为词条的内容）').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -427,7 +423,6 @@ export const baikeV1EntityHighlight = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ text: z.string().describe('需要识别词条的内容（不超过1000字）') }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -452,7 +447,6 @@ export const baikeV1EntityList = {
       provider: z.string().describe('相关外部系统【可用来过滤词条数据】').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -467,7 +461,6 @@ export const baikeV1EntityMatch = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ word: z.string().describe('搜索关键词，将与词条名、别名进行精准匹配') }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -506,7 +499,6 @@ export const baikeV1EntitySearch = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

@@ -9,6 +9,7 @@ import { attendanceV1Tools, attendanceV1ToolName } from './zod/attendance_v1';
 import { authV3Tools, authV3ToolName } from './zod/auth_v3';
 import { authenV1Tools, authenV1ToolName } from './zod/authen_v1';
 import { baikeV1Tools, baikeV1ToolName } from './zod/baike_v1';
+import { baseV2Tools, baseV2ToolName } from './zod/base_v2';
 import { bitableV1Tools, bitableV1ToolName } from './zod/bitable_v1';
 import { boardV1Tools, boardV1ToolName } from './zod/board_v1';
 import { calendarV4Tools, calendarV4ToolName } from './zod/calendar_v4';
@@ -67,6 +68,7 @@ export type ToolName =
   | authV3ToolName
   | authenV1ToolName
   | baikeV1ToolName
+  | baseV2ToolName
   | bitableV1ToolName
   | boardV1ToolName
   | calendarV4ToolName
@@ -124,6 +126,7 @@ export type ProjectName =
   | 'auth'
   | 'authen'
   | 'baike'
+  | 'base'
   | 'bitable'
   | 'board'
   | 'calendar'
@@ -175,6 +178,7 @@ export const GenTools = [
   ...authV3Tools,
   ...authenV1Tools,
   ...baikeV1Tools,
+  ...baseV2Tools,
   ...bitableV1Tools,
   ...boardV1Tools,
   ...calendarV4Tools,

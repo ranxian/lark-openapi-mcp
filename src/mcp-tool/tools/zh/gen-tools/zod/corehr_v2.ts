@@ -20,6 +20,10 @@ export type corehrV2ToolName =
   | 'corehr.v2.company.batchGet'
   | 'corehr.v2.company.queryRecentChange'
   | 'corehr.v2.contract.search'
+  | 'corehr.v2.costAllocation.batchQuery'
+  | 'corehr.v2.costAllocation.createVersion'
+  | 'corehr.v2.costAllocation.removeVersion'
+  | 'corehr.v2.costAllocation.updateVersion'
   | 'corehr.v2.costCenter.create'
   | 'corehr.v2.costCenter.delete'
   | 'corehr.v2.costCenter.patch'
@@ -28,6 +32,10 @@ export type corehrV2ToolName =
   | 'corehr.v2.costCenterVersion.create'
   | 'corehr.v2.costCenterVersion.delete'
   | 'corehr.v2.costCenterVersion.patch'
+  | 'corehr.v2.defaultCostCenter.batchQuery'
+  | 'corehr.v2.defaultCostCenter.createVersion'
+  | 'corehr.v2.defaultCostCenter.removeVersion'
+  | 'corehr.v2.defaultCostCenter.updateVersion'
   | 'corehr.v2.department.batchGet'
   | 'corehr.v2.department.delete'
   | 'corehr.v2.department.parents'
@@ -724,6 +732,151 @@ export const corehrV2ContractSearch = {
     }),
   },
 };
+export const corehrV2CostAllocationBatchQuery = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.batchQuery',
+  sdkName: 'corehr.v2.costAllocation.batchQuery',
+  path: '/open-apis/corehr/v2/cost_allocations/batch_query',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-成本分摊-查询成本分摊-查询成本分摊',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_ids: z
+        .array(z.string())
+        .describe(
+          '员工ID列表-可以调用接口，获取指定员工的 employment_id',
+        ),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+    }),
+  },
+};
+export const corehrV2CostAllocationCreateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.createVersion',
+  sdkName: 'corehr.v2.costAllocation.createVersion',
+  path: '/open-apis/corehr/v2/cost_allocations/create_version',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-成本分摊-创建成本分摊-创建成本分摊',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z
+        .string()
+        .describe(
+          '员工雇佣 ID-可以调用接口，获取指定员工的 employment_id',
+        ),
+      cost_allocation: z
+        .object({
+          effective_time: z.string().describe('分摊生效日期'),
+          expiration_time: z.string().describe('分摊失效日期').optional(),
+          job_data_cost_center_id: z
+            .array(
+              z.object({
+                cost_center_id: z
+                  .string()
+                  .describe(
+                    '成本中心 ID-可以调用接口，获取对应成本中心信息的成本中心ID',
+                  ),
+                new_rate: z.number().describe('分摊比例'),
+              }),
+            )
+            .describe('成本分摊')
+            .optional(),
+          reason: z.string().describe('变更原因').optional(),
+        })
+        .describe('成本分摊')
+        .optional(),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+      client_token: z.string().describe('根据client_token是否一致来判断是否为同一请求').optional(),
+    }),
+  },
+};
+export const corehrV2CostAllocationRemoveVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.removeVersion',
+  sdkName: 'corehr.v2.costAllocation.removeVersion',
+  path: '/open-apis/corehr/v2/cost_allocations/remove_version',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-成本分摊-删除成本分摊-删除成本分摊',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z
+        .string()
+        .describe(
+          '员工ID，删除时必填-可以调用接口，获取指定员工的 employment_id',
+        ),
+      cost_allocation: z
+        .object({
+          wk_id: z
+            .string()
+            .describe(
+              'wk_id，删除时必填-可以调用接口，获取对应成本分摊信息的成本分摊ID',
+            ),
+        })
+        .describe('成本分摊')
+        .optional(),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+      client_token: z.string().describe('根据client_token是否一致来判断是否为同一请求').optional(),
+    }),
+  },
+};
+export const corehrV2CostAllocationUpdateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.updateVersion',
+  sdkName: 'corehr.v2.costAllocation.updateVersion',
+  path: '/open-apis/corehr/v2/cost_allocations/update_version',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-成本分摊-更新成本分摊-更新成本分摊',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z
+        .string()
+        .describe(
+          '员工雇佣 ID-可以调用接口，获取指定员工的 employment_id',
+        ),
+      cost_allocation: z
+        .object({
+          wk_id: z
+            .string()
+            .describe(
+              'wk_id-可以调用接口，获取对应成本分摊信息的成本分摊ID',
+            ),
+          effective_time: z.string().describe('分摊生效日期').optional(),
+          expiration_time: z.string().describe('分摊失效日期').optional(),
+          job_data_cost_center_id: z
+            .array(
+              z.object({
+                cost_center_id: z
+                  .string()
+                  .describe(
+                    '成本中心 ID-可以调用接口，获取对应成本中心信息的成本中心ID',
+                  )
+                  .optional(),
+                new_rate: z.number().describe('分摊比例').optional(),
+              }),
+            )
+            .describe('成本分摊')
+            .optional(),
+          reason: z.string().describe('变更原因').optional(),
+        })
+        .describe('成本分摊')
+        .optional(),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+      client_token: z.string().describe('根据client_token是否一致来判断是否为同一请求').optional(),
+    }),
+  },
+};
 export const corehrV2CostCenterCreate = {
   project: 'corehr',
   name: 'corehr.v2.costCenter.create',
@@ -791,7 +944,6 @@ export const corehrV2CostCenterDelete = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ operation_reason: z.string().describe('操作原因') }),
-
     path: z.object({
       cost_center_id: z
         .string()
@@ -962,7 +1114,6 @@ export const corehrV2CostCenterVersionDelete = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ operation_reason: z.string().describe('操作原因') }),
-
     path: z.object({
       cost_center_id: z
         .string()
@@ -1043,6 +1194,146 @@ export const corehrV2CostCenterVersionPatch = {
           '版本ID，可通过接口查询获得',
         )
         .optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterBatchQuery = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.batchQuery',
+  sdkName: 'corehr.v2.defaultCostCenter.batchQuery',
+  path: '/open-apis/corehr/v2/default_cost_centers/batch_query',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-默认成本中心-查询默认成本中心-查询默认成本中心',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_ids: z
+        .array(z.string())
+        .describe(
+          '员工雇佣 ID 列表--可以调用接口，获取指定员工的 employment_id',
+        ),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterCreateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.createVersion',
+  sdkName: 'corehr.v2.defaultCostCenter.createVersion',
+  path: '/open-apis/corehr/v2/default_cost_centers/create_version',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-默认成本中心-添加默认成本中心-添加默认成本中心',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z
+        .string()
+        .describe(
+          '员工雇佣 ID-可以调用接口，获取指定员工的 employment_id',
+        ),
+      default_cost_center: z
+        .object({
+          effective_time: z.string().describe('生效日期'),
+          cost_center_id: z
+            .string()
+            .describe(
+              '成本中心ID-可以调用接口，获取成本中心信息中的成本中心ID',
+            )
+            .optional(),
+          is_inherit: z.boolean().describe('是否继承自岗位/部门的默认成本中心').optional(),
+          reason: z.string().describe('变更原因').optional(),
+        })
+        .describe('默认成本中心信息')
+        .optional(),
+    }),
+    params: z.object({
+      client_token: z.string().describe('幂等标识，服务端会忽略client_token重复的请求').optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterRemoveVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.removeVersion',
+  sdkName: 'corehr.v2.defaultCostCenter.removeVersion',
+  path: '/open-apis/corehr/v2/default_cost_centers/remove_version',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-默认成本中心-删除默认成本中心-删除默认成本中心',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z
+        .string()
+        .describe(
+          '员工雇佣 ID-可以调用接口，获取指定员工的 employment_id',
+        ),
+      default_cost_center: z
+        .object({
+          wk_id: z
+            .string()
+            .describe(
+              'wk_id-可以调用接口，获取对应默认成本中心信息的默认成本中心ID',
+            ),
+          wk_tid: z
+            .string()
+            .describe(
+              'wk_tid-可以调用接口，获取对应默认成本中心信息的默认成本中心版本ID',
+            ),
+        })
+        .describe('默认成本中心信息')
+        .optional(),
+    }),
+    params: z.object({
+      client_token: z.string().describe('幂等标识，服务端会忽略client_token重复的请求').optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterUpdateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.updateVersion',
+  sdkName: 'corehr.v2.defaultCostCenter.updateVersion',
+  path: '/open-apis/corehr/v2/default_cost_centers/update_version',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-飞书人事（企业版）-员工信息-默认成本中心-更新默认成本中心-更新默认成本中心',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z
+        .string()
+        .describe(
+          '员工雇佣 ID-可以调用接口，获取指定员工的 employment_id',
+        ),
+      default_cost_center: z
+        .object({
+          wk_id: z
+            .string()
+            .describe(
+              'wk_id-可以调用接口，获取对应默认成本中心信息的默认成本中心ID',
+            ),
+          wk_tid: z
+            .string()
+            .describe(
+              'wk_tid-可以调用接口，获取对应默认成本中心信息的默认成本中心版本ID',
+            ),
+          effective_time: z.string().describe('生效日期').optional(),
+          cost_center_id: z
+            .string()
+            .describe(
+              '成本中心 ID-可以调用接口，获取对应成本中心信息的成本中心ID',
+            )
+            .optional(),
+          is_inherit: z.boolean().describe('是否继承自岗位/部门的默认成本中心').optional(),
+          reason: z.string().describe('变更原因').optional(),
+        })
+        .describe('默认成本中心信息')
+        .optional(),
+    }),
+    params: z.object({
+      client_token: z.string().describe('幂等标识，服务端会忽略client_token重复的请求').optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型').optional(),
     }),
   },
 };
@@ -2697,7 +2988,6 @@ export const corehrV2EmployeeCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -3375,7 +3665,7 @@ export const corehrV2JobChangeCreate = {
       transfer_type_unique_identifier: z
         .string()
         .describe(
-          '异动类型唯一标识，不支持仅在特殊场景使用的异动类型，如组织架构调整、职责转交和试用期转正。 可通过接口获取',
+          '异动类型唯一标识，不支持仅在特殊场景使用的异动类型，如组织架构调整、职责转交和试用期转正，不会校验是否停用。 可通过接口获取',
         ),
       flow_id: z
         .string()
@@ -3919,7 +4209,7 @@ export const corehrV2JobList = {
         .optional(),
       page_size: z.string().describe('每页获取记录数量，最大100'),
       name: z.string().describe('职务名称').optional(),
-      query_language: z.string().describe('语言信息，中文用zh-CN，英文用en-US- 传空默认为中文').optional(),
+      query_language: z.string().describe('语言信息，中文用zh-CN，英文用en-US- 传空默认都返回').optional(),
     }),
   },
 };
@@ -7962,7 +8252,6 @@ export const corehrV2PreHirePatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       pre_hire_id: z
         .string()
@@ -8153,7 +8442,6 @@ export const corehrV2PreHireTransitTask = {
           '任务标识码。- 对于系统内置的任务，标识码与任务名称的对应关系如下所示： > 其中 **创建账户SSO** 为隐藏的任务节点，在 **个人信息** 前自动执行。 - 1：职位信息 - 2：个人信息 - 3：创建账户SSO - 4：签到 - 9：签署入职文件- 对于自定义的任务节点（如：3095697a-065f-4627-a47c-46fe958a6754），名称的获取方式如下所示： 1. 通过 `pre_hire_id` 调用接口或 2. 查询字段 `fields` 中添加 `onboarding_info.onboarding_task_list` 查询后返回的 onboarding_task_list 结构体中包含标识码和任务名字的对应关系，示例如下所示：```json{ "onboarding_task_list": [ { "task_code": "3095697a-065f-4627-a47c-46fe958a6754", "task_name": "修改入职日期", "task_status": "uninitialized" }, { "task_code": "d37b9d7c-232d-4a55-98fa-541318234ede", "task_name": "工签补充任务", "task_status": "uninitialized" } ]}```',
         ),
     }),
-
     path: z.object({
       pre_hire_id: z
         .string()
@@ -9382,6 +9670,10 @@ export const corehrV2Tools = [
   corehrV2CompanyBatchGet,
   corehrV2CompanyQueryRecentChange,
   corehrV2ContractSearch,
+  corehrV2CostAllocationBatchQuery,
+  corehrV2CostAllocationCreateVersion,
+  corehrV2CostAllocationRemoveVersion,
+  corehrV2CostAllocationUpdateVersion,
   corehrV2CostCenterCreate,
   corehrV2CostCenterDelete,
   corehrV2CostCenterPatch,
@@ -9390,6 +9682,10 @@ export const corehrV2Tools = [
   corehrV2CostCenterVersionCreate,
   corehrV2CostCenterVersionDelete,
   corehrV2CostCenterVersionPatch,
+  corehrV2DefaultCostCenterBatchQuery,
+  corehrV2DefaultCostCenterCreateVersion,
+  corehrV2DefaultCostCenterRemoveVersion,
+  corehrV2DefaultCostCenterUpdateVersion,
   corehrV2DepartmentBatchGet,
   corehrV2DepartmentDelete,
   corehrV2DepartmentParents,

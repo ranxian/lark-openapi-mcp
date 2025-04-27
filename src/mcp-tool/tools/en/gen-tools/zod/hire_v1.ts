@@ -185,7 +185,6 @@ export const hireV1AdvertisementPublish = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ job_channel_id: z.string().describe('Job channel ID').optional() }),
-
     path: z.object({ advertisement_id: z.string().describe('Job ID') }),
   },
 };
@@ -397,7 +396,6 @@ export const hireV1ApplicationCancelOnboard = {
         .optional(),
       termination_reason_notes: z.string().describe('Remarks').optional(),
     }),
-
     path: z.object({ application_id: z.string().describe('Delivery ID') }),
   },
 };
@@ -685,7 +683,6 @@ export const hireV1ApplicationTerminate = {
         .optional(),
       termination_reason_note: z.string().describe('Termination remarks').optional(),
     }),
-
     path: z.object({
       application_id: z
         .string()
@@ -777,7 +774,6 @@ export const hireV1ApplicationTransferStage = {
           'The stage ID to transfer to, you can get the stage ID enumeration through the "Get Recruitment Process Information" interface',
         ),
     }),
-
     path: z.object({ application_id: z.string().describe('Delivery ID') }),
   },
 };
@@ -1477,7 +1473,6 @@ export const hireV1EcoExamLoginInfo = {
         })
         .describe('Login Info'),
     }),
-
     path: z.object({
       exam_id: z
         .string()
@@ -1529,7 +1524,6 @@ export const hireV1EcoExamUpdateResult = {
         .describe('Detail List')
         .optional(),
     }),
-
     path: z.object({
       exam_id: z
         .string()
@@ -1559,7 +1553,6 @@ export const hireV1EhrImportTaskPatch = {
         .optional(),
       state: z.number().describe('Status Options:1(导入成功 Import successful),2(导入失败 Import failed)'),
     }),
-
     path: z.object({
       ehr_import_task_id: z
         .string()
@@ -1920,7 +1913,6 @@ export const hireV1ExternalApplicationUpdate = {
       create_time: z.number().describe('Creation time in the external system for the application').optional(),
       termination_type: z.string().describe('Termination type').optional(),
     }),
-
     path: z.object({ external_application_id: z.string().describe('External delivery id').optional() }),
   },
 };
@@ -2022,7 +2014,6 @@ export const hireV1ExternalBackgroundCheckUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       external_background_check_id: z
         .string()
@@ -2131,7 +2122,6 @@ export const hireV1ExternalInterviewAssessmentPatch = {
         .optional(),
       content: z.string().describe('Comprehensive record').optional(),
     }),
-
     path: z.object({ external_interview_assessment_id: z.string().describe('External Review ID') }),
   },
 };
@@ -2318,7 +2308,6 @@ export const hireV1ExternalInterviewUpdate = {
         .describe('Interview feedback list')
         .optional(),
     }),
-
     path: z.object({
       external_interview_id: z
         .string()
@@ -2436,7 +2425,6 @@ export const hireV1ExternalOfferUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       external_offer_id: z
         .string()
@@ -3900,7 +3888,6 @@ export const hireV1JobOpen = {
           'Whether it is valid for a long time **Optional values are**: * `true`: valid for a long time* `false`: specify expiration date',
         ),
     }),
-
     path: z.object({
       job_id: z
         .string()
@@ -4320,7 +4307,6 @@ export const hireV1OfferCustomFieldUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       offer_custom_field_id: z
         .string()
@@ -4401,6 +4387,12 @@ export const hireV1OfferCreate = {
           job_requirement_id: z.string().describe('Recruitment Requirement ID').optional(),
           job_process_type_id: z.number().describe('Recruitment process type ID').optional(),
           attachment_id_list: z.array(z.string()).describe('Attachment ID List').optional(),
+          common_attachment_id_list: z
+            .array(z.string())
+            .describe(
+              'List of common attachment IDs, you can use the  api to create common attachments',
+            )
+            .optional(),
           attachment_description: z.string().describe('Attachment description').optional(),
           operator_user_id: z
             .string()
@@ -4558,7 +4550,6 @@ export const hireV1OfferInternOfferStatus = {
         .describe('Exit form information (this field is required when operation is offboard)')
         .optional(),
     }),
-
     path: z.object({ offer_id: z.string().describe('Offer ID').optional() }),
   },
 };
@@ -4619,7 +4610,6 @@ export const hireV1OfferOfferStatus = {
         .optional(),
       termination_reason_note: z.string().describe('Termination remarks').optional(),
     }),
-
     path: z.object({ offer_id: z.string().describe('Offer ID').optional() }),
   },
 };
@@ -4665,6 +4655,12 @@ export const hireV1OfferUpdate = {
           job_requirement_id: z.string().describe('Recruitment Requirement ID').optional(),
           job_process_type_id: z.number().describe('Recruitment process type ID').optional(),
           attachment_id_list: z.array(z.string()).describe('Attachment ID List').optional(),
+          common_attachment_id_list: z
+            .array(z.string())
+            .describe(
+              'List of common attachment IDs, you can use the  api to create common attachments',
+            )
+            .optional(),
           attachment_description: z.string().describe('Attachment description').optional(),
           operator_user_id: z.string().describe('Offer Operator ID'),
           position_id: z
@@ -4906,7 +4902,6 @@ export const hireV1ReferralAccountWithdraw = {
           'The bill of lading ID is provided by the requesting party when requesting. The subsequent interaction about this withdrawal operation is carried out with this bill of lading ID as the identifier. It needs to be guaranteed to be unique and used to ensure the idempotence of the withdrawal. Passing in the duplicate ID will return the corresponding bill of lading. Extracted amount details',
         ),
     }),
-
     path: z.object({ referral_account_id: z.string().describe('Account ID').optional() }),
   },
 };
@@ -5237,7 +5232,6 @@ export const hireV1TalentPoolBatchChangeTalentPool = {
           'operation type Options:1(Add Join the designated talent pool operation),2(Remove Remove from the designated talent pool)',
         ),
     }),
-
     path: z.object({
       talent_pool_id: z
         .string()
@@ -5263,7 +5257,6 @@ export const hireV1TalentPoolMoveTalent = {
         .number()
         .describe('Remove talents from the original talent pool. Options:1(OnlyAdd No),2(AddAndRemoveFromOrigin Yes)'),
     }),
-
     path: z.object({ talent_pool_id: z.string().describe('Talent pool ID').optional() }),
   },
 };
@@ -6081,7 +6074,6 @@ export const hireV1TalentExternalInfoCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ external_create_time: z.string().describe('Talent creation time in external systems') }),
-
     path: z.object({ talent_id: z.string().describe('Talent ID') }),
   },
 };
@@ -6096,7 +6088,6 @@ export const hireV1TalentExternalInfoUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ external_create_time: z.string().describe('Talent creation time in external systems') }),
-
     path: z.object({ talent_id: z.string().describe('Talent ID') }),
   },
 };
@@ -6175,7 +6166,6 @@ export const hireV1TalentOnboardStatus = {
       onboard_time: z.string().describe('Millisecond Timestamp').optional(),
       overboard_time: z.string().describe('Millisecond Timestamp').optional(),
     }),
-
     path: z.object({
       talent_id: z
         .string()
@@ -6224,7 +6214,6 @@ export const hireV1TalentTag = {
       operation: z.number().describe('Operation type Options:1(add),2(remove)'),
       tag_id_list: z.array(z.string()).describe('Tag id list'),
     }),
-
     path: z.object({ talent_id: z.string().describe('Talent id') }),
   },
 };
@@ -6310,7 +6299,6 @@ export const hireV1TodoList = {
           'To-do type Options:evaluation(Assessment to be done),offer(Offer to be done),exam(Written test to be done),interview(Interview to be done)',
         ),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -6391,7 +6379,7 @@ export const hireV1TripartiteAgreementUpdate = {
       state: z
         .number()
         .describe(
-          'Tripartite agreement status Options:1(NotStarted Not started),2(Applied Applied.),3(StudentProcessing Student processing),4(CompanyProcessing The company is processing it.),5(SchoolProcessing School processing),6(Terminated),7(Completed),8(TerminationProcessing Termination process in progress),9(Terminated)',
+          'Tripartite agreement status Options:1(NotStarted Not started),2(Applied Applied.),3(StudentProcessing Student processing),4(CompanyProcessing The company is processing it.),5(SchoolProcessing School processing),6(Ended),7(Completed),8(TerminationProcessing Termination process in progress),9(Terminated)',
         ),
       modify_time: z
         .string()
@@ -6399,7 +6387,6 @@ export const hireV1TripartiteAgreementUpdate = {
           'The three-party agreement modification timestamp cannot be less than the creation time or the current modification time',
         ),
     }),
-
     path: z.object({
       tripartite_agreement_id: z
         .string()
@@ -6445,7 +6432,6 @@ export const hireV1WebsiteChannelCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ channel_name: z.string().describe('Promotion channel name') }),
-
     path: z.object({ website_id: z.string().describe('Official website ID').optional() }),
   },
 };
@@ -6498,7 +6484,6 @@ export const hireV1WebsiteChannelUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ channel_name: z.string().describe('Promotion channel name') }),
-
     path: z.object({
       website_id: z.string().describe('Official website ID').optional(),
       channel_id: z.string().describe('Promotion Channel ID').optional(),
@@ -6575,7 +6560,6 @@ export const hireV1WebsiteDeliveryCreateByAttachment = {
         )
         .optional(),
     }),
-
     path: z.object({ website_id: z.string().describe('Official website ID') }),
   },
 };
@@ -7106,7 +7090,6 @@ export const hireV1WebsiteSiteUserCreate = {
         .describe('Country code, please provide it with the phone number, you can check from "Get Address Code"')
         .optional(),
     }),
-
     path: z.object({
       website_id: z
         .string()

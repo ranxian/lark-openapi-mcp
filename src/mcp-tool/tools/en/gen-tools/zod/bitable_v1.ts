@@ -71,7 +71,6 @@ export const bitableV1AppCopy = {
         .describe('Base App Time Zone, ')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('Base unique App identifier') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -98,7 +97,6 @@ export const bitableV1AppCreate = {
         .describe('Base App Time Zone, ')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -113,7 +111,6 @@ export const bitableV1AppDashboardCopy = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ name: z.string().describe('Dashboard Name') }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       block_id: z.string().describe('Base block_id'),
@@ -163,7 +160,7 @@ export const bitableV1AppRoleCreate = {
   sdkName: 'bitable.v1.appRole.create',
   path: '/open-apis/bitable/v1/apps/:app_token/roles',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Base-Advanced Permission-Role-Create role-Create a role',
+  description: '[Feishu/Lark]-Docs-Base-Role-Create role-Create a role',
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({
@@ -233,7 +230,6 @@ export const bitableV1AppRoleCreate = {
         .describe('Block role')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('Base unique App identifier').optional() }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -260,11 +256,11 @@ export const bitableV1AppRoleList = {
   sdkName: 'bitable.v1.appRole.list',
   path: '/open-apis/bitable/v1/apps/:app_token/roles',
   httpMethod: 'GET',
-  description: '[Feishu/Lark]-Base-Advanced Permission-Role-List roles-Get all roles according to app_token',
+  description: '[Feishu/Lark]-Docs-Base-Role-List roles-Get all roles according to app_token',
   accessTokens: ['tenant', 'user'],
   schema: {
     params: z.object({
-      page_size: z.number().optional(),
+      page_size: z.number().describe('paging size').optional(),
       page_token: z
         .string()
         .describe(
@@ -301,7 +297,6 @@ export const bitableV1AppRoleMemberBatchCreate = {
         )
         .describe('List of member'),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       role_id: z.string().describe('Custom role ID'),
@@ -333,7 +328,6 @@ export const bitableV1AppRoleMemberBatchDelete = {
         )
         .describe('List of members'),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       role_id: z.string().describe('Custom role ID'),
@@ -423,7 +417,7 @@ export const bitableV1AppRoleUpdate = {
   sdkName: 'bitable.v1.appRole.update',
   path: '/open-apis/bitable/v1/apps/:app_token/roles/:role_id',
   httpMethod: 'PUT',
-  description: '[Feishu/Lark]-Base-Advanced Permission-Role-Update role-Update a role',
+  description: '[Feishu/Lark]-Docs-Base-Role-Update role-Update a role',
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({
@@ -493,7 +487,6 @@ export const bitableV1AppRoleUpdate = {
         .describe('Block role')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier').optional(),
       role_id: z.string().describe('Role id').optional(),
@@ -547,7 +540,6 @@ export const bitableV1AppTableBatchDelete = {
         )
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('Base unique App identifier') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -736,7 +728,6 @@ export const bitableV1AppTableCreate = {
         .describe('table')
         .optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('Base unique App identifier') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -1205,7 +1196,6 @@ export const bitableV1AppTableFieldUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       table_id: z.string().describe('Base unique table identifier'),
@@ -1262,7 +1252,6 @@ export const bitableV1AppTableFormFieldPatch = {
       required: z.boolean().describe('Required').optional(),
       visible: z.boolean().describe('Visible').optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       table_id: z.string().describe('Base unique table identifier'),
@@ -1310,7 +1299,6 @@ export const bitableV1AppTableFormPatch = {
         .optional(),
       submit_limit_once: z.boolean().describe('Fill in the number of times limit once').optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       table_id: z.string().describe('Base unique table identifier'),
@@ -1359,7 +1347,6 @@ export const bitableV1AppTablePatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       table_id: z.string().describe('Base unique table identifier'),
@@ -1419,7 +1406,6 @@ export const bitableV1AppTableRecordBatchDelete = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ records: z.array(z.string()).describe('records') }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       table_id: z.string().describe('Base unique table identifier'),
@@ -1452,7 +1438,6 @@ export const bitableV1AppTableRecordBatchGet = {
         .describe('Controls whether to return automatically calculated fields, true means return')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier'),
       table_id: z.string().describe('Base unique table identifier'),
@@ -1757,7 +1742,6 @@ export const bitableV1AppTableViewCreate = {
         )
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier').optional(),
       table_id: z.string().describe('Base unique table identifier').optional(),
@@ -1881,7 +1865,6 @@ export const bitableV1AppTableViewPatch = {
         .describe('View properties')
         .optional(),
     }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier').optional(),
       table_id: z.string().describe('Base unique table identifier').optional(),
@@ -1903,7 +1886,6 @@ export const bitableV1AppUpdate = {
       name: z.string().describe('Base App Name').optional(),
       is_advanced: z.boolean().describe('Is advanced').optional(),
     }),
-
     path: z.object({ app_token: z.string().describe('Base unique App identifier') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -1941,7 +1923,6 @@ export const bitableV1AppWorkflowUpdate = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ status: z.string().describe('automated state') }),
-
     path: z.object({
       app_token: z.string().describe('Base unique App identifier').optional(),
       workflow_id: z.string().describe('workflow_id'),

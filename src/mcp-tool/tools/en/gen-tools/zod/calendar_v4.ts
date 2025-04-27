@@ -216,7 +216,6 @@ export const calendarV4CalendarCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1015,7 +1014,7 @@ export const calendarV4CalendarEventList = {
       anchor_time: z
         .string()
         .describe(
-          'A time anchor represented by a Unix timestamp (in seconds). It is used to set a specific point in time for pulling events, thereby avoiding the need to pull all events. You can use page_token or sync_token for pagination or incremental retrieval of all events after the specified anchor_time.**Notice**: It can not be used together with start_time and end_time.**Default**: empty',
+          'A time anchor represented by a Unix timestamp (in seconds). It is used to set a specific point in time for pulling events, thereby avoiding the need to pull all events. You can use page_token or sync_token for pagination or incremental retrieval of all events after the specified anchor_time.**Instructions**:- For single events, you will receive event information where **the end time of the event is >= anchor_time**.- For recurring events, after setting the anchor_time, all recurring events will be retrieved including those with past occurrences before the anchor_time.- For exceptional events, you will receive event information where **the original_time is >= anchor_time** as well as **the end time of the event is >= anchor_time**. The original_time is extracted from the exceptional event ID, which is structured as `{uid}_{original_time}`.**Notice**: It can not be used together with start_time and end_time.**Default**: empty',
         )
         .optional(),
       page_token: z
@@ -1453,7 +1452,6 @@ export const calendarV4CalendarEventReply = {
           'Event invitee RSVP status, that is, event reply status. Options:accept(accept),decline(refuse),tentative(To be determined)',
         ),
     }),
-
     path: z.object({
       calendar_id: z
         .string()
@@ -1674,7 +1672,6 @@ export const calendarV4CalendarList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1713,7 +1710,6 @@ export const calendarV4CalendarPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       calendar_id: z
         .string()
@@ -1735,7 +1731,6 @@ export const calendarV4CalendarPrimary = {
   accessTokens: ['tenant', 'user'],
   schema: {
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1765,7 +1760,6 @@ export const calendarV4CalendarSearch = {
         .optional(),
       page_size: z.number().describe('The maximum number of calendars returned in a single request').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1856,7 +1850,6 @@ export const calendarV4ExchangeBindingCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1948,7 +1941,6 @@ export const calendarV4FreebusyList = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1970,7 +1962,6 @@ export const calendarV4SettingGenerateCaldavConf = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

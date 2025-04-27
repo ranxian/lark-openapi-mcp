@@ -34,7 +34,6 @@ export const compensationV1ArchiveQuery = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

@@ -122,7 +122,6 @@ export const taskV2AttachmentList = {
         ),
       user_id_type: z.string().describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -156,7 +155,6 @@ export const taskV2CommentCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -226,7 +224,6 @@ export const taskV2CommentList = {
         .optional(),
       user_id_type: z.string().describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -278,7 +275,6 @@ export const taskV2CustomFieldAdd = {
         .describe('The resource type to add custom fields to a resource. Currently only tasklist is supported'),
       resource_id: z.string().describe('The resource id to add a custom field to, currently only tasklist_guid'),
     }),
-
     path: z.object({
       custom_field_guid: z
         .string()
@@ -418,7 +414,6 @@ export const taskV2CustomFieldCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -470,7 +465,6 @@ export const taskV2CustomFieldList = {
         .optional(),
       resource_id: z.string().describe('To query the attribution resource_id of a custom field').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -494,7 +488,6 @@ export const taskV2CustomFieldOptionCreate = {
       insert_after: z.string().describe('option_guid to put after an option').optional(),
       is_hidden: z.boolean().describe('Whether to hide').optional(),
     }),
-
     path: z.object({ custom_field_guid: z.string().describe('custom field GUID to create option') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -527,7 +520,6 @@ export const taskV2CustomFieldOptionPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       custom_field_guid: z.string().describe('custom field GUID whose option is to update'),
       option_guid: z.string().describe('option GUID to be udpate'),
@@ -685,7 +677,6 @@ export const taskV2CustomFieldRemove = {
           'To remove the resource id of a custom field from a resource, when "tasklist" is resource_type, fill in the tasklist GUID',
         ),
     }),
-
     path: z.object({
       custom_field_guid: z
         .string()
@@ -731,7 +722,6 @@ export const taskV2SectionCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -795,7 +785,6 @@ export const taskV2SectionList = {
         .optional(),
       user_id_type: z.string().describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -893,7 +882,6 @@ export const taskV2TaskAddDependencies = {
         .describe('Dependencies to add')
         .optional(),
     }),
-
     path: z.object({ task_guid: z.string().describe('Task GUID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -1267,7 +1255,6 @@ export const taskV2TaskCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1329,7 +1316,6 @@ export const taskV2TaskList = {
         .optional(),
       user_id_type: z.string().describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1560,7 +1546,6 @@ export const taskV2TaskRemoveDependencies = {
         .array(z.object({ task_guid: z.string().describe('GUIDs for dependent tasks') }))
         .describe('Dependencies to remove'),
     }),
-
     path: z.object({ task_guid: z.string().describe('GUID of task to remove the dependencies') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
@@ -2117,7 +2102,6 @@ export const taskV2TasklistCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.string().describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -2170,7 +2154,6 @@ export const taskV2TasklistList = {
         .optional(),
       user_id_type: z.string().describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

@@ -228,7 +228,12 @@ export const imV2AppFeedCardCreate = {
             .describe('交互按钮（非必填字段，如未传入该字段，则不展示按钮；最多展示 2 个按钮）')
             .optional(),
           link: z
-            .object({ link: z.string().describe('链接**注意**：- 仅支持 HTTPS 协议- 暂不支持 Applink').optional() })
+            .object({
+              link: z
+                .string()
+                .describe('链接**注意**：仅支持 HTTPS 协议，以及网页应用或小程序的 Applink（会校验 appid 是否正确）')
+                .optional(),
+            })
             .describe('卡片整体跳转链接（创建时该参数为必填参数）')
             .optional(),
           time_sensitive: z
@@ -453,7 +458,6 @@ export const imV2TagPatch = {
         .describe('编辑标签')
         .optional(),
     }),
-
     path: z.object({ tag_id: z.string().describe('标签 ID') }),
   },
 };
