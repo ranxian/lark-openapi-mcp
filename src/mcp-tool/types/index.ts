@@ -4,8 +4,15 @@ import { CallToolResult } from '@modelcontextprotocol/sdk/types';
 
 export type ToolNameCase = 'snake' | 'camel' | 'kebab' | 'dot';
 
+export enum TokenMode {
+  AUTO = 'auto',
+  USER_ACCESS_TOKEN = 'user_access_token',
+  TENANT_ACCESS_TOKEN = 'tenant_access_token',
+}
+
 export interface McpHandlerOptions {
   userAccessToken?: string;
+  tokenMode?: TokenMode;
   tool?: McpTool;
 }
 
@@ -32,6 +39,12 @@ export interface McpTool {
   path?: string;
   // API http方法
   httpMethod?: string;
+  // 令牌类型
+  accessTokens?: string[];
+  // 是否支持文件上传
+  supportFileUpload?: boolean;
+  // 是否支持文件下载
+  supportFileDownload?: boolean;
   // 自定义处理函数
   customHandler?: McpHandler;
 }
@@ -46,6 +59,8 @@ export interface ToolsFilterOptions {
   allowTools?: ToolName[];
   // 允许的业务域
   allowProjects?: ProjectName[];
+  // 令牌类型
+  tokenMode?: TokenMode;
 }
 
 export type LarkClientOptions = Partial<ConstructorParameters<typeof lark.Client>[0]>;
@@ -56,4 +71,5 @@ export interface LarkMcpToolOptions extends LarkClientOptions {
   appSecret?: string;
   // 工具选项
   toolsOptions?: ToolsFilterOptions;
+  tokenMode?: TokenMode;
 }

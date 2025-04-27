@@ -1,8 +1,8 @@
 import * as lark from '@larksuiteoapi/node-sdk';
-import { McpHandler } from '../types';
+import { McpHandler, McpHandlerOptions, TokenMode } from '../types';
 
-const sdkFuncCall: McpHandler = async (client, params, options) => {
-  const { tool, userAccessToken } = options || {};
+const sdkFuncCall = async (client: lark.Client, params: any, options: McpHandlerOptions) => {
+  const { tool, userAccessToken, tokenMode = TokenMode.AUTO } = options || {};
   const { sdkName, path, httpMethod } = tool || {};
 
   if (!sdkName) {
@@ -24,13 +24,21 @@ const sdkFuncCall: McpHandler = async (client, params, options) => {
       await client.request({ method: httpMethod, url: path, ...params }, ...args);
   }
 
-  let response: any = {};
-  if (userAccessToken && params?.useUAT) {
-    response = await func(params, lark.withUserAccessToken(userAccessToken));
-  } else {
-    response = await func(params);
+  switch (tokenMode) {
+    case TokenMode.USER_ACCESS_TOKEN:
+      if (!userAccessToken) {
+        throw new Error('Invalid UserAccessToken');
+      }
+      return await func(params, lark.withUserAccessToken(userAccessToken));
+    case TokenMode.TENANT_ACCESS_TOKEN:
+      return await func(params);
+    case TokenMode.AUTO:
+    default:
+      if (userAccessToken && params?.useUAT) {
+        return await func(params, lark.withUserAccessToken(userAccessToken));
+      }
+      return await func(params);
   }
-  return response;
 };
 
 export const larkOapiHandler: McpHandler = async (client, params, options) => {

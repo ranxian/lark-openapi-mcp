@@ -6,6 +6,7 @@ export type imBuiltinToolName = 'im.builtin.batchSend';
 export const larkImBuiltinBatchSendTool: McpTool = {
   project: 'im',
   name: 'im.builtin.batchSend',
+  accessTokens: ['tenant'],
   description:
     '[Feishu/Lark] - Batch send messages - Supports batch sending messages to multiple users and departments, supports text and card',
   schema: {

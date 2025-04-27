@@ -1,6 +1,6 @@
 import { Client } from '@larksuiteoapi/node-sdk';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { LarkMcpToolOptions, McpTool, ToolNameCase } from './types';
+import { LarkMcpToolOptions, McpTool, ToolNameCase, TokenMode } from './types';
 import { AllTools, AllToolsZh } from './tools';
 import { filterTools } from './utils/filter-tools';
 import { defaultToolNames } from './constants';
@@ -8,19 +8,24 @@ import { larkOapiHandler } from './utils/handler';
 import { caseTransf } from './utils/case-transf';
 
 /**
- * 飞书/Lark MCP SDK
+ * Feishu/Lark MCP
  */
 export class LarkMcpTool {
-  // 飞书API客户端
+  // Lark Client
   private client: Client | null = null;
-  // 用户访问令牌
+
+  // User Access Token
   private userAccessToken: string | undefined;
-  // 所有工具
+
+  // Token Mode
+  private tokenMode: TokenMode = TokenMode.AUTO;
+
+  // All Tools
   private allTools: McpTool[] = [];
 
   /**
-   * 飞书/Lark MCP SDK
-   * @param options 飞书API配置选项
+   * Feishu/Lark MCP
+   * @param options Feishu/Lark Client Options
    */
   constructor(options: LarkMcpToolOptions) {
     if (options.client) {
@@ -32,32 +37,36 @@ export class LarkMcpTool {
         ...options,
       });
     }
-    if (options.toolsOptions?.language === 'zh') {
-      this.allTools = filterTools(AllToolsZh, { allowTools: defaultToolNames, ...options.toolsOptions });
-    } else {
-      this.allTools = filterTools(AllTools, { allowTools: defaultToolNames, ...options.toolsOptions });
-    }
+    this.tokenMode = options.tokenMode || TokenMode.AUTO;
+    const isZH = options.toolsOptions?.language === 'zh';
+
+    const filterOptions = {
+      allowTools: defaultToolNames,
+      tokenMode: this.tokenMode,
+      ...options.toolsOptions,
+    };
+    this.allTools = filterTools(isZH ? AllToolsZh : AllTools, filterOptions);
   }
 
   /**
-   * 更新用户访问令牌
-   * @param userAccessToken 用户访问令牌
+   * Update User Access Token
+   * @param userAccessToken User Access Token
    */
   updateUserAccessToken(userAccessToken: string) {
     this.userAccessToken = userAccessToken;
   }
 
   /**
-   * 获取MCP工具列表
-   * @returns MCP工具定义数组
+   * Get MCP Tools
+   * @returns MCP Tool Definition Array
    */
   getTools(): McpTool[] {
     return this.allTools;
   }
 
   /**
-   * 注册工具到MCP服务器
-   * @param server MCP服务器实例
+   * Register Tools to MCP Server
+   * @param server MCP Server Instance
    */
   registerMcpServer(server: McpServer, options?: { toolNameCase?: ToolNameCase }): void {
     for (const tool of this.allTools) {
@@ -66,10 +75,7 @@ export class LarkMcpTool {
           throw new Error('Client not initialized');
         }
         const handler = tool.customHandler || larkOapiHandler;
-        return handler(this.client, params, {
-          userAccessToken: this.userAccessToken,
-          tool,
-        });
+        return handler(this.client, params, { tokenMode: this.tokenMode, userAccessToken: this.userAccessToken, tool });
       });
     }
   }

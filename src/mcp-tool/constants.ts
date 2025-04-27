@@ -1,34 +1,107 @@
+/**
+ * Commonly used tools in MCP
+ */
+
 import { ToolName } from './tools';
 
-/**
- * 精选工具，MCP常用工具
- */
-export const defaultToolNames: ToolName[] = [
-  'im.v1.chat.create', // 创建群
-  'im.v1.chat.list', // 获取群列表
-  'im.v1.chatMembers.get', // 获取群成员
+export enum PresetName {
+  /**
+   * Default preset including IM, Bitable, Doc and Contact tools
+   */
+  DEFAULT = 'preset.default',
+  /**
+   * IM related tools for chat and message operations
+   */
+  IM_DEFAULT = 'preset.im.default',
+  /**
+   * Bitable standard tools for table operations
+   */
+  BITABLE_DEFAULT = 'preset.bitable.default',
+  /**
+   * Bitable tools with batch record operations
+   */
+  BITABLE_BATCH = 'preset.bitable.batch',
+  /**
+   * Document related tools for content and permission operations
+   */
+  DOC_DEFAULT = 'preset.doc.default',
+  /**
+   * Task management related tools
+   */
+  TASK_DEFAULT = 'preset.task.default',
+  /**
+   * Calendar event management tools
+   */
+  CALENDAR_DEFAULT = 'preset.calendar.default',
+}
 
-  'im.v1.message.create', // 发送消息
-  'im.v1.message.list', // 获取消息列表
+export const presetContactToolNames: ToolName[] = ['contact.v3.user.batchGetId'];
 
-  'wiki.v2.space.getNode', // 获取知识库节点
-  'wiki.v1.node.search', // 搜索知识库节点
-
-  'docx.v1.document.rawContent', // 获取文档内容
-  'drive.v1.permissionMember.create', // 添加协作者权限
-  'docx.builtin.import', // 导入文档
-  'docx.builtin.search', // 搜索文档
-
-  // 多维表格
-
-  'bitable.v1.app.create', // 创建多维表格
-  'bitable.v1.appTable.create', // 创建多维表格数据表
-  'bitable.v1.appTable.list', // 获取多维表格数据表列表
-  'bitable.v1.appTableField.list', // 获取多维表格数据表字段列表
-  'bitable.v1.appTableRecord.search', // 搜索多维表格数据表记录
-  'bitable.v1.appTableRecord.create', // 创建多维表格数据表记录
-  'bitable.v1.appTableRecord.update', // 更新多维表格数据表记录
-
-  // 通讯录
-  'contact.v3.user.batchGetId', // 批量获取用户ID
+export const presetImToolNames: ToolName[] = [
+  'im.v1.chat.create',
+  'im.v1.chat.list',
+  'im.v1.chatMembers.get',
+  'im.v1.message.create',
+  'im.v1.message.list',
 ];
+
+export const presetBitableCommonToolNames: ToolName[] = [
+  'bitable.v1.app.create',
+  'bitable.v1.appTable.create',
+  'bitable.v1.appTable.list',
+  'bitable.v1.appTableField.list',
+  'bitable.v1.appTableRecord.search',
+];
+
+export const presetBitableToolNames: ToolName[] = [
+  ...presetBitableCommonToolNames,
+  'bitable.v1.appTableRecord.create',
+  'bitable.v1.appTableRecord.update',
+];
+
+export const presetBitableRecordBatchToolNames: ToolName[] = [
+  ...presetBitableCommonToolNames,
+  'bitable.v1.appTableRecord.batchCreate',
+  'bitable.v1.appTableRecord.batchUpdate',
+];
+
+export const presetDocToolNames: ToolName[] = [
+  'docx.v1.document.rawContent',
+  'docx.builtin.import',
+  'docx.builtin.search',
+  'drive.v1.permissionMember.create',
+  'wiki.v2.space.getNode',
+  'wiki.v1.node.search',
+];
+
+export const presetTaskToolNames: ToolName[] = [
+  'task.v2.task.create',
+  'task.v2.task.patch',
+  'task.v2.task.addMembers',
+  'task.v2.task.addReminders',
+];
+
+export const presetCalendarToolNames: ToolName[] = [
+  'calendar.v4.calendarEvent.create',
+  'calendar.v4.calendarEvent.patch',
+  'calendar.v4.calendarEvent.get',
+  'calendar.v4.freebusy.list',
+  'calendar.v4.calendar.primary',
+];
+
+export const defaultToolNames: ToolName[] = [
+  ...presetImToolNames,
+  ...presetBitableToolNames,
+  ...presetDocToolNames,
+  ...presetContactToolNames,
+];
+
+export const presetTools: Record<PresetName, ToolName[]> = {
+  [PresetName.DEFAULT]: defaultToolNames,
+  [PresetName.IM_DEFAULT]: presetImToolNames,
+  [PresetName.BITABLE_DEFAULT]: presetBitableToolNames,
+  [PresetName.BITABLE_BATCH]: presetBitableRecordBatchToolNames,
+  [PresetName.DOC_DEFAULT]: presetDocToolNames,
+  [PresetName.TASK_DEFAULT]: presetTaskToolNames,
+  [PresetName.CALENDAR_DEFAULT]: presetCalendarToolNames,
+};

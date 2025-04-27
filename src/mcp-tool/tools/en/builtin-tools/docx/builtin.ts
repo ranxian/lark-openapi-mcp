@@ -10,11 +10,15 @@ export type docxBuiltinToolName = 'docx.builtin.search' | 'docx.builtin.import';
 export const larkDocxBuiltinSearchTool: McpTool = {
   project: 'docx',
   name: 'docx.builtin.search',
+  accessTokens: ['user'],
   description: '[Feishu/Lark]-Docs-Document-Search Document-Search cloud documents, only supports user_access_token',
   schema: {
     data: z.object({
       search_key: z.string().describe('Search keyword'),
-      count: z.number().describe('Specify the number of files returned in the search. Value range is [0,50].').optional(),
+      count: z
+        .number()
+        .describe('Specify the number of files returned in the search. Value range is [0,50].')
+        .optional(),
       offset: z
         .number()
         .describe(
@@ -30,7 +34,10 @@ export const larkDocxBuiltinSearchTool: McpTool = {
         )
         .optional(),
     }),
-    useUAT: z.boolean().describe('Whether to use user identity for the request, false means using application identity').optional(),
+    useUAT: z
+      .boolean()
+      .describe('Whether to use user identity for the request, false means using application identity')
+      .optional(),
   },
   customHandler: async (client, params, options): Promise<any> => {
     try {
@@ -77,6 +84,7 @@ export const larkDocxBuiltinSearchTool: McpTool = {
 export const larkDocxBuiltinImportTool: McpTool = {
   project: 'docx',
   name: 'docx.builtin.import',
+  accessTokens: ['user', 'tenant'],
   description: '[Feishu/Lark]-Docs-Document-Import Document-Import cloud document, maximum 20MB',
   schema: {
     data: z
@@ -154,7 +162,12 @@ export const larkDocxBuiltinImportTool: McpTool = {
           };
         } else if (taskResponse.data?.result?.job_status !== 1 && taskResponse.data?.result?.job_status !== 2) {
           return {
-            content: [{ type: 'text' as const, text: 'Document import failed, please try again later' + JSON.stringify(taskResponse.data) }],
+            content: [
+              {
+                type: 'text' as const,
+                text: 'Document import failed, please try again later' + JSON.stringify(taskResponse.data),
+              },
+            ],
           };
         }
         await new Promise((resolve) => setTimeout(resolve, 1000));
