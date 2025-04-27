@@ -1,6 +1,5 @@
 import * as lark from '@larksuiteoapi/node-sdk';
 import { larkOapiHandler } from '../../../src/mcp-tool/utils/handler';
-import { TokenMode } from '../../../src/mcp-tool/types';
 
 // 模拟Client及其方法
 jest.mock('@larksuiteoapi/node-sdk', () => {
@@ -104,46 +103,13 @@ describe('larkOapiHandler', () => {
     });
 
     // 调用函数
-    await larkOapiHandler(mockClient as any, params, {
-      tool,
-      userAccessToken: 'test-token',
-      tokenMode: TokenMode.AUTO,
-    });
+    await larkOapiHandler(mockClient as any, params, { tool, userAccessToken: 'test-token' });
 
     // 验证withUserAccessToken被调用
     expect(lark.withUserAccessToken).toHaveBeenCalledWith('test-token');
   });
 
-  it('应该使用Tenant Access Token当useUAT为true,tokenMode为auto,没有userAccessToken', async () => {
-    // 准备测试数据
-    const params = {
-      data: { content: 'test message' },
-      useUAT: true,
-    };
-    const tool = {
-      name: 'im.v1.message.create',
-      description: '发送消息',
-      schema: {},
-      project: 'im',
-      sdkName: 'im.message.create',
-    };
-
-    // 成功响应
-    imCreate.mockResolvedValueOnce({
-      data: { message_id: '123' },
-    });
-
-    // 调用函数
-    await larkOapiHandler(mockClient as any, params, {
-      tool,
-      tokenMode: TokenMode.AUTO,
-    });
-
-    // 验证withUserAccessToken没有被调用
-    expect(lark.withUserAccessToken).not.toHaveBeenCalled();
-  });
-
-  it('应该使用User Access Token,tokenMode为user_access_token,当useUAT为false', async () => {
+  it('应该使用Tenant Access Token当useUAT为false,没有userAccessToken', async () => {
     // 准备测试数据
     const params = {
       data: { content: 'test message' },
@@ -163,37 +129,7 @@ describe('larkOapiHandler', () => {
     });
 
     // 调用函数
-    await larkOapiHandler(mockClient as any, params, {
-      tool,
-      userAccessToken: 'test-token',
-      tokenMode: TokenMode.USER_ACCESS_TOKEN,
-    });
-
-    // 验证withUserAccessToken被调用
-    expect(lark.withUserAccessToken).toHaveBeenCalledWith('test-token');
-  });
-
-  it('应该使用Tenant Access Token当tokenMode为tenant_access_token', async () => {
-    // 准备测试数据
-    const params = { data: { content: 'test message' } };
-    const tool = {
-      name: 'im.v1.message.create',
-      description: '发送消息',
-      schema: {},
-      project: 'im',
-      sdkName: 'im.message.create',
-    };
-
-    // 成功响应
-    imCreate.mockResolvedValueOnce({
-      data: { message_id: '123' },
-    });
-
-    // 调用函数
-    await larkOapiHandler(mockClient as any, params, {
-      tool,
-      tokenMode: TokenMode.TENANT_ACCESS_TOKEN,
-    });
+    await larkOapiHandler(mockClient as any, params, { tool });
 
     // 验证withUserAccessToken没有被调用
     expect(lark.withUserAccessToken).not.toHaveBeenCalled();
@@ -262,7 +198,7 @@ describe('larkOapiHandler', () => {
 
   it('应该通过测试user_access_token模式且没有token', async () => {
     // 准备测试数据
-    const params = { data: { content: 'test message' } };
+    const params = { data: { content: 'test message' }, useUAT: true };
     const tool = {
       name: 'im.v1.message.create',
       description: '发送消息',
@@ -272,44 +208,11 @@ describe('larkOapiHandler', () => {
     };
 
     // 调用函数
-    const result = await larkOapiHandler(mockClient as any, params, {
-      tool,
-      tokenMode: TokenMode.USER_ACCESS_TOKEN,
-    });
+    const result = await larkOapiHandler(mockClient as any, params, { tool });
 
     // 验证结果
     expect(result.isError).toBe(true);
     expect(result.content[0].text).toContain('Invalid UserAccessToken');
-  });
-
-  it('应该使用user_access_token当options中未指定tokenMode但提供了userAccessToken', async () => {
-    // 准备测试数据
-    const params = {
-      data: { content: 'test message' },
-      useUAT: true,
-    };
-    const tool = {
-      name: 'im.v1.message.create',
-      description: '发送消息',
-      schema: {},
-      project: 'im',
-      sdkName: 'im.message.create',
-    };
-
-    // 成功响应
-    imCreate.mockResolvedValueOnce({
-      data: { message_id: '123' },
-    });
-
-    // 调用函数但不指定tokenMode
-    await larkOapiHandler(mockClient as any, params, {
-      tool,
-      userAccessToken: 'test-token',
-      // 不指定tokenMode
-    });
-
-    // 验证withUserAccessToken被调用 (默认为auto模式并使用UAT)
-    expect(lark.withUserAccessToken).toHaveBeenCalledWith('test-token');
   });
 
   it('应该测试error处理', async () => {
@@ -409,11 +312,7 @@ describe('larkOapiHandler', () => {
       project: 'im',
       sdkName: 'im.message.create',
     };
-    await larkOapiHandler(mockClient as any, undefined as any, {
-      tool,
-      userAccessToken: 'test-token',
-      tokenMode: TokenMode.AUTO,
-    });
+    await larkOapiHandler(mockClient as any, undefined as any, { tool, userAccessToken: 'test-token' });
     // 验证withUserAccessToken没有被调用
     expect(lark.withUserAccessToken).not.toHaveBeenCalled();
   });

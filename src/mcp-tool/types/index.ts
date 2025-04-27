@@ -12,7 +12,6 @@ export enum TokenMode {
 
 export interface McpHandlerOptions {
   userAccessToken?: string;
-  tokenMode?: TokenMode;
   tool?: McpTool;
 }
 

@@ -2,9 +2,7 @@ import { ToolName, ProjectName } from '../tools';
 import { McpTool, ToolsFilterOptions, TokenMode } from '../types';
 
 export function filterTools(tools: McpTool[], options: ToolsFilterOptions) {
-  let filteredTools = tools;
-
-  filteredTools = tools.filter(
+  let filteredTools = tools.filter(
     (tool) =>
       options.allowTools?.includes(tool.name as ToolName) ||
       options.allowProjects?.includes(tool.project as ProjectName),

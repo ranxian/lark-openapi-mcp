@@ -6,6 +6,7 @@ import { filterTools } from './utils/filter-tools';
 import { defaultToolNames } from './constants';
 import { larkOapiHandler } from './utils/handler';
 import { caseTransf } from './utils/case-transf';
+import { getShouldUseUAT } from './utils/get-should-use-uat';
 
 /**
  * Feishu/Lark MCP
@@ -71,11 +72,32 @@ export class LarkMcpTool {
   registerMcpServer(server: McpServer, options?: { toolNameCase?: ToolNameCase }): void {
     for (const tool of this.allTools) {
       server.tool(caseTransf(tool.name, options?.toolNameCase), tool.description, tool.schema, (params: any) => {
-        if (!this.client) {
-          throw new Error('Client not initialized');
+        try {
+          if (!this.client) {
+            return {
+              isError: true,
+              content: [{ type: 'text' as const, text: 'Client not initialized' }],
+            };
+          }
+          const handler = tool.customHandler || larkOapiHandler;
+          if (this.tokenMode == TokenMode.USER_ACCESS_TOKEN && !this.userAccessToken) {
+            return {
+              isError: true,
+              content: [{ type: 'text' as const, text: 'Invalid UserAccessToken' }],
+            };
+          }
+          const shouldUseUAT = getShouldUseUAT(this.tokenMode, this.userAccessToken, params?.useUAT);
+          return handler(
+            this.client,
+            { ...params, useUAT: shouldUseUAT },
+            { userAccessToken: this.userAccessToken, tool },
+          );
+        } catch (error) {
+          return {
+            isError: true,
+            content: [{ type: 'text' as const, text: `Error: ${JSON.stringify((error as Error)?.message)}` }],
+          };
         }
-        const handler = tool.customHandler || larkOapiHandler;
-        return handler(this.client, params, { tokenMode: this.tokenMode, userAccessToken: this.userAccessToken, tool });
       });
     }
   }

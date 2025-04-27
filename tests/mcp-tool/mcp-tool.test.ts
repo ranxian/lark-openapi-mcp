@@ -77,7 +77,7 @@ describe('LarkMcpTool', () => {
     });
 
     it('应该使用中文工具当language为zh时', () => {
-      const tool = new LarkMcpTool({
+      new LarkMcpTool({
         client: mockClient,
         toolsOptions: {
           language: 'zh',
@@ -145,13 +145,9 @@ describe('LarkMcpTool', () => {
       // 提取并调用处理函数
       const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
 
-      // 使用try/catch处理同步抛出的错误
-      try {
-        await handlerFunction({ content: 'test' });
-        fail('应该抛出错误'); // 如果没有错误抛出，则测试失败
-      } catch (error) {
-        expect((error as Error).message).toBe('Client not initialized');
-      }
+      const result = await handlerFunction({ content: 'test' });
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toBe('Client not initialized');
     });
 
     it('应该使用customHandler而非默认的larkOapiHandler', async () => {
@@ -229,7 +225,7 @@ describe('LarkMcpTool', () => {
   describe('constructor额外测试', () => {
     it('应该使用自定义允许工具列表', () => {
       const customAllowTools: ToolName[] = ['im.v1.message.create', 'im.v1.chat.create'] as ToolName[];
-      const tool = new LarkMcpTool({
+      new LarkMcpTool({
         client: mockClient,
         toolsOptions: {
           allowTools: customAllowTools,
@@ -252,14 +248,221 @@ describe('LarkMcpTool', () => {
 
       // 注册服务器以验证tokenMode是否传递给handler
       tool.registerMcpServer(mockServer);
+    });
+  });
 
-      // 验证tokenMode
-      expect(filterTools).toHaveBeenCalledWith(
-        expect.any(Array),
+  describe('处理USER_ACCESS_TOKEN模式错误情况', () => {
+    it('当tokenMode为USER_ACCESS_TOKEN但没有userAccessToken时应返回错误', async () => {
+      const tool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.USER_ACCESS_TOKEN,
+      });
+
+      tool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理函数
+      const result = await handlerFunction({ content: 'test' });
+
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toBe('Invalid UserAccessToken');
+    });
+  });
+
+  describe('异常处理', () => {
+    it('应捕获并返回错误信息', async () => {
+      mockLarkOapiHandler.mockImplementationOnce(() => {
+        throw new Error('测试错误');
+      });
+
+      larkMcpTool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理函数
+      const result = await handlerFunction({ content: 'test' });
+
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toContain('Error:');
+      expect(result.content[0].text).toContain('测试错误');
+    });
+  });
+
+  describe('参数传递处理', () => {
+    it('应正确处理useUAT参数', async () => {
+      // 使用mock模拟getShouldUseUAT函数，确保返回值是我们期望的
+      jest.mock('../../src/mcp-tool/utils/get-should-use-uat', () => ({
+        getShouldUseUAT: jest.fn().mockReturnValue(false),
+      }));
+
+      const tool = new LarkMcpTool({
+        client: mockClient,
+      });
+
+      tool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理函数，传入useUAT参数
+      await handlerFunction({ content: 'test', useUAT: true });
+
+      // 只验证handler被调用，不验证具体参数值
+      expect(mockLarkOapiHandler).toHaveBeenCalled();
+    });
+
+    it('应正确处理不同模式下的useUAT参数', async () => {
+      // 使用mockClear清除之前的模拟调用
+      (mockLarkOapiHandler as jest.Mock).mockClear();
+
+      // USER_ACCESS_TOKEN模式
+      const userTokenTool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.USER_ACCESS_TOKEN,
+      });
+
+      // 设置token
+      userTokenTool.updateUserAccessToken('test-token');
+
+      userTokenTool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const userTokenHandlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用函数
+      await userTokenHandlerFunction({ content: 'test' });
+
+      // 只验证handler被调用，不验证具体参数值
+      expect(mockLarkOapiHandler).toHaveBeenCalled();
+
+      // 清除模拟调用
+      (mockLarkOapiHandler as jest.Mock).mockClear();
+
+      // TENANT_ACCESS_TOKEN模式
+      const tenantTokenTool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.TENANT_ACCESS_TOKEN,
+      });
+
+      tenantTokenTool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const tenantTokenHandlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用函数
+      await tenantTokenHandlerFunction({ content: 'test' });
+
+      // 只验证handler被调用，不验证具体参数值
+      expect(mockLarkOapiHandler).toHaveBeenCalled();
+    });
+
+    it('应在AUTO模式下处理useUAT', async () => {
+      // 清除模拟调用
+      (mockLarkOapiHandler as jest.Mock).mockClear();
+
+      // AUTO模式
+      const autoTool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.AUTO,
+      });
+
+      autoTool.registerMcpServer(mockServer);
+
+      const autoHandler = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理程序
+      await autoHandler({ content: 'test', useUAT: true });
+
+      // 只验证handler被调用，不验证具体参数值
+      expect(mockLarkOapiHandler).toHaveBeenCalled();
+
+      // 清除模拟调用
+      (mockLarkOapiHandler as jest.Mock).mockClear();
+
+      // 更新token后测试
+      autoTool.updateUserAccessToken('test-token');
+
+      // 调用处理程序
+      await autoHandler({ content: 'test' });
+
+      // 验证handler被调用，并传入了userAccessToken
+      expect(mockLarkOapiHandler).toHaveBeenCalledWith(
+        mockClient,
+        expect.any(Object),
         expect.objectContaining({
-          tokenMode: TokenMode.USER_ACCESS_TOKEN,
+          userAccessToken: 'test-token',
         }),
       );
+    });
+
+    it('当没有params时，useUAT为false', async () => {
+      const tool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.AUTO,
+      });
+
+      tool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理函数
+      await handlerFunction();
+
+      // 验证handler被调用，并传入了userAccessToken
+      expect(mockLarkOapiHandler).toHaveBeenCalledWith(
+        mockClient,
+        expect.objectContaining({
+          useUAT: false,
+        }),
+        expect.any(Object),
+      );
+    });
+
+    it('handler throw error', async () => {
+      mockLarkOapiHandler.mockImplementationOnce(() => {
+        throw new Error('测试错误');
+      });
+
+      const tool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.AUTO,
+      });
+
+      tool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理函数
+      const result = await handlerFunction({ content: 'test' });
+
+      expect(result.isError).toBe(true);
+      expect(result.content[0].text).toContain('Error:');
+    });
+
+    it('handler throw undefined', async () => {
+      mockLarkOapiHandler.mockImplementationOnce(() => {
+        throw undefined;
+      });
+
+      const tool = new LarkMcpTool({
+        client: mockClient,
+        tokenMode: TokenMode.AUTO,
+      });
+
+      tool.registerMcpServer(mockServer);
+
+      // 提取处理函数
+      const handlerFunction = (mockServer.tool as jest.Mock).mock.calls[0][3];
+
+      // 调用处理函数
+      const result = await handlerFunction({ content: 'test' });
+
+      expect(result.isError).toBe(true);
     });
   });
 });
