@@ -1,9 +1,9 @@
 import { initMcpServer, McpServerOptions } from './shared';
 import express, { Request, Response } from 'express';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp';
 
-export function initSSEServer(options: McpServerOptions) {
-  const { mcpServer } = initMcpServer(options);
+export function initSSEServer(server: McpServer, options: McpServerOptions) {
   const app = express();
   const transports: { [sessionId: string]: SSEServerTransport } = {};
 
@@ -13,7 +13,7 @@ export function initSSEServer(options: McpServerOptions) {
     res.on('close', () => {
       delete transports[transport.sessionId];
     });
-    await mcpServer.connect(transport);
+    await server.connect(transport);
   });
 
   app.post('/messages', async (req: Request, res: Response) => {

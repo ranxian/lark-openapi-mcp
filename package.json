@@ -40,9 +40,10 @@
   "dependencies": {
     "@larksuiteoapi/node-sdk": "^1.46.0",
     "@modelcontextprotocol/sdk": "^1.10.2",
+    "axios": "^1.8.4",
     "commander": "^13.1.0",
-    "express": "^5.1.0",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
