@@ -317,7 +317,7 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 
 The following table details each API tool and its inclusion in different preset collections, helping you choose the appropriate preset for your needs:
 
-| Tool Name | Function Description | preset.default (Default) | preset.im.default | preset.bitable.default | preset.bitable.batch | preset.doc.default | preset.task.default | preset.calendar.default |
+| Tool Name | Function Description | preset.default (Default) | preset.im.default | preset.base.default | preset.base.batch | preset.doc.default | preset.task.default | preset.calendar.default |
 | --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | im.v1.chat.create | Create a group chat | ✓ | ✓ | | | | | |
 | im.v1.chat.list | Get group chat list | ✓ | ✓ | | | | | |
@@ -325,15 +325,15 @@ The following table details each API tool and its inclusion in different preset 
 | im.v1.chatMembers.create | Add group members | ✓ | ✓ | | | | | |
 | im.v1.message.create | Send messages | ✓ | ✓ | | | | | |
 | im.v1.message.list | Get message list | ✓ | ✓ | | | | | |
-| bitable.v1.app.create | Create Bitable | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTable.create | Create Bitable data table | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTable.list | Get Bitable data table list | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTableField.list | Get Bitable data table field list | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTableRecord.search | Search Bitable data table records | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTableRecord.create | Create Bitable data table records | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchCreate | Batch create Bitable data table records | ✓ | | | ✓ | | | |
-| bitable.v1.appTableRecord.update | Update Bitable data table records | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchUpdate | Batch update Bitable data table records | ✓ | | | ✓ | | | |
+| bitable.v1.app.create | Create base | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.create | Create base data table | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.list | Get base data table list | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableField.list | Get base data table field list | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.search | Search base data table records | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.create | Create base data table records | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchCreate | Batch create base data table records | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.update | Update base data table records | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchUpdate | Batch update base data table records | ✓ | | | ✓ | | | |
 | docx.v1.document.rawContent | Get document content | ✓ | | | | ✓ | | |
 | docx.builtin.import | Import documents | ✓ | | | | ✓ | | |
 | docx.builtin.search | Search documents | ✓ | | | | ✓ | | |
