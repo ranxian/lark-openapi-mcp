@@ -2,12 +2,11 @@
 
 New: 新增--token-mode，现在可以在启动的时候指定调用API的token类型，支持auto/tenant_access_token/user_access_token
 New: -t 支持配置 preset.default preset.im preset.bitable preset.doc 等默认预设
-Change: 默认tools增加 im.v1.chatMembers.create bitable.v1.appTableRecord.batchCreate bitable.v1.appTableRecord.batchUpdate
-Bump： 升级 @modelcontextprotocol/sdk 到 1.10.2
+Bump： 升级 @modelcontextprotocol/sdk 到 1.11.0
 
 New: Added --token-mode, now you can specify the API token type when starting, supporting auto/tenant_access_token/user_access_token
-New: -t supports configuring preset.default
-Bump: Upgraded @modelcontextprotocol/sdk to 1.10.2
+New: -t supports configuring preset.default preset.im preset.bitable preset.doc etc.
+Bump: Upgraded @modelcontextprotocol/sdk to 1.11.0
 
 # 0.2.0
 

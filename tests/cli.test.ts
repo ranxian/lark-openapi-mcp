@@ -47,6 +47,17 @@ jest.mock('../src/mcp-server', () => ({
   initStreamableHTTPServer: jest.fn(),
 }));
 
+// 模拟 McpServer
+jest.mock('@modelcontextprotocol/sdk/server/mcp.js', () => ({
+  McpServer: jest.fn().mockImplementation(() => ({
+    connect: jest.fn().mockResolvedValue(undefined),
+    server: {},
+    _registeredResources: {},
+    _registeredResourceTemplates: {},
+    _registeredTools: {},
+  })),
+}));
+
 // 模拟process.exit
 const mockExit = jest.fn();
 process.exit = mockExit as any;
@@ -61,7 +72,10 @@ describe('CLI', () => {
     if (options.mode === 'stdio') {
       server.initStdioServer(options);
     } else if (options.mode === 'sse') {
-      server.initSSEServer(options);
+      // 使用从 @modelcontextprotocol/sdk/server/mcp.js 导入的 McpServer
+      const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+      const mockMcpServer = new McpServer();
+      server.initSSEServer(mockMcpServer, options);
     } else {
       console.error('Invalid mode:', options.mode);
       process.exit(1);
@@ -116,6 +130,7 @@ describe('CLI', () => {
 
     // 验证
     expect(server.initSSEServer).toHaveBeenCalledWith(
+      expect.anything(), // 验证第一个参数（mockServer）是任何值
       expect.objectContaining({
         appId: 'test-app-id',
         appSecret: 'test-app-secret',

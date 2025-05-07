@@ -19,6 +19,17 @@ jest.mock('http', () => ({
   })),
 }));
 
+// 模拟 McpServer
+jest.mock('@modelcontextprotocol/sdk/server/mcp.js', () => ({
+  McpServer: jest.fn().mockImplementation(() => ({
+    connect: mcpConnectMock,
+    server: {},
+    _registeredResources: {},
+    _registeredResourceTemplates: {},
+    _registeredTools: {},
+  })),
+}));
+
 jest.mock('express', () => {
   const mockApp = {
     use: jest.fn(),
@@ -108,7 +119,11 @@ describe('initSseServer', () => {
       port: 3000,
     };
 
-    initSSEServer(options);
+    // 创建McpServer模拟实例
+    const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+    const mockServer = new McpServer();
+
+    initSSEServer(mockServer, options);
 
     // 验证调用
     expect(express).toHaveBeenCalled();
@@ -125,7 +140,11 @@ describe('initSseServer', () => {
       port: 3000,
     };
 
-    initSSEServer(options);
+    // 创建McpServer模拟实例
+    const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+    const mockServer = new McpServer();
+
+    initSSEServer(mockServer, options);
 
     // 模拟请求和响应对象
     const req = {};
@@ -150,7 +169,11 @@ describe('initSseServer', () => {
       port: 3000,
     };
 
-    initSSEServer(options);
+    // 创建McpServer模拟实例
+    const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+    const mockServer = new McpServer();
+
+    initSSEServer(mockServer, options);
 
     // 首先模拟一个SSE连接，这会创建transport
     const getReq = {};
@@ -181,7 +204,11 @@ describe('initSseServer', () => {
       port: 3000,
     };
 
-    initSSEServer(options);
+    // 创建McpServer模拟实例
+    const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+    const mockServer = new McpServer();
+
+    initSSEServer(mockServer, options);
 
     // 模拟一个带有无效sessionId的POST请求
     const invalidReq = {
@@ -214,7 +241,11 @@ describe('initSseServer', () => {
       return { close: jest.fn() };
     });
 
-    initSSEServer(options);
+    // 创建McpServer模拟实例
+    const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+    const mockServer = new McpServer();
+
+    initSSEServer(mockServer, options);
 
     // 验证错误处理
     expect(console.error).toHaveBeenCalled();
@@ -229,7 +260,11 @@ describe('initSseServer', () => {
       port: 3000,
     };
 
-    initSSEServer(options);
+    // 创建McpServer模拟实例
+    const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+    const mockServer = new McpServer();
+
+    initSSEServer(mockServer, options);
 
     // 模拟请求和响应对象
     const req = {};

@@ -18,6 +18,17 @@ jest.mock('../../src/mcp-server/shared/init', () => {
   };
 });
 
+// 模拟 McpServer
+jest.mock('@modelcontextprotocol/sdk/server/mcp.js', () => ({
+  McpServer: jest.fn().mockImplementation(() => ({
+    connect: connectMock,
+    server: {},
+    _registeredResources: {},
+    _registeredResourceTemplates: {},
+    _registeredTools: {},
+  })),
+}));
+
 jest.mock('@modelcontextprotocol/sdk/server/stdio', () => ({
   StdioServerTransport: jest.fn().mockImplementation(() => ({
     connect: jest.fn(),
@@ -68,7 +79,11 @@ describe('initStdioServer', () => {
       port: 3000,
     };
 
-    initStdioServer(options);
+    // 首先初始化MCP服务器
+    const { mcpServer } = initMcpServer(options);
+
+    // 然后使用mcpServer调用initStdioServer
+    initStdioServer(mcpServer);
 
     // 验证调用
     expect(initMcpServer).toHaveBeenCalledWith(options);
@@ -91,7 +106,11 @@ describe('initStdioServer', () => {
       larkClient: {},
     }));
 
-    initStdioServer(options);
+    // 首先初始化MCP服务器
+    const { mcpServer } = initMcpServer(options);
+
+    // 然后使用mcpServer调用initStdioServer
+    initStdioServer(mcpServer);
 
     // 假设错误处理是异步的，我们需要等待Promise rejecting
     return new Promise<void>(process.nextTick).then(() => {
