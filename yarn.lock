@@ -528,13 +528,12 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@larksuiteoapi/node-sdk@^1.46.0":
-  version "1.46.0"
-  resolved "https://registry.npmjs.org/@larksuiteoapi/node-sdk/-/node-sdk-1.46.0.tgz#fd4e42b9e3efec44da26caf15e761c05037ca04c"
-  integrity sha512-VgF2Q8c71AlcTL8ic1gUGX7tphAJYjXgiXBqhMrhgL67AV6NB8jpNBd963IkNPxMayL5siBhxyjsYV8ZojS/Xw==
+"@larksuiteoapi/node-sdk@^1.47.0":
+  version "1.47.0"
+  resolved "https://registry.npmjs.org/@larksuiteoapi/node-sdk/-/node-sdk-1.47.0.tgz#5025476fe095bfd053cc6ff67d7da980d0d7f4c0"
+  integrity sha512-lcMxljyuaFIhVuvE3I3pb1yN5BK56x/tPPN+3RcYB3z1Js/KXg3Kkl19nXJH75EQejsIFSw1H7x+W1V09Tr+0Q==
   dependencies:
     axios "0.27.2"
-    lodash.get "^4.4.2"
     lodash.identity "^3.0.0"
     lodash.merge "^4.6.2"
     lodash.pickby "^4.6.0"
@@ -542,10 +541,10 @@
     qs "^6.13.0"
     ws "^8.16.0"
 
-"@modelcontextprotocol/sdk@^1.10.2":
-  version "1.10.2"
-  resolved "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.10.2.tgz#50cdfbf0b6fbea23420388a7b00e64c13adabac8"
-  integrity sha512-rb6AMp2DR4SN+kc6L1ta2NCpApyA9WYNx3CrTSZvGxq9wH71bRur+zRqPfg0vQ9mjywR7qZdX2RGHOPq3ss+tA==
+"@modelcontextprotocol/sdk@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.11.0.tgz#9f1762efe6f3365f0bf3b019cc9bd1629d19bc50"
+  integrity sha512-k/1pb70eD638anoi0e8wUGAlbMJXyvdV4p62Ko+EZ7eBe1xMx8Uhak1R5DgfoofsK5IBBnRwsYGTaLZl+6/+RQ==
   dependencies:
     content-type "^1.0.5"
     cors "^2.8.5"
@@ -2205,11 +2204,6 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
-
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-  integrity sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==
 
 lodash.identity@^3.0.0:
   version "3.0.0"
