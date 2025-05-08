@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { recallDeveloperDocument } from '../../../../src/mcp-tool/document-tool/recall/request';
 import { DocumentRecallToolOptions } from '../../../../src/mcp-tool/document-tool/recall/type';
+import { USER_AGENT } from '../../../../src/utils/constants';
 
 // 模拟axios
 jest.mock('axios');
@@ -35,7 +36,10 @@ describe('recallDeveloperDocument', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(
       'https://example.com/document_portal/v1/recall',
       { question: query },
-      { timeout: 10000 },
+      {
+        timeout: 10000,
+        headers: { 'User-Agent': USER_AGENT },
+      },
     );
   });
 
