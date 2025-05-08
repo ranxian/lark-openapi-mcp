@@ -3,6 +3,7 @@ import { noop } from '../../utils/noop';
 import { currentVersion } from '../../utils/version';
 import { McpServerOptions } from './types';
 import * as larkmcp from '../../mcp-tool';
+import { oapiHttpInstance } from '../../utils/http-instance';
 
 export function initMcpServer(options: McpServerOptions) {
   const appId = options.appId || process.env.APP_ID;
@@ -34,6 +35,7 @@ export function initMcpServer(options: McpServerOptions) {
     appId,
     appSecret,
     logger: { warn: noop, error: noop, debug: noop, info: noop, trace: noop },
+    httpInstance: oapiHttpInstance,
     domain: options.domain,
     toolsOptions: allowTools.length
       ? { allowTools: allowTools as larkmcp.ToolName[], language: options.language }
