@@ -8,9 +8,9 @@
 
 > **⚠️ Beta版本提示**：当前工具处于Beta版本阶段，功能和API可能会有变更，请密切关注版本更新。
 
-这是飞书/Lark官方 开放平台开发文档检索 MCP（Model Context Protocol）工具，旨在帮助用户输入自身诉求后迅速检索到自己需要的文档。也可搭配 [飞书/Lark OpenAPI MCP](./README_ZH.md) 来让 AI 助手运行自动化场景
+这是飞书/Lark官方 开放平台开发文档检索 MCP（Model Context Protocol）工具，旨在帮助用户输入自身诉求后迅速检索到自己需要的开发文档，帮助开发者在AI IDE中编写与飞书集成的代码。也可搭配 [飞书/Lark OpenAPI MCP](./README_ZH.md) 来让 AI 助手运行自动化场景
 
-> 开放平台开发文档检索，检索范围是 [开发文档](https://open.feishu.cn/document/home/index) 下所有的开发指南、开发教程、服务端 API、客户端 API，帮助用户迅速检索到对应的 OpenApi 或者其他开发文档，非「飞书云文档」的检索。
+>**说明**： 开放平台开发文档检索，检索范围是 [开发文档](https://open.feishu.cn/document/home/index) 下所有的开发指南、开发教程、服务端 API、客户端 API，帮助用户迅速检索到对应的 OpenApi 或者其他开发文档，非「飞书云文档」的检索。
 
 ## 使用准备
 
@@ -64,9 +64,9 @@ npm install -g @larksuiteoapi/lark-mcp
 
 ## 使用指南
 
-### 在Cursor/Claude中使用
+### 在Trae/Cursor/Claude中使用
 
-如需在Cursor或Claude等AI工具中集成飞书/Lark功能，可以在配置文件中添加以下内容：
+如需在Trae/Cursor或Claude等AI工具中集成飞书/Lark功能，可以在配置文件中添加以下内容：
 
 ```json
 {
@@ -87,7 +87,7 @@ npm install -g @larksuiteoapi/lark-mcp
 
 #### 命令行参数说明
 
-`lark-mcp`工具提供了多种命令行参数，以便您灵活配置MCP服务：
+`lark-mcp recall-developer-documents`工具提供了多种命令行参数，以便您灵活配置MCP服务：
 
 | 参数 | 简写 | 描述 | 示例 |
 |------|------|------|------|
@@ -99,30 +99,26 @@ npm install -g @larksuiteoapi/lark-mcp
 
 #### 参数使用示例
 
-1. **使用SSE模式并指定端口和主机**：
-   ```bash
-   lark-mcp recall-developer-documents -m sse --host 0.0.0.0 -p 3000
-   ```
-#### 传输模式
+1. **传输模式**：
 
-lark-mcp支持两种传输模式：
+    recall-developer-documents 支持两种传输模式：
 
-1. **stdio模式（默认/推荐）**：适用于与Cursor或Claude等AI工具集成，通过标准输入输出流进行通信。
-   ```bash
-   lark-mcp recall-developer-documents -m stdio
-   ```
+    1. **stdio模式（默认/推荐）**：适用于与Cursor或Claude等AI工具集成，通过标准输入输出流进行通信。
+    ```bash
+    lark-mcp recall-developer-documents -m stdio
+    ```
 
-2. **SSE模式**：提供基于Server-Sent Events的HTTP接口，适用于Web应用或需要网络接口的场景。
-   
-   ```bash
-   # 默认只监听localhost
-   lark-mcp recall-developer-documents -m sse -p 3000
-   
-   # 监听所有网络接口（允许远程访问）
-   lark-mcp recall-developer-documents -m sse --host 0.0.0.0 -p 3000
-   ```
-   
-   启动后，SSE端点将可在 `http://<host>:<port>/sse` 访问。
+    2. **SSE模式**：提供基于Server-Sent Events的HTTP接口，适用于Web应用或需要网络接口的场景。
+
+    ```bash
+    # 默认只监听localhost
+    lark-mcp recall-developer-documents -m sse -p 3000
+
+    # 监听所有网络接口（允许远程访问）
+    lark-mcp recall-developer-documents -m sse --host 0.0.0.0 -p 3000
+    ```
+
+    启动后，SSE端点将可在 `http://<host>:<port>/sse` 访问。
 
 ## 相关链接
 

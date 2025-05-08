@@ -1,11 +1,13 @@
 # 0.3.0
 
+New: 开放平台开发文档检索 MCP，旨在帮助用户输入自身诉求后迅速检索到自己需要的开发文档，帮助开发者在AI IDE中编写与飞书集成的代码
 New: 新增--token-mode，现在可以在启动的时候指定调用API的token类型，支持auto/tenant_access_token/user_access_token
-New: -t 支持配置 preset.default preset.im preset.bitable preset.doc 等默认预设
+New: -t 支持配置 preset.default preset.im.default preset.bitable.default preset.doc.default 等默认预设
 Bump： 升级 @modelcontextprotocol/sdk 到 1.11.0
 
+New：Retrieval of Open Platform Development Documents in MCP aims to enable users to quickly find the development documents they need after inputting their own requirements, and assist developers in writing code integrated with Feishu in the AI IDE.
 New: Added --token-mode, now you can specify the API token type when starting, supporting auto/tenant_access_token/user_access_token
-New: -t supports configuring preset.default preset.im preset.bitable preset.doc etc.
+New: -t supports configuring preset.default preset.im.default preset.bitable.default preset.doc.default etc.
 Bump: Upgraded @modelcontextprotocol/sdk to 1.11.0
 
 # 0.2.0

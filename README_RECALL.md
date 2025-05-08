@@ -1,4 +1,4 @@
-# Lark Open Platform Developer Documentation Retrieval MCP
+# Feishu/Lark Open Platform Developer Documentation Retrieval MCP
 
 [![npm version](https://img.shields.io/npm/v/@larksuiteoapi/lark-mcp.svg)](https://www.npmjs.com/package/@larksuiteoapi/lark-mcp)
 [![npm downloads](https://img.shields.io/npm/dm/@larksuiteoapi/lark-mcp.svg)](https://www.npmjs.com/package/@larksuiteoapi/lark-mcp)
@@ -64,9 +64,9 @@ npm install -g @larksuiteoapi/lark-mcp
 
 ## User Guide
 
-### Use in Cursor/Claude
+### Use in Trae/Cursor/Claude
 
-To integrate Lark features in AI tools such as Cursor or Claude, you can add the following to your configuration file:
+To integrate Lark features in AI tools such as Trae, Cursor or Claude, you can add the following to your configuration file:
 
 ```json
 {
@@ -87,7 +87,7 @@ To integrate Lark features in AI tools such as Cursor or Claude, you can add the
 
 #### Command Line Arguments
 
-The `lark-mcp` tool provides a variety of command line arguments for flexible MCP service configuration:
+The `lark-mcp recall-developer-documents` tool provides a variety of command line arguments for flexible MCP service configuration:
 
 | Parameter | Short | Description | Example |
 |------|------|------|------|
@@ -99,30 +99,26 @@ The `lark-mcp` tool provides a variety of command line arguments for flexible MC
 
 #### Example Usage of Arguments
 
-1. **Use SSE mode and specify port and host:**
-   ```bash
-   lark-mcp recall-developer-documents -m sse --host 0.0.0.0 -p 3000
-   ```
-#### Transfer Modes
+1. **Transfer Modes**：
 
-lark-mcp supports two transfer modes:
+    recall-developer-documents supports two transfer modes:
 
-1. **stdio mode (default/recommended):** Suitable for integration with AI tools such as Cursor or Claude, communicating via standard input and output streams.
-   ```bash
-   lark-mcp recall-developer-documents -m stdio
-   ```
+    1. **stdio mode (default/recommended):** Suitable for integration with AI tools such as Cursor or Claude, communicating via standard input and output streams.
+      ```bash
+      lark-mcp recall-developer-documents -m stdio
+      ```
 
-2. **SSE mode:** Provides an HTTP interface based on Server-Sent Events, suitable for web applications or scenarios requiring a network interface.
-   
-   ```bash
-   # By default, only listens on localhost
-   lark-mcp recall-developer-documents -m sse -p 3000
-   
-   # Listen on all network interfaces (allow remote access)
-   lark-mcp recall-developer-documents -m sse --host 0.0.0.0 -p 3000
-   ```
-   
-   After starting, the SSE endpoint can be accessed at `http://<host>:<port>/sse`.
+    2. **SSE mode:** Provides an HTTP interface based on Server-Sent Events, suitable for web applications or scenarios requiring a network interface.
+      
+      ```bash
+      # By default, only listens on localhost
+      lark-mcp recall-developer-documents -m sse -p 3000
+      
+      # Listen on all network interfaces (allow remote access)
+      lark-mcp recall-developer-documents -m sse --host 0.0.0.0 -p 3000
+      ```
+      
+      After starting, the SSE endpoint can be accessed at `http://<host>:<port>/sse`.
 
 ## Related Links
 
