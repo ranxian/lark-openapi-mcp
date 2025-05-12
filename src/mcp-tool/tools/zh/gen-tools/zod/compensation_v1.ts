@@ -31,7 +31,6 @@ export const compensationV1ArchiveQuery = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('用户ID类型'),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

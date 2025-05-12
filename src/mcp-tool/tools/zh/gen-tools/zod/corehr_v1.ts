@@ -2463,7 +2463,7 @@ export const corehrV1JobDataCreate = {
         .optional(),
       probation_start_date: z.string().describe('试用期开始日期').optional(),
       probation_end_date: z.string().describe('试用期结束日期（实际结束日期）').optional(),
-      primary_job_data: z.boolean().describe('是否为主任职'),
+      primary_job_data: z.boolean().describe('是否为主任职- 该字段已废弃，默认为 true，不可更改'),
       employment_id: z
         .string()
         .describe(
@@ -2480,7 +2480,7 @@ export const corehrV1JobDataCreate = {
       assignment_start_reason: z
         .object({ enum_name: z.string().describe('枚举值') })
         .describe(
-          '任职原因- 可通过接口查询，查询参数如下： - object_api_name：job_data - custom_api_name：assignment_start_reason- 这里只支持填写"onboarding"',
+          '业务类型（原：任职原因）- 可通过接口查询，查询参数如下： - object_api_name：job_data - custom_api_name：assignment_start_reason- 这里只支持填写"onboarding"',
         ),
       probation_expected_end_date: z.string().describe('预计试用期结束日期').optional(),
       direct_manager_id: z
@@ -2533,6 +2533,8 @@ export const corehrV1JobDataCreate = {
           '任职公司 ID，详细信息可通过接口查询获得',
         )
         .optional(),
+      position_id: z.string().describe('岗位 ID，枚举值及详细信息可通过【查询单个岗位】接口查询获得').optional(),
+      pathway_id: z.string().describe('通道 ID').optional(),
     }),
     params: z.object({
       client_token: z
@@ -2780,6 +2782,7 @@ export const corehrV1JobDataPatch = {
           '任职公司 ID，详细信息可通过接口查询获得',
         )
         .optional(),
+      pathway_id: z.string().describe('通道 ID').optional(),
     }),
     params: z.object({
       client_token: z
@@ -3169,12 +3172,7 @@ export const corehrV1JobCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      code: z
-        .string()
-        .describe(
-          '职务编码 (不能与其他记录的编码重复)- 开启自动编码时，如果不传值会自动生成编码，否则以传入值为准- 未开启自动编码时，不传值不会自动生成编码',
-        )
-        .optional(),
+      code: z.string().describe('职务编码 (不能与其他记录的编码重复)，当开启自动编码时，该字段会失效').optional(),
       name: z
         .array(
           z.object({
@@ -3182,7 +3180,7 @@ export const corehrV1JobCreate = {
             value: z.string().describe('名称信息的内容'),
           }),
         )
-        .describe('职务名称- 名称不能包含「/」「；」「;」字符- 职务中英文名称会有全局唯一校验'),
+        .describe('职务名称- 名称不能包含「/」「；」「;」字符- 职务中英文名称会有全局唯一校验（已停用职务也会校验）'),
       description: z
         .array(
           z.object({
@@ -3223,7 +3221,7 @@ export const corehrV1JobCreate = {
       expiration_time: z
         .string()
         .describe(
-          '版本失效日期- 填写格式：YYYY-MM-DD 00:00:00（系统会自动将时分秒改为00:00:00）- 系统默认为填写日期当天的 00:00:00 失效- 日期范围要求:1900-01-01 00:00:00～9999-12-31 23:59:59- 详情可以参考',
+          '版本失效日期- 填写格式：YYYY-MM-DD 00:00:00（系统会自动将时分秒改为00:00:00）- 系统默认为9999-12-31 23:59:59 失效- 日期范围要求:1900-01-01 00:00:00～9999-12-31 23:59:59- 详情可以参考',
         )
         .optional(),
       custom_fields: z
@@ -3237,7 +3235,9 @@ export const corehrV1JobCreate = {
               ),
           }),
         )
-        .describe('自定义字段（该功能暂不支持，可忽略）')
+        .describe(
+          '自定义字段，格式参考：岗位、职务、自定义组织模块',
+        )
         .optional(),
     }),
     params: z.object({ client_token: z.string().describe('根据client_token是否一致来判断是否为同一请求').optional() }),
@@ -3306,12 +3306,7 @@ export const corehrV1JobPatch = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      code: z
-        .string()
-        .describe(
-          '职务编码 (不能与其他记录的编码重复)- 开启自动编码时，如果不传值会自动生成编码，否则以传入值为准- 未开启自动编码时，不传值不会自动生成编码',
-        )
-        .optional(),
+      code: z.string().describe('职务编码 (不能与其他记录的编码重复)，当开启自动编码时，该字段会失效').optional(),
       name: z
         .array(
           z.object({
@@ -3319,7 +3314,7 @@ export const corehrV1JobPatch = {
             value: z.string().describe('名称信息的内容'),
           }),
         )
-        .describe('职务名称- 名称不能包含「/」「；」「;」字符- xx中英文名称会有全局唯一校验')
+        .describe('职务名称- 名称不能包含「/」「；」「;」字符- xx中英文名称会有全局唯一校验（已停用职务也会校验）')
         .optional(),
       description: z
         .array(
@@ -3381,7 +3376,9 @@ export const corehrV1JobPatch = {
               ),
           }),
         )
-        .describe('自定义字段（暂不支持该功能，可忽略）')
+        .describe(
+          '自定义字段，格式参考：岗位、职务、自定义组织模块',
+        )
         .optional(),
     }),
     params: z.object({ client_token: z.string().describe('根据client_token是否一致来判断是否为同一请求').optional() }),
@@ -3504,7 +3501,6 @@ export const corehrV1LeaveCalendarByScope = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -3669,9 +3665,9 @@ export const corehrV1LeaveWorkCalendar = {
       wk_calendar_id_gt: z.string().describe('工作日历ID大于').optional(),
       wk_option: z
         .object({
-          count: z.boolean().describe('是否返回符合条件的工作日历总数').optional(),
-          offset: z.number().describe('分页查询的位移，从0开始').optional(),
-          limit: z.number().describe('分页查询 单次查询数量'),
+          count: z.boolean().describe('是否返回符合条件的工作日历总数，默认值为true').optional(),
+          offset: z.number().describe('分页查询的位移，从0开始，默认值为0').optional(),
+          limit: z.number().describe('分页查询单次查询数量，默认值为2000'),
           sort_options: z
             .array(
               z.object({
@@ -3691,7 +3687,7 @@ export const corehrV1LeaveWorkCalendar = {
             .describe('排序')
             .optional(),
         })
-        .describe('分页、排序等选项，注意需要填写limit参数，默认为0')
+        .describe('分页、排序等选项，如未填写将赋默认值')
         .optional(),
       only_enable: z.boolean().describe('是否只返回启用的工作日历，不填默认true').optional(),
     }),
@@ -3735,7 +3731,6 @@ export const corehrV1LeaveWorkCalendarDate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

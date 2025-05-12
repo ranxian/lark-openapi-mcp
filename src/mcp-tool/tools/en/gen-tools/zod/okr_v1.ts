@@ -28,7 +28,6 @@ export const okrV1OkrBatchGet = {
         .describe("Request the language version of OKR (such as @'s name), lang = en_us/zh_cn, request Query")
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -94,7 +93,6 @@ export const okrV1PeriodPatch = {
           'Period display status Options:1(normal_status Normal state),2(mark_invalid Mark failure),3(hidden_period Hidden period)',
         ),
     }),
-
     path: z.object({ period_id: z.string().describe('Period id') }),
   },
 };
@@ -242,7 +240,6 @@ export const okrV1ProgressRecordCreate = {
       source_url_mobile: z.string().describe('{}').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

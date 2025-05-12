@@ -251,7 +251,9 @@ export const imV2AppFeedCardCreate = {
             .object({
               link: z
                 .string()
-                .describe('link **Notice**:- Only HTTPS protocol is supported- Applink is not supported yet')
+                .describe(
+                  'link **Note**: Only HTTPS protocol is supported, as well as Applink for web app or gadget (appid will be verified for correctness)',
+                )
                 .optional(),
             })
             .describe('card redirect link (This parameter is required when creating)')
@@ -494,7 +496,6 @@ export const imV2TagPatch = {
         .describe('Patch a tag')
         .optional(),
     }),
-
     path: z.object({ tag_id: z.string() }),
   },
 };

@@ -37,7 +37,6 @@ export const lingoV1ClassificationList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -176,7 +175,6 @@ export const lingoV1DraftCreate = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -481,7 +479,6 @@ export const lingoV1EntityHighlight = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ text: z.string().describe('需要识别词条的内容（不超过1000字）') }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -511,7 +508,6 @@ export const lingoV1EntityList = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -533,7 +529,6 @@ export const lingoV1EntityMatch = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -578,7 +573,6 @@ export const lingoV1EntitySearch = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

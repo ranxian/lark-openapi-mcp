@@ -90,7 +90,6 @@ export const attendanceV1ArchiveRuleDelReport = {
           '请求体中的 user_ids 和响应体中的 user_id 的员工ID类型。如果没有后台管理权限，可使用* `employee_id `：员工 employee ID，即 > 组织架构 > 成员与部门 > 成员详情中的用户 ID* `employee_no`：员工工号，即 > 组织架构 > 成员与部门 > 成员详情中的工号',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -113,7 +112,6 @@ export const attendanceV1ArchiveRuleList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -166,7 +164,6 @@ export const attendanceV1ArchiveRuleUploadReport = {
           '请求体中的 user_ids 和响应体中的 user_id 的员工ID类型。如果没有后台管理权限，可使用* `employee_id `：员工 employee ID，即 > 组织架构 > 成员与部门 > 成员详情中的用户 ID* `employee_no`：员工工号，即 > 组织架构 > 成员与部门 > 成员详情中的工号',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -197,7 +194,6 @@ export const attendanceV1ArchiveRuleUserStatsFieldsQuery = {
           '请求体中的 user_ids 和响应体中的 user_id 的员工ID类型。如果没有后台管理权限，可使用* `employee_id `：员工 employee ID，即 > 组织架构 > 成员与部门 > 成员详情中的用户 ID* `employee_no`：员工工号，即 > 组织架构 > 成员与部门 > 成员详情中的工号',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1056,9 +1052,18 @@ export const attendanceV1UserApprovalCreate = {
                   .string()
                   .describe('外出记录的唯一幂等键，用于避免外出记录重复创建，可以填入三方的外出记录id')
                   .optional(),
-                correct_process_id: z.array(z.string()).describe('更正流程实例 ID').optional(),
-                cancel_process_id: z.array(z.string()).describe('撤销流程实例 ID').optional(),
-                process_id: z.array(z.string()).describe('发起流程实例 ID').optional(),
+                correct_process_id: z
+                  .array(z.string())
+                  .describe('更正流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
+                cancel_process_id: z
+                  .array(z.string())
+                  .describe('撤销流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
+                process_id: z
+                  .array(z.string())
+                  .describe('发起流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
               }),
             )
             .describe('外出信息')
@@ -1066,12 +1071,7 @@ export const attendanceV1UserApprovalCreate = {
           leaves: z
             .array(
               z.object({
-                uniq_id: z
-                  .string()
-                  .describe(
-                    '假期类型唯一 ID，代表一种假期类型，长度小于 14* 此ID对应假期类型(即: i18n_names)，因此需要保证唯一。可通过获取',
-                  )
-                  .optional(),
+                uniq_id: z.string().describe('审批实例id').optional(),
                 unit: z
                   .number()
                   .describe('假期时长单位 Options:1(Day 天),2(Hour 小时),3(HalfDay 半天),4(HalfHour 半小时)'),
@@ -1127,9 +1127,18 @@ export const attendanceV1UserApprovalCreate = {
                   .string()
                   .describe('加班记录的唯一幂等键，用于避免加班记录重复创建，可以填入三方的加班记录id')
                   .optional(),
-                correct_process_id: z.array(z.string()).describe('更正流程实例 ID').optional(),
-                cancel_process_id: z.array(z.string()).describe('撤销流程实例 ID').optional(),
-                process_id: z.array(z.string()).describe('发起流程实例 ID').optional(),
+                correct_process_id: z
+                  .array(z.string())
+                  .describe('更正流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
+                cancel_process_id: z
+                  .array(z.string())
+                  .describe('撤销流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
+                process_id: z
+                  .array(z.string())
+                  .describe('发起流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
               }),
             )
             .describe('加班信息')
@@ -1146,21 +1155,46 @@ export const attendanceV1UserApprovalCreate = {
                   .string()
                   .describe('出差记录的唯一幂等键，用于避免出差记录重复创建，可以填入三方的出差记录id')
                   .optional(),
-                correct_process_id: z.array(z.string()).describe('更正流程实例 ID').optional(),
-                cancel_process_id: z.array(z.string()).describe('撤销流程实例 ID').optional(),
-                process_id: z.array(z.string()).describe('发起流程实例 ID').optional(),
+                correct_process_id: z
+                  .array(z.string())
+                  .describe('更正流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
+                cancel_process_id: z
+                  .array(z.string())
+                  .describe('撤销流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
+                process_id: z
+                  .array(z.string())
+                  .describe('发起流程实例 ID。该字段由系统自动生成，在写入审批结果时，无需传入该参数')
+                  .optional(),
                 departure: z
                   .object({
-                    region_level: z.string().describe('地理等级（国家｜省｜市｜区）').optional(),
-                    region_id: z.string().describe('地理id').optional(),
+                    region_level: z
+                      .string()
+                      .describe('地理等级（国家｜省｜市｜区）l1：国家级；l2：省级；l3：市级l4：区/县级')
+                      .optional(),
+                    region_id: z
+                      .string()
+                      .describe(
+                        '地理id可以通过或获取（仅支持飞书人事企业版使用）',
+                      )
+                      .optional(),
                   })
                   .describe('出发地（只有一个）')
                   .optional(),
                 destinations: z
                   .array(
                     z.object({
-                      region_level: z.string().describe('地理等级').optional(),
-                      region_id: z.string().describe('地理id').optional(),
+                      region_level: z
+                        .string()
+                        .describe('地理等级（国家｜省｜市｜区）l1：国家级；l2：省级；l3：市级l4：区/县级')
+                        .optional(),
+                      region_id: z
+                        .string()
+                        .describe(
+                          '地理id可以通过或获取（仅支持飞书人事企业版使用）',
+                        )
+                        .optional(),
                     }),
                   )
                   .describe('目的地（可写多个）')
@@ -1326,7 +1360,6 @@ export const attendanceV1UserDailyShiftBatchCreateTemp = {
           '请求体和响应体中的 user_id 的员工ID类型。如果没有后台管理权限，可使用 Options:employee_id(EmployeeID 员工 employee ID，即 > 组织架构 > 成员与部门 > 成员详情中的用户 ID，或者获取的userid。),employee_no(EmployeeNo 员工工号，即 > 组织架构 > 成员与部门 > 成员详情中的工号)',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

@@ -17,7 +17,6 @@ export const applicationV5ApplicationFavourite = {
       page_token: z.string().optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -44,7 +43,6 @@ export const applicationV5ApplicationRecommend = {
       page_token: z.string().optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

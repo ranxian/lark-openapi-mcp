@@ -32,7 +32,6 @@ export const wikiV2SpaceCreate = {
         .describe('表示知识空间的分享状态 Options:open(打开),closed(关闭)')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -87,7 +86,6 @@ export const wikiV2SpaceGetNode = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -115,7 +113,6 @@ export const wikiV2SpaceList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -172,7 +169,6 @@ export const wikiV2SpaceMemberDelete = {
         .describe('知识库协作者类型（暂不支持） Options:user(用户),chat(群组),department(组织架构)')
         .optional(),
     }),
-
     path: z.object({
       space_id: z.string().describe('知识空间id'),
       member_id: z.string().describe('成员id，值的类型由请求体的 member_type 参数决定'),
@@ -222,7 +218,6 @@ export const wikiV2SpaceNodeCopy = {
         .optional(),
       title: z.string().describe('复制后的新标题。如果填空，则新标题为空。如果不填，则使用原节点标题').optional(),
     }),
-
     path: z.object({
       space_id: z.string().describe('知识空间id').optional(),
       node_token: z.string().describe('节点token').optional(),
@@ -253,7 +248,6 @@ export const wikiV2SpaceNodeCreate = {
       origin_node_token: z.string().describe('快捷方式对应的实体node_token，当节点为快捷方式时，该值不为空').optional(),
       title: z.string().describe('文档标题').optional(),
     }),
-
     path: z.object({
       space_id: z
         .string()
@@ -301,7 +295,6 @@ export const wikiV2SpaceNodeMove = {
       target_parent_token: z.string().describe('移动到的父节点token').optional(),
       target_space_id: z.string().describe('移动到的知识空间ID').optional(),
     }),
-
     path: z.object({
       space_id: z.string().describe('知识空间id'),
       node_token: z.string().describe('需要迁移的节点token'),
@@ -332,7 +325,6 @@ export const wikiV2SpaceNodeMoveDocsToWiki = {
         .describe('没有权限时，是否申请移动文档。如果申请移动，文档将在处理人同意时自动移动至指定位置')
         .optional(),
     }),
-
     path: z.object({ space_id: z.string().describe('知识库id') }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
@@ -347,7 +339,6 @@ export const wikiV2SpaceNodeUpdateTitle = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ title: z.string().describe('节点新标题') }),
-
     path: z.object({
       space_id: z.string().describe('知识空间ID').optional(),
       node_token: z.string().describe('节点token').optional(),
@@ -375,7 +366,6 @@ export const wikiV2SpaceSettingUpdate = {
         .optional(),
       comment_setting: z.string().describe('可阅读用户可否评论： "allow" - 允许 "not_allow" - 不允许').optional(),
     }),
-
     path: z.object({ space_id: z.string().describe('知识空间id').optional() }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },

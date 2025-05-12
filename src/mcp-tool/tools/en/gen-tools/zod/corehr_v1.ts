@@ -2892,7 +2892,7 @@ export const corehrV1JobCreate = {
       code: z
         .string()
         .describe(
-          "Job code (cannot be duplicated with other records' codes)- When turning on automatic encoding, if no value is passed, the encoding will be automatically generated, otherwise the incoming value shall prevail- When automatic encoding is not enabled, the encoding will not be automatically generated without passing the value",
+          "Job code (cannot be duplicated with other records' codes), this field is disabled when auto-encoding is turned on",
         )
         .optional(),
       name: z
@@ -2903,7 +2903,7 @@ export const corehrV1JobCreate = {
           }),
         )
         .describe(
-          'Job title- Name cannot contain 「/」「；」「;」 characters- The Chinese and English names of the job title will be globally unique',
+          'Job title- Name cannot contain 「/」「；」「;」 characters- The Chinese and English names of the job title will be globally unique(Deactivated jobs will also be verified.)',
         ),
       description: z
         .array(
@@ -2950,7 +2950,7 @@ export const corehrV1JobCreate = {
       expiration_time: z
         .string()
         .describe(
-          'Version effective date- Fill in the format: YYYY-MM-DD- The system defaults to 00:00:00 on the day of filling in the date.The interface is only supported up to the smallest unit for the day- Date range requirements: 1900-01-01~ 9999-12-31',
+          'Version expiration date- Fill in the format: YYYY-MM-DD- The system defaults to invalid on 9999-12-31 23:59:59.The interface is only supported up to the smallest unit for the day- Date range requirements: 1900-01-01~ 9999-12-31',
         )
         .optional(),
       custom_fields: z
@@ -2964,7 +2964,9 @@ export const corehrV1JobCreate = {
               ),
           }),
         )
-        .describe('Custom fields (this function is not supported for the time being, it can be ignored)')
+        .describe(
+          'Custom field, format reference:[[Custom Field Description]](https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/corehr-v2/job_level/batch_get)Position, Job, Custom Organization Module',
+        )
         .optional(),
     }),
     params: z.object({
@@ -3037,14 +3039,14 @@ export const corehrV1JobPatch = {
   path: '/open-apis/corehr/v1/jobs/:job_id',
   httpMethod: 'PATCH',
   description:
-    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Job management-Job-Update position-You can update a job through this interface',
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Job management-Job-Update Job-You can update a job through this interface',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
       code: z
         .string()
         .describe(
-          "Job code (cannot be duplicated with other records' codes)- When turning on automatic encoding, if no value is passed, the encoding will be automatically generated, otherwise the incoming value shall prevail- When automatic encoding is not enabled, the encoding will not be automatically generated without passing the value",
+          "Job code (cannot be duplicated with other records' codes), when automatic encoding is enabled, this field will be invalid",
         )
         .optional(),
       name: z
@@ -3055,7 +3057,7 @@ export const corehrV1JobPatch = {
           }),
         )
         .describe(
-          'Job title- Name cannot contain 「/」「；」「;」 characters- Xx Chinese and English names will have a globally unique check',
+          'Job title- Name cannot contain 「/」「；」「;」 characters- Xx Chinese and English names will have a globally unique check(Deactivated jobs will also be verified.)',
         )
         .optional(),
       description: z
@@ -3118,7 +3120,9 @@ export const corehrV1JobPatch = {
               ),
           }),
         )
-        .describe('custom fields')
+        .describe(
+          'Custom field, format reference:[[Custom Field Description]](https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/corehr-v2/job_level/batch_get)Position, Job, Custom Organization Module',
+        )
         .optional(),
     }),
     params: z.object({
@@ -3251,7 +3255,6 @@ export const corehrV1LeaveCalendarByScope = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -3553,7 +3556,6 @@ export const corehrV1LeaveWorkCalendarDate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

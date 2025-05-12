@@ -601,7 +601,6 @@ export const applicationV6ApplicationManagementUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ enable: z.boolean().describe('启用/停用应用').optional() }),
-
     path: z.object({ app_id: z.string().describe('应用ID') }),
   },
 };

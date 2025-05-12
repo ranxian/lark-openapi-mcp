@@ -155,7 +155,6 @@ export const imV1ChatAnnouncementPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -363,7 +362,6 @@ export const imV1ChatLink = {
         )
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -400,7 +398,6 @@ export const imV1ChatList = {
         .optional(),
       page_size: z.number().describe('分页大小，用来限制一次请求返回的数据条目数').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -699,7 +696,6 @@ export const imV1ChatMenuItemPatch = {
         })
         .describe('群菜单的元信息'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -858,7 +854,6 @@ export const imV1ChatMenuTreeCreate = {
         })
         .describe('要向群内追加的菜单'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -886,7 +881,6 @@ export const imV1ChatMenuTreeDelete = {
           '一级菜单 ID。ID 可通过  接口获取',
         ),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -934,7 +928,6 @@ export const imV1ChatMenuTreeSort = {
           '通过一级菜单的 ID 进行排序。数组内的元素排序对应群组内一级菜单从左往右的排序。ID 可通过  接口获取。**说明**：进行排序的 ID 列表需要跟群内存在的一级菜单 ID 列表对齐',
         ),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1041,7 +1034,6 @@ export const imV1ChatSearch = {
         .optional(),
       page_size: z.number().describe('分页大小，用来限制一次请求所返回的数据条目数').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1114,7 +1106,6 @@ export const imV1ChatTabCreate = {
         )
         .describe('会话标签页**注意**：一个会话内最多只允许添加 20 个自定义会话标签页'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1141,7 +1132,6 @@ export const imV1ChatTabDeleteTabs = {
           '会话标签页 ID 列表，ID 可以在或者接口返回值中获取',
         ),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1189,7 +1179,6 @@ export const imV1ChatTabSortTabs = {
         )
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1276,7 +1265,6 @@ export const imV1ChatTabUpdateTabs = {
         .describe('会话标签页')
         .optional(),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1336,7 +1324,6 @@ export const imV1ChatTopNoticePutTopNotice = {
         )
         .describe('群置顶配置'),
     }),
-
     path: z.object({
       chat_id: z
         .string()
@@ -1497,7 +1484,7 @@ export const imV1MessageCreate = {
       msg_type: z
         .string()
         .describe(
-          '消息类型。**可选值有**：- text：文本- post：富文本- image：图片- file：文件- audio：语音- media：视频- sticker：表情包- interactive：卡片- share_chat：分享群名片- share_user：分享个人名片- system：系统消息不同消息类型的详细介绍，参见',
+          '消息类型。**可选值有**：- text：文本- post：富文本- image：图片- file：文件- audio：语音- media：视频- sticker：表情包- interactive：卡片- share_chat：分享群名片- share_user：分享个人名片- system：系统消息。该类型仅支持在机器人单聊内推送系统消息，不支持在群聊内使用，例如下图所示突出新会话。 不同消息类型的详细介绍，参见',
         ),
       content: z
         .string()
@@ -1685,7 +1672,6 @@ export const imV1MessagePatch = {
           '消息卡片的内容，支持卡片 JSON 或构建的卡片，需为 JSON 结构序列化后的字符串。 - 要使用卡片 JSON，参考。 - 要使用构建的卡片模板，你需传入 `type` 和 `data` 参数。参考 文档末尾的字段说明传值。**注意**：- 更新的卡片消息最大不能超过 30 KB。若消息中包含大量样式标签，会使实际消息体长度大于你输入的请求体长度。- 以下示例值未转义，使用时请注意将其转为 JSON 序列化后的字符串',
         ),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -1745,7 +1731,6 @@ export const imV1MessagePushFollowUp = {
         )
         .describe('跟随气泡列表'),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -1775,7 +1760,6 @@ export const imV1MessageReactionCreate = {
         })
         .describe('表情类型'),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -1909,7 +1893,6 @@ export const imV1MessageReply = {
         )
         .optional(),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -1937,7 +1920,6 @@ export const imV1MessageUpdate = {
           '消息内容，JSON 结构序列化后的字符串。该参数的取值与 `msg_type` 对应，例如 `msg_type` 取值为 `text`，则该参数需要传入文本类型的内容。**注意：**- JSON字符串需进行转义，如换行符转义后为`\\`- 文本消息请求体最大不能超过 150 KB- 富文本消息请求体最大不能超过 30 KB- 如果消息中包含样式标签，会使实际消息体长度大于您输入的请求体长度。了解不同类型的消息内容格式、使用限制，可参见',
         ),
     }),
-
     path: z.object({
       message_id: z
         .string()
@@ -2045,7 +2027,6 @@ export const imV1PinCreate = {
           '待 Pin 的消息 ID。ID 获取方式： - 调用接口后，从响应结果的 `message_id` 参数获取。- 监听事件，当触发该事件后可以从事件体内获取消息的 `message_id`。- 调用接口，从响应结果的 `message_id` 参数获取',
         ),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -2103,7 +2084,6 @@ export const imV1PinList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

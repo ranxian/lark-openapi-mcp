@@ -192,7 +192,6 @@ export const hireV1AdvertisementPublish = {
         )
         .optional(),
     }),
-
     path: z.object({
       advertisement_id: z
         .string()
@@ -403,7 +402,6 @@ export const hireV1ApplicationCancelOnboard = {
         .optional(),
       termination_reason_notes: z.string().describe('备注').optional(),
     }),
-
     path: z.object({
       application_id: z
         .string()
@@ -720,7 +718,6 @@ export const hireV1ApplicationTerminate = {
         .optional(),
       termination_reason_note: z.string().describe('终止备注').optional(),
     }),
-
     path: z.object({
       application_id: z
         .string()
@@ -834,7 +831,6 @@ export const hireV1ApplicationTransferStage = {
           '要转移到的阶段 ID，可通过接口获取',
         ),
     }),
-
     path: z.object({
       application_id: z
         .string()
@@ -1514,7 +1510,6 @@ export const hireV1EcoExamLoginInfo = {
         })
         .describe('笔试作答信息'),
     }),
-
     path: z.object({
       exam_id: z
         .string()
@@ -1564,7 +1559,6 @@ export const hireV1EcoExamUpdateResult = {
         .describe('详细评价结果')
         .optional(),
     }),
-
     path: z.object({
       exam_id: z
         .string()
@@ -1594,7 +1588,6 @@ export const hireV1EhrImportTaskPatch = {
         .optional(),
       state: z.number().describe('导入结果 Options:1(导入成功),2(导入失败)'),
     }),
-
     path: z.object({
       ehr_import_task_id: z
         .string()
@@ -1988,7 +1981,6 @@ export const hireV1ExternalApplicationUpdate = {
       create_time: z.number().describe('投递在外部系统创建时间，毫秒时间戳（字段类型为：int64）').optional(),
       termination_type: z.string().describe('终止类型').optional(),
     }),
-
     path: z.object({
       external_application_id: z
         .string()
@@ -2109,7 +2101,6 @@ export const hireV1ExternalBackgroundCheckUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       external_background_check_id: z
         .string()
@@ -2184,7 +2175,6 @@ export const hireV1ExternalInterviewAssessmentPatch = {
         .optional(),
       content: z.string().describe('综合记录').optional(),
     }),
-
     path: z.object({ external_interview_assessment_id: z.string().describe('外部面评 ID') }),
   },
 };
@@ -2356,7 +2346,6 @@ export const hireV1ExternalInterviewUpdate = {
         .describe('面试评价列表')
         .optional(),
     }),
-
     path: z.object({
       external_interview_id: z
         .string()
@@ -2477,7 +2466,6 @@ export const hireV1ExternalOfferUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       external_offer_id: z
         .string()
@@ -3943,7 +3931,6 @@ export const hireV1JobOpen = {
         .optional(),
       is_never_expired: z.boolean().describe('是否长期有效**可选值有**：* `true`：长期有效* `false`：指定到期日期'),
     }),
-
     path: z.object({
       job_id: z
         .string()
@@ -4413,7 +4400,6 @@ export const hireV1OfferCustomFieldUpdate = {
         .describe('自定义字段配置信息')
         .optional(),
     }),
-
     path: z.object({
       offer_custom_field_id: z
         .string()
@@ -4516,7 +4502,13 @@ export const hireV1OfferCreate = {
             )
             .optional(),
           job_process_type_id: z.number().describe('招聘流程类型 ID，可选值：「1:社招，2:校招」').optional(),
-          attachment_id_list: z.array(z.string()).describe('附件ID列表，暂无获取附件ID的方式，请勿使用').optional(),
+          attachment_id_list: z.array(z.string()).describe('附件 ID 列表，暂无获取附件 ID 的方式，请勿使用').optional(),
+          common_attachment_id_list: z
+            .array(z.string())
+            .describe(
+              '通用附件 ID 列表，可使用接口创建的附件',
+            )
+            .optional(),
           attachment_description: z.string().describe('附件描述').optional(),
           operator_user_id: z.string().describe('Offer操作人 ID，与入参`user_id_type`类型一致'),
           position_id: z
@@ -4669,7 +4661,6 @@ export const hireV1OfferInternOfferStatus = {
         .describe('离职表单信息**注意**：当 operation 为 `offboard` 时，该字段必填')
         .optional(),
     }),
-
     path: z.object({
       offer_id: z
         .string()
@@ -4740,7 +4731,6 @@ export const hireV1OfferOfferStatus = {
         .optional(),
       termination_reason_note: z.string().describe('Offer 终止备注信息').optional(),
     }),
-
     path: z.object({
       offer_id: z
         .string()
@@ -4818,10 +4808,11 @@ export const hireV1OfferUpdate = {
             )
             .optional(),
           job_process_type_id: z.number().describe('招聘流程类型 ID**可选值**：- 1：社招- 2：校招').optional(),
-          attachment_id_list: z
+          attachment_id_list: z.array(z.string()).describe('附件 ID 列表，暂无获取附件 ID 的方式，请勿使用').optional(),
+          common_attachment_id_list: z
             .array(z.string())
             .describe(
-              '附件 ID 列表，可通过接口返回',
+              '通用附件 ID 列表，可使用接口创建的附件',
             )
             .optional(),
           attachment_description: z.string().describe('附件描述').optional(),
@@ -5081,7 +5072,6 @@ export const hireV1ReferralAccountWithdraw = {
           '外部提取单 ID，由请求方提供，用于保证接口的幂等性，需要保证唯一。传入重复 ID 会返回原 ID 对应的提取详情',
         ),
     }),
-
     path: z.object({
       referral_account_id: z
         .string()
@@ -5428,7 +5418,6 @@ export const hireV1TalentPoolBatchChangeTalentPool = {
         .number()
         .describe('操作类型 Options:1(Add 将人才添加至指定人才库),2(Remove 将人才从指定人才库中移除)'),
     }),
-
     path: z.object({
       talent_pool_id: z
         .string()
@@ -5457,7 +5446,6 @@ export const hireV1TalentPoolMoveTalent = {
         .number()
         .describe('加入类型，加入后是否从其他库移出 Options:1(OnlyAdd 否),2(AddAndRemoveFromOrigin 是)'),
     }),
-
     path: z.object({
       talent_pool_id: z
         .string()
@@ -6595,7 +6583,6 @@ export const hireV1TalentExternalInfoCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ external_create_time: z.string().describe('人才在外部系统的创建时间，毫秒时间戳') }),
-
     path: z.object({
       talent_id: z
         .string()
@@ -6616,7 +6603,6 @@ export const hireV1TalentExternalInfoUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ external_create_time: z.string().describe('人才在外部系统的创建时间，毫秒时间戳') }),
-
     path: z.object({
       talent_id: z
         .string()
@@ -6694,7 +6680,6 @@ export const hireV1TalentOnboardStatus = {
       onboard_time: z.string().describe('入职时间，毫秒时间戳').optional(),
       overboard_time: z.string().describe('离职时间，毫秒时间戳').optional(),
     }),
-
     path: z.object({
       talent_id: z
         .string()
@@ -6745,7 +6730,6 @@ export const hireV1TalentTag = {
           '标签 ID 列表，可通过以下接口获取',
         ),
     }),
-
     path: z.object({
       talent_id: z
         .string()
@@ -6832,7 +6816,6 @@ export const hireV1TodoList = {
         .enum(['evaluation', 'offer', 'exam', 'interview'])
         .describe('待办类型 Options:evaluation(评估待办),offer(Offer 待办),exam(笔试待办),interview(面试待办)'),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -6925,11 +6908,10 @@ export const hireV1TripartiteAgreementUpdate = {
       state: z
         .number()
         .describe(
-          '三方协议状态 Options:1(NotStarted 未开始),2(Applied 已申请),3(StudentProcessing 学生处理中),4(CompanyProcessing 公司处理中),5(SchoolProcessing 学校处理中),6(Terminated 已终止),7(Completed 已完成),8(TerminationProcessing 解约处理中),9(Terminated 已解约)',
+          '三方协议状态 Options:1(NotStarted 未开始),2(Applied 已申请),3(StudentProcessing 学生处理中),4(CompanyProcessing 公司处理中),5(SchoolProcessing 学校处理中),6(Ended 已终止),7(Completed 已完成),8(TerminationProcessing 解约处理中),9(Terminated 已解约)',
         ),
       modify_time: z.string().describe('三方协议修改时间，毫秒时间戳**注意**：不可小于创建时间或者上次修改时间'),
     }),
-
     path: z.object({
       tripartite_agreement_id: z
         .string()
@@ -6982,7 +6964,6 @@ export const hireV1WebsiteChannelCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ channel_name: z.string().describe('推广渠道名称') }),
-
     path: z.object({
       website_id: z
         .string()
@@ -7057,7 +7038,6 @@ export const hireV1WebsiteChannelUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ channel_name: z.string().describe('推广渠道名称') }),
-
     path: z.object({
       website_id: z
         .string()
@@ -7155,7 +7135,6 @@ export const hireV1WebsiteDeliveryCreateByAttachment = {
         .describe('证件（当该参数值与简历附件中的相关值不一致时，将以该参数值为准）')
         .optional(),
     }),
-
     path: z.object({
       website_id: z
         .string()
@@ -7796,7 +7775,6 @@ export const hireV1WebsiteSiteUserCreate = {
         )
         .optional(),
     }),
-
     path: z.object({
       website_id: z
         .string()

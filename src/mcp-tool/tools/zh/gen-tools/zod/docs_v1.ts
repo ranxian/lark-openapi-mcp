@@ -24,7 +24,6 @@ export const docsV1ContentGet = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

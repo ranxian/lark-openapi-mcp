@@ -17288,7 +17288,6 @@ export const docxV1DocumentCreate = {
         .optional(),
       title: z.string().describe('文档标题，只支持纯文本').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

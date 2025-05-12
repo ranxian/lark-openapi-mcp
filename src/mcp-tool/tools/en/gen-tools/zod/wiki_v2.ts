@@ -32,7 +32,6 @@ export const wikiV2SpaceCreate = {
         .describe('Represents Wiki space sharing status Options:open(Open),closed(Closed)')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -87,7 +86,6 @@ export const wikiV2SpaceGetNode = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -116,7 +114,6 @@ export const wikiV2SpaceList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -167,7 +164,6 @@ export const wikiV2SpaceMemberDelete = {
         .describe('Wiki space collaborator type (Future Support) Options:user(User),chat(Chat),department(Department)')
         .optional(),
     }),
-
     path: z.object({
       space_id: z.string().describe('Wiki space id'),
       member_id: z.string().describe('Member id, which should match the member type below'),
@@ -223,7 +219,6 @@ export const wikiV2SpaceNodeCopy = {
         .describe('Copied new title. If blank, the new title is empty. If not, the original node title is used')
         .optional(),
     }),
-
     path: z.object({
       space_id: z
         .string()
@@ -265,7 +260,6 @@ export const wikiV2SpaceNodeCreate = {
         .optional(),
       title: z.string().describe('The title of this document').optional(),
     }),
-
     path: z.object({
       space_id: z
         .string()
@@ -318,7 +312,6 @@ export const wikiV2SpaceNodeMove = {
       target_parent_token: z.string().describe('Moved to parent token').optional(),
       target_space_id: z.string().describe('Moved to Wiki space').optional(),
     }),
-
     path: z.object({
       space_id: z.string().describe('Wiki space id'),
       node_token: z.string().describe('Node tokens to migrate'),
@@ -346,7 +339,6 @@ export const wikiV2SpaceNodeMoveDocsToWiki = {
       obj_token: z.string().describe('Document token'),
       apply: z.boolean().describe('Whether to apply for moving in documents when there is no permission').optional(),
     }),
-
     path: z.object({
       space_id: z.string().describe(''),
     }),
@@ -363,7 +355,6 @@ export const wikiV2SpaceNodeUpdateTitle = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ title: z.string().describe('New title of the node') }),
-
     path: z.object({
       space_id: z.string().describe('Space ID').optional(),
       node_token: z.string().describe('Node Token').optional(),
@@ -395,7 +386,6 @@ export const wikiV2SpaceSettingUpdate = {
         .describe('Readable user can comment: "allow" -allow "not_allow" -not allowed')
         .optional(),
     }),
-
     path: z.object({ space_id: z.string().describe('Wiki space id').optional() }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },

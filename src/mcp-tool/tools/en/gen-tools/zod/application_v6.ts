@@ -637,7 +637,6 @@ export const applicationV6ApplicationManagementUpdate = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({ enable: z.boolean().describe('Enable/Deactivate Apps').optional() }),
-
     path: z.object({ app_id: z.string().describe('App ID') }),
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },

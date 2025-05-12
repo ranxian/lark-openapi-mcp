@@ -20,6 +20,10 @@ export type corehrV2ToolName =
   | 'corehr.v2.company.batchGet'
   | 'corehr.v2.company.queryRecentChange'
   | 'corehr.v2.contract.search'
+  | 'corehr.v2.costAllocation.batchQuery'
+  | 'corehr.v2.costAllocation.createVersion'
+  | 'corehr.v2.costAllocation.removeVersion'
+  | 'corehr.v2.costAllocation.updateVersion'
   | 'corehr.v2.costCenter.create'
   | 'corehr.v2.costCenter.delete'
   | 'corehr.v2.costCenter.patch'
@@ -28,6 +32,10 @@ export type corehrV2ToolName =
   | 'corehr.v2.costCenterVersion.create'
   | 'corehr.v2.costCenterVersion.delete'
   | 'corehr.v2.costCenterVersion.patch'
+  | 'corehr.v2.defaultCostCenter.batchQuery'
+  | 'corehr.v2.defaultCostCenter.createVersion'
+  | 'corehr.v2.defaultCostCenter.removeVersion'
+  | 'corehr.v2.defaultCostCenter.updateVersion'
   | 'corehr.v2.department.batchGet'
   | 'corehr.v2.department.delete'
   | 'corehr.v2.department.parents'
@@ -711,6 +719,136 @@ export const corehrV2ContractSearch = {
     }),
   },
 };
+export const corehrV2CostAllocationBatchQuery = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.batchQuery',
+  sdkName: 'corehr.v2.costAllocation.batchQuery',
+  path: '/open-apis/corehr/v2/cost_allocations/batch_query',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Cost allocation-Query cost allocation-query cost allocation',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({ employment_ids: z.array(z.string()).describe('Employee ID List') }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+    }),
+  },
+};
+export const corehrV2CostAllocationCreateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.createVersion',
+  sdkName: 'corehr.v2.costAllocation.createVersion',
+  path: '/open-apis/corehr/v2/cost_allocations/create_version',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Cost allocation-Create cost allocation-Create cost allocation',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z.string().describe('Employee Employment ID'),
+      cost_allocation: z
+        .object({
+          effective_time: z.string().describe('Effective time'),
+          expiration_time: z.string().describe('Expiration time').optional(),
+          job_data_cost_center_id: z
+            .array(
+              z.object({
+                cost_center_id: z
+                  .string()
+                  .describe(
+                    'Cost center ID, you can obtain the corresponding cost center information through the [Query a single cost center information] interface',
+                  ),
+                new_rate: z.number().describe('proportion of assessment'),
+              }),
+            )
+            .describe('cost allocation')
+            .optional(),
+          reason: z.string().describe('Reason for change').optional(),
+        })
+        .describe('cost allocation')
+        .optional(),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+      client_token: z
+        .string()
+        .describe('Determine whether the same request is based on whether the client_token are consistent')
+        .optional(),
+    }),
+  },
+};
+export const corehrV2CostAllocationRemoveVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.removeVersion',
+  sdkName: 'corehr.v2.costAllocation.removeVersion',
+  path: '/open-apis/corehr/v2/cost_allocations/remove_version',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Cost allocation-Delete cost allocation-Delete cost allocation',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z.string().describe('employment id'),
+      cost_allocation: z
+        .object({ wk_id: z.string().describe('cost center id') })
+        .describe('cost center')
+        .optional(),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+      client_token: z
+        .string()
+        .describe('Determine whether the same request is based on whether the client_token are consistent')
+        .optional(),
+    }),
+  },
+};
+export const corehrV2CostAllocationUpdateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.costAllocation.updateVersion',
+  sdkName: 'corehr.v2.costAllocation.updateVersion',
+  path: '/open-apis/corehr/v2/cost_allocations/update_version',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Cost allocation-Update cost allocation-Update cost allocation',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z.string().describe('Employee Employment ID'),
+      cost_allocation: z
+        .object({
+          wk_id: z.string().describe('ID'),
+          effective_time: z.string().describe('Effective time').optional(),
+          expiration_time: z.string().describe('Expiration time').optional(),
+          job_data_cost_center_id: z
+            .array(
+              z.object({
+                cost_center_id: z
+                  .string()
+                  .describe(
+                    'Cost center ID, you can obtain the corresponding cost center information through the [Query a single cost center information] interface',
+                  )
+                  .optional(),
+                new_rate: z.number().describe('proportion of assessment').optional(),
+              }),
+            )
+            .describe('cost allocation')
+            .optional(),
+          reason: z.string().describe('Reason for change').optional(),
+        })
+        .describe('cost allocation')
+        .optional(),
+    }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+      client_token: z
+        .string()
+        .describe('Determine whether the same request is based on whether the client_token are consistent')
+        .optional(),
+    }),
+  },
+};
 export const corehrV2CostCenterCreate = {
   project: 'corehr',
   name: 'corehr.v2.costCenter.create',
@@ -785,7 +923,6 @@ export const corehrV2CostCenterDelete = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ operation_reason: z.string().describe('Operational reasons') }),
-
     path: z.object({
       cost_center_id: z
         .string()
@@ -954,7 +1091,6 @@ export const corehrV2CostCenterVersionDelete = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ operation_reason: z.string().describe('Operational reasons') }),
-
     path: z.object({
       cost_center_id: z
         .string()
@@ -1038,6 +1174,106 @@ export const corehrV2CostCenterVersionPatch = {
           'Version ID, which can be obtained through the  interface query',
         )
         .optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterBatchQuery = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.batchQuery',
+  sdkName: 'corehr.v2.defaultCostCenter.batchQuery',
+  path: '/open-apis/corehr/v2/default_cost_centers/batch_query',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Default cost center-Batch query default cost center-Query default cost center',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({ employment_ids: z.array(z.string()).describe('true') }),
+    params: z.object({
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterCreateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.createVersion',
+  sdkName: 'corehr.v2.defaultCostCenter.createVersion',
+  path: '/open-apis/corehr/v2/default_cost_centers/create_version',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Default cost center-Create default cost center-Create default cost center',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z.string().describe('employment id'),
+      default_cost_center: z
+        .object({
+          effective_time: z.string().describe('effective time'),
+          cost_center_id: z.string().describe('cost center id').optional(),
+          is_inherit: z.boolean().describe('is is_inherit').optional(),
+          reason: z.string().describe('change reason').optional(),
+        })
+        .describe('cost center info')
+        .optional(),
+    }),
+    params: z.object({
+      client_token: z.string().optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterRemoveVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.removeVersion',
+  sdkName: 'corehr.v2.defaultCostCenter.removeVersion',
+  path: '/open-apis/corehr/v2/default_cost_centers/remove_version',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Default cost center-Delete default cost center-Delete default cost center',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z.string().describe('Employee Employment ID'),
+      default_cost_center: z
+        .object({ wk_id: z.string().describe('ID'), wk_tid: z.string().describe('Version ID') })
+        .describe('Cost center information')
+        .optional(),
+    }),
+    params: z.object({
+      client_token: z
+        .string()
+        .describe('Idempotent flag, server level ignores client_token duplicate requests')
+        .optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
+    }),
+  },
+};
+export const corehrV2DefaultCostCenterUpdateVersion = {
+  project: 'corehr',
+  name: 'corehr.v2.defaultCostCenter.updateVersion',
+  sdkName: 'corehr.v2.defaultCostCenter.updateVersion',
+  path: '/open-apis/corehr/v2/default_cost_centers/update_version',
+  httpMethod: 'POST',
+  description:
+    '[Feishu/Lark]-Feishu People（Enterprise Edition）-Employee information-Default cost center-Update default cost center-Update default cost center',
+  accessTokens: ['tenant'],
+  schema: {
+    data: z.object({
+      employment_id: z.string().describe('employment id'),
+      default_cost_center: z
+        .object({
+          wk_id: z.string().describe('id'),
+          wk_tid: z.string().describe('version id'),
+          effective_time: z.string().describe('effective time').optional(),
+          cost_center_id: z.string().describe('cost center id').optional(),
+          is_inherit: z.boolean().describe('is inherit').optional(),
+          reason: z.string().describe('change reason').optional(),
+        })
+        .describe('default cost center')
+        .optional(),
+    }),
+    params: z.object({
+      client_token: z.string().optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id', 'people_corehr_id']).describe('User ID type').optional(),
     }),
   },
 };
@@ -2539,7 +2775,6 @@ export const corehrV2EmployeeCreate = {
         .describe('Whether to ignore the automatic generation rules of the working hour system')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -3178,7 +3413,7 @@ export const corehrV2JobChangeCreate = {
   path: '/open-apis/corehr/v2/job_changes',
   httpMethod: 'POST',
   description:
-    "[Feishu/Lark]-Feishu People（Enterprise Edition）-Job change-Job Change-This interface is used to initiate an employee change. If the initiation is successful, an employee's change data will be generated and corresponding events will be generated at the same time. Refer to [Change of Change Status](/ssl: ttdoc/uAjLw4CM/ukTMukTMukTM/reference/corehr-v1/job_change/events/updated)",
+    "[Feishu/Lark]-Feishu People（Enterprise Edition）-Job change-Job Change-This interface is used to initiate an employee change. If the initiation is successful, an employee's change data will be generated",
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
@@ -3583,7 +3818,7 @@ export const corehrV2JobList = {
       name: z.string().describe('name').optional(),
       query_language: z
         .string()
-        .describe('Language information, Chinese with zh-CN, English with en-US- Passing empty defaults to Chinese')
+        .describe('Language information, Chinese with zh-CN, English with en-US- Passing empty defaults to ALL')
         .optional(),
     }),
   },
@@ -7034,7 +7269,6 @@ export const corehrV2PreHirePatch = {
         )
         .optional(),
     }),
-
     path: z.object({ pre_hire_id: z.string().describe('prehireID') }),
   },
 };
@@ -7198,7 +7432,6 @@ export const corehrV2PreHireTransitTask = {
           'Task code.- For system-built tasks, the correspondence between task codes and task names is as follows: > The task **Create Account SSO** is a hidden task node that is automatically executed before **Personal Information**. - 1: Position Information - 2: Personal Information - 3: Create Account SSO - 4: Check-in - 9: Sign Employment Documents- For custom task nodes (e.g., 3095697a-065f-4627-a47c-46fe958a6754), the method to obtain the name is as follows: 1. Use `pre_hire_id` to call the  API or  2. Add `onboarding_info.onboarding_task_list` to the query field `fields` After querying, the returned structure of the onboarding_task_list contains the correspondence between task codes and task names, as shown in the example below:```json{ "onboarding_task_list": [ { "task_code": "3095697a-065f-4627-a47c-46fe958a6754", "task_name": "Modify Onboarding Date", "task_status": "uninitialized" }, { "task_code": "d37b9d7c-232d-4a55-98fa-541318234ede", "task_name": "Work Visa Supplement Task", "task_status": "uninitialized" } ]}```',
         ),
     }),
-
     path: z.object({ pre_hire_id: z.string() }),
   },
 };
@@ -7940,6 +8173,10 @@ export const corehrV2Tools = [
   corehrV2CompanyBatchGet,
   corehrV2CompanyQueryRecentChange,
   corehrV2ContractSearch,
+  corehrV2CostAllocationBatchQuery,
+  corehrV2CostAllocationCreateVersion,
+  corehrV2CostAllocationRemoveVersion,
+  corehrV2CostAllocationUpdateVersion,
   corehrV2CostCenterCreate,
   corehrV2CostCenterDelete,
   corehrV2CostCenterPatch,
@@ -7948,6 +8185,10 @@ export const corehrV2Tools = [
   corehrV2CostCenterVersionCreate,
   corehrV2CostCenterVersionDelete,
   corehrV2CostCenterVersionPatch,
+  corehrV2DefaultCostCenterBatchQuery,
+  corehrV2DefaultCostCenterCreateVersion,
+  corehrV2DefaultCostCenterRemoveVersion,
+  corehrV2DefaultCostCenterUpdateVersion,
   corehrV2DepartmentBatchGet,
   corehrV2DepartmentDelete,
   corehrV2DepartmentParents,

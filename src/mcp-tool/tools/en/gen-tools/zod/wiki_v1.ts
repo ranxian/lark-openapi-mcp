@@ -11,7 +11,6 @@ export const wikiV1NodeSearch = {
   schema: {
     data: z.object({ query: z.string(), space_id: z.string().optional(), node_id: z.string().optional() }),
     params: z.object({ page_token: z.string().optional(), page_size: z.number().optional() }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

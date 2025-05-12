@@ -35,7 +35,6 @@ export const searchV2AppCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -156,7 +155,6 @@ export const searchV2DataSourceItemCreate = {
         })
         .optional(),
     }),
-
     path: z.object({ data_source_id: z.string().describe('ID of the data source') }),
   },
 };
@@ -258,7 +256,6 @@ export const searchV2DataSourcePatch = {
         .optional(),
       enable_answer: z.boolean().optional(),
     }),
-
     path: z.object({ data_source_id: z.string().describe('Unique identification of the data source') }),
   },
 };
@@ -302,7 +299,6 @@ export const searchV2MessageCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -469,7 +465,6 @@ export const searchV2SchemaPatch = {
         )
         .optional(),
     }),
-
     path: z.object({ schema_id: z.string().describe('Unique identification of user-defined data schema') }),
   },
 };

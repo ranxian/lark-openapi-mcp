@@ -34,7 +34,6 @@ export const searchV2AppCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -182,7 +181,6 @@ export const searchV2DataSourceItemCreate = {
         .describe('非结构化数据，如文档文本')
         .optional(),
     }),
-
     path: z.object({ data_source_id: z.string().describe('数据源的ID') }),
   },
 };
@@ -295,7 +293,6 @@ export const searchV2DataSourcePatch = {
         .optional(),
       enable_answer: z.boolean().describe('是否使用问答服务').optional(),
     }),
-
     path: z.object({ data_source_id: z.string().describe('数据源的唯一标识') }),
   },
 };
@@ -335,7 +332,6 @@ export const searchV2MessageCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -597,7 +593,6 @@ export const searchV2SchemaPatch = {
         .describe('数据范式的属性定义')
         .optional(),
     }),
-
     path: z.object({ schema_id: z.string().describe('用户自定义数据范式的唯一标识') }),
   },
 };

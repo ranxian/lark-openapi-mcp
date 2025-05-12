@@ -355,7 +355,6 @@ export const personalSettingsV1SystemStatusPatch = {
         )
         .describe('Fields that need to be updated'),
     }),
-
     path: z.object({
       system_status_id: z
         .string()

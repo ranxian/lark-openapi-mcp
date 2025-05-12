@@ -46,7 +46,6 @@ export const sheetsV3SpreadsheetCreate = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -90,7 +89,6 @@ export const sheetsV3SpreadsheetPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -118,7 +116,6 @@ export const sheetsV3SpreadsheetSheetFilterViewConditionCreate = {
       compare_type: z.string().describe('Comparison type').optional(),
       expected: z.array(z.string()).describe('Filter parameter').optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -198,7 +195,6 @@ export const sheetsV3SpreadsheetSheetFilterViewConditionUpdate = {
       compare_type: z.string().describe('Comparison type').optional(),
       expected: z.array(z.string()).describe('Filter parameter').optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -223,7 +219,6 @@ export const sheetsV3SpreadsheetSheetFilterViewCreate = {
       filter_view_name: z.string().describe('Filter view name').optional(),
       range: z.string().describe('Filter view range').optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -281,7 +276,6 @@ export const sheetsV3SpreadsheetSheetFilterViewPatch = {
       filter_view_name: z.string().describe('Filter view name').optional(),
       range: z.string().describe('Filter view range').optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -328,7 +322,6 @@ export const sheetsV3SpreadsheetSheetFilterCreate = {
         })
         .describe('Filter conditions'),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -389,7 +382,6 @@ export const sheetsV3SpreadsheetSheetFilterUpdate = {
         })
         .describe('Filter conditions'),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -437,7 +429,6 @@ export const sheetsV3SpreadsheetSheetFind = {
         .describe('Search conditions'),
       find: z.string().describe('Found string'),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -494,7 +485,6 @@ export const sheetsV3SpreadsheetSheetFloatImageCreate = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -576,7 +566,6 @@ export const sheetsV3SpreadsheetSheetFloatImagePatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet ID').optional(),
@@ -654,7 +643,6 @@ export const sheetsV3SpreadsheetSheetMoveDimension = {
         .optional(),
       destination_index: z.number().describe('Row or column number of the target location').optional(),
     }),
-
     path: z.object({
       spreadsheet_token: z
         .string()
@@ -729,7 +717,6 @@ export const sheetsV3SpreadsheetSheetReplace = {
       find: z.string().describe('Found string'),
       replacement: z.string().describe('Replaced string'),
     }),
-
     path: z.object({
       spreadsheet_token: z.string().describe('Spreadsheet token').optional(),
       sheet_id: z.string().describe('Sheet id').optional(),

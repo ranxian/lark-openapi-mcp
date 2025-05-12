@@ -1,11 +1,12 @@
 # Feishu/Lark OpenAPI MCP
 
-
 [![npm version](https://img.shields.io/npm/v/@larksuiteoapi/lark-mcp.svg)](https://www.npmjs.com/package/@larksuiteoapi/lark-mcp)
 [![npm downloads](https://img.shields.io/npm/dm/@larksuiteoapi/lark-mcp.svg)](https://www.npmjs.com/package/@larksuiteoapi/lark-mcp)
 [![Node.js Version](https://img.shields.io/node/v/@larksuiteoapi/lark-mcp.svg)](https://nodejs.org/)
 
 English | [中文](./README_ZH.md)
+
+[Developer Documentation Retrieval MCP](./README_RECALL.md) | [Official Document](https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/mcp_integration/mcp_introduction)
 
 > **⚠️ Beta Version Notice**: This tool is currently in Beta stage. Features and APIs may change, so please stay updated with version releases.
 
@@ -18,7 +19,7 @@ This is the Feishu/Lark official OpenAPI MCP (Model Context Protocol) tool desig
   - Supports App Access Token authentication
   - Supports User Access Token authentication
 - **Flexible Communication Protocols:**
-  - Supports standard input/output stream (stdio) mode, suitable for integration with AI tools like Cursor/Claude
+  - Supports standard input/output stream (stdio) mode, suitable for integration with AI tools like Trae/Cursor/Claude
   - Supports Server-Sent Events (SSE) mode, providing HTTP-based interfaces
 
 - Supports multiple configuration methods, adapting to different usage scenarios
@@ -34,7 +35,7 @@ A complete list of all supported Feishu/Lark tools can be found in [tools.md](./
 Before using the lark-mcp tool, you need to create a Feishu/Lark application:
 
 1. Visit the [Feishu Open Platform](https://open.feishu.cn/) or [Lark Open Platform](https://open.larksuite.com/) and log in
-2. Click "Get Started" and create a new application
+2. Click "Console" and create a new application
 3. Obtain the App ID and App Secret, which will be used for API authentication
 4. Add the necessary permissions for your application based on your usage scenario
 5. If you need to call APIs as a user, set up OAuth 2.0 redirect URLs and obtain user access tokens
@@ -94,9 +95,9 @@ npm install -g @larksuiteoapi/lark-mcp
 
 ## Usage Guide
 
-### Using with Cursor/Claude
+### Using with Trae/Cursor/Claude
 
-To integrate Feishu/Lark functionality in AI tools like Cursor or Claude, add the following to your configuration file:
+To integrate Feishu/Lark functionality in AI tools like Trae，Cursor or Claude, add the following to your configuration file:
 
 ```json
 {
@@ -140,21 +141,70 @@ To access APIs with user identity, you can add a user access token:
 }
 ```
 
+### Custom API Configuration
+
+By default, the MCP service enables common APIs. To enable other tools or only specific APIs or presets, you can specify them using the `-t` parameter (separated by commas):
+
+```bash
+lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1.message.list,im.v1.chat.create,preset.calendar.default
+```
+
+#### Preset Tool Collections in Detail
+
+The following table details each API tool and its inclusion in different preset collections, helping you choose the appropriate preset for your needs:
+
+| Tool Name | Function Description | preset.default (Default) | preset.im.default | preset.base.default | preset.base.batch | preset.doc.default | preset.task.default | preset.calendar.default |
+| --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| im.v1.chat.create | Create a group chat | ✓ | ✓ | | | | | |
+| im.v1.chat.list | Get group chat list | ✓ | ✓ | | | | | |
+| im.v1.chatMembers.get | Get group members | ✓ | ✓ | | | | | |
+| im.v1.chatMembers.create | Add group members | ✓ | ✓ | | | | | |
+| im.v1.message.create | Send messages | ✓ | ✓ | | | | | |
+| im.v1.message.list | Get message list | ✓ | ✓ | | | | | |
+| bitable.v1.app.create | Create base | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.create | Create base data table | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.list | Get base data table list | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableField.list | Get base data table field list | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.search | Search base data table records | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.create | Create base data table records | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchCreate | Batch create base data table records | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.update | Update base data table records | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchUpdate | Batch update base data table records | ✓ | | | ✓ | | | |
+| docx.v1.document.rawContent | Get document content | ✓ | | | | ✓ | | |
+| docx.builtin.import | Import documents | ✓ | | | | ✓ | | |
+| docx.builtin.search | Search documents | ✓ | | | | ✓ | | |
+| drive.v1.permissionMember.create | Add collaborator permissions | ✓ | | | | ✓ | | |
+| wiki.v2.space.getNode | Get Wiki node | ✓ | | | | ✓ | | |
+| wiki.v1.node.search | Search Wiki nodes | ✓ | | | | ✓ | | |
+| contact.v3.user.batchGetId | Batch get user IDs | ✓ | | | | | | |
+| task.v2.task.create | Create task | | | | | | ✓ | |
+| task.v2.task.patch | Modify task | | | | | | ✓ | |
+| task.v2.task.addMembers | Add task members | | | | | | ✓ | |
+| task.v2.task.addReminders | Add task reminders | | | | | | ✓ | |
+| calendar.v4.calendarEvent.create | Create calendar event | | | | | | | ✓ |
+| calendar.v4.calendarEvent.patch | Modify calendar event | | | | | | | ✓ |
+| calendar.v4.calendarEvent.get | Get calendar event | | | | | | | ✓ |
+| calendar.v4.freebusy.list | Query free/busy status | | | | | | | ✓ |
+| calendar.v4.calendar.primary | Get primary calendar | | | | | | | ✓ |
+
+> **Note**: In the table, "✓" indicates the tool is included in that preset. Using `-t preset.xxx` will only enable tools marked with "✓" in the corresponding column.
+
 ### Advanced Configuration
 
 #### Command Line Parameters
 
-The `lark-mcp` tool provides various command line parameters for flexible MCP service configuration:
+The `lark-mcp mcp` tool provides various command line parameters for flexible MCP service configuration:
 
 | Parameter | Short | Description | Example |
 |------|------|------|------|
 | `--app-id` | `-a` | Feishu/Lark application App ID | `-a cli_xxxx` |
 | `--app-secret` | `-s` | Feishu/Lark application App Secret | `-s xxxx` |
-| `--domain` | `-d` | Feishu/Lark API domain, default is Feishu China version | `-d https://open.larksuite.com` |
+| `--domain` | `-d` | Feishu/Lark API domain, default is https://open.feishu.cn | `-d https://open.larksuite.com` |
 | `--tools` | `-t` | List of API tools to enable, separated by commas | `-t im.v1.message.create,im.v1.chat.create` |
 | `--tool-name-case` | `-c` | Tool name format, options are snake, camel, dot, or kebab, default is snake | `-c camel` |
 | `--language` | `-l` | Tools language, options are zh or en, default is en | `-l zh` |
 | `--user-access-token` | `-u` | User access token for calling APIs as a user | `-u u-xxxx` |
+| `--token-mode` |  | API token type, options are auto, tenant_access_token, or user_access_token, default is auto | `--token-mode user_access_token` |
 | `--mode` | `-m` | Transport mode, options are stdio or sse, default is stdio | `-m sse` |
 | `--host` |  | Listening host in SSE mode, default is localhost | `--host 0.0.0.0` |
 | `--port` | `-p` | Listening port in SSE mode, default is 3000 | `-p 3000` |
@@ -174,29 +224,51 @@ The `lark-mcp` tool provides various command line parameters for flexible MCP se
    lark-mcp mcp -a cli_xxxx -s yyyyy -u u-zzzz
    ```
 
-3. **Specifying Lark International Domain**:
+   > **Note**: User access tokens can be obtained through the [Feishu Open Platform's authorization process](https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/authentication-management/access-token/get-user-access-token) or [Lark Open Platform's authorization process](https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/reference/authen-v1/oidc-access_token/create), or you can use the API debugging console to obtain them. After using a user access token, API calls will be made with that user's identity.
+
+3. **Setting Specific Token Mode**:
    ```bash
-   lark-mcp mcp -a cli_xxxx -s yyyyy -d https://open.larksuite.com
+   lark-mcp mcp -a cli_xxxx -s yyyyy --token-mode user_access_token
+   ```
+   
+   > **Note**: This option allows you to explicitly specify which token type to use when calling APIs. The `auto` mode (default) will be determined by the LLM when calling the API.
+
+4. **Specifying Lark or KA Domains**:
+   ```bash
+   # Lark international version
+   lark-mcp mcp -a <your_app_id> -s <your_app_secret> -d https://open.larksuite.com
+
+   # Custom domain (KA domain)
+   lark-mcp mcp -a <your_app_id> -s <your_app_secret> -d https://open.your-ka-domain.com
    ```
 
-4. **Enabling Only Specific API Tools**:
+5. **Enabling Only Specific API Tools or Other API Tools**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -t im.v1.chat.create,im.v1.message.create
    ```
 
-5. **Using SSE Mode with Specific Port and Host**:
+   > **Note**: The `-t` parameter supports the following preset tool collections:
+   > - `preset.default` - Default tool set containing all preset tools
+   > - `preset.im.default` - Instant messaging related tools, such as group management, message sending, etc.
+   > - `preset.bitable.default` - Bitable related tools, such as table creation, record management, etc.
+   > - `preset.bitable.batch` - Bitable batch operation tools, including batch create and update record functions
+   > - `preset.doc.default` - Document related tools, such as document content reading, permission management, etc.
+   > - `preset.task.default` - Task management related tools, such as task creation, member management, etc.
+   > - `preset.calendar.default` - Calendar event management tools, such as creating calendar events, querying free/busy status, etc.
+
+6. **Using SSE Mode with Specific Port and Host**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -m sse --host 0.0.0.0 -p 3000
    ```
 
-6. **Setting Tools Language to Chinese**:
+7. **Setting Tools Language to Chinese**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -l zh
    ```
    
    > **Note**: Setting the language to Chinese (`-l zh`) may consume more tokens. If you encounter token limit issues when integrating with large language models, consider using the default English setting (`-l en`).
 
-7. **Setting Tool Name Format to Camel Case**:
+8. **Setting Tool Name Format to Camel Case**:
    ```bash
    lark-mcp mcp -a cli_xxxx -s yyyyy -c camel
    ```
@@ -207,7 +279,7 @@ The `lark-mcp` tool provides various command line parameters for flexible MCP se
    > - kebab format: `im-v1-message-create`
    > - dot format: `im.v1.message.create`
 
-8. **Using Environment Variables Instead of Command Line Parameters**:
+9. **Using Environment Variables Instead of Command Line Parameters**:
    ```bash
    # Set environment variables
    export APP_ID=cli_xxxx
@@ -217,109 +289,54 @@ The `lark-mcp` tool provides various command line parameters for flexible MCP se
    lark-mcp mcp
    ```
 
-#### Using Configuration File
+10. **Using Configuration File**:
 
-Besides command line parameters, you can also use a JSON format configuration file to set parameters:
+    Besides command line parameters, you can also use a JSON format configuration file to set parameters:
 
-```bash
-lark-mcp mcp --config ./config.json
-```
+    ```bash
+    lark-mcp mcp --config ./config.json
+    ```
 
-Configuration file example (config.json):
+    Configuration file example (config.json):
 
-```json
-{
-  "appId": "cli_xxxx",
-  "appSecret": "xxxx",
-  "domain": "https://open.feishu.cn",
-  "tools": ["im.v1.message.create","im.v1.chat.create"],
-  "toolNameCase": "snake",
-  "language": "zh",
-  "userAccessToken": "",
-  "mode": "stdio",
-  "host": "localhost",
-  "port": "3000"
-}
-```
+    ```json
+    {
+      "appId": "cli_xxxx",
+      "appSecret": "xxxx",
+      "domain": "https://open.feishu.cn",
+      "tools": ["im.v1.message.create","im.v1.chat.create"],
+      "toolNameCase": "snake",
+      "language": "zh",
+      "userAccessToken": "",
+      "tokenMode": "auto",
+      "mode": "stdio",
+      "host": "localhost",
+      "port": "3000"
+    }
+    ```
 
-> **Note**: Command line parameters have higher priority than configuration file. When using both command line parameters and configuration file, command line parameters will override corresponding settings in the configuration file.
+    > **Note**: Command line parameters have higher priority than configuration file. When using both command line parameters and configuration file, command line parameters will override corresponding settings in the configuration file.
 
-#### Using User Access Token
+11. **Transport Modes**:
 
-If you need to call APIs as a specific user, you can do so by specifying a User Access Token:
+    lark-mcp supports two transport modes:
 
-```bash
-lark-mcp mcp -a <your_app_id> -s <your_app_secret> -u <your_user_token>
-```
+    1. **stdio mode (Default/Recommended)**: Suitable for integration with AI tools like Trae/Cursor or Claude, communicating through standard input/output streams.
+      ```bash
+      lark-mcp mcp -a <your_app_id> -s <your_app_secret> -m stdio
+      ```
 
-User access tokens can be obtained through the [Feishu Open Platform's authorization process](https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/authentication-management/access-token/get-user-access-token) or [Lark Open Platform's authorization process](https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/reference/authen-v1/oidc-access_token/create), or you can use the API debugging console to obtain them. After using a user access token, API calls will be made with that user's identity.
-
-#### Specifying Custom Domains
-
-If you are using the Lark international version or a custom domain, you can specify it using the `-d` parameter:
-
-```bash
-# Lark international version
-lark-mcp mcp -a <your_app_id> -s <your_app_secret> -d https://open.larksuite.com
-
-# Custom domain (KA domain)
-lark-mcp mcp -a <your_app_id> -s <your_app_secret> -d https://open.your-ka-domain.com
-```
-
-#### Transport Modes
-
-lark-mcp supports two transport modes:
-
-1. **stdio mode (Default/Recommended)**: Suitable for integration with AI tools like Cursor or Claude, communicating through standard input/output streams.
-   ```bash
-   lark-mcp mcp -a <your_app_id> -s <your_app_secret> -m stdio
-   ```
-
-2. **SSE mode**: Provides an HTTP interface based on Server-Sent Events, suitable for web applications or scenarios requiring network interfaces.
-   
-   ```bash
-   # Default listens only on localhost
-   lark-mcp mcp -a <your_app_id> -s <your_app_secret> -m sse -p 3000
-   
-   # Listen on all network interfaces (allowing remote access)
-   lark-mcp mcp -a <your_app_id> -s <your_app_secret> -m sse --host 0.0.0.0 -p 3000
-   ```
-   
-   After startup, the SSE endpoint will be accessible at `http://<host>:<port>/sse`.
-
-#### Enabling More APIs
-
-By default, the MCP service enables common APIs. To enable other tools or only specific APIs, you can specify them using the `-t` parameter (separated by commas):
-
-```bash
-lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1.message.list,im.v1.chat.create
-```
-
-### Default Supported API List
-
-By default, the MCP service enables the following APIs:
-
-| Tool Name | Function Description |
-| --------------------------------- | -------------------------- |
-| im.v1.chat.create | Create a group chat |
-| im.v1.chat.list | Get group chat list |
-| im.v1.chatMembers.get | Get group members |
-| im.v1.message.create | Send messages |
-| im.v1.message.list | Get message list |
-| wiki.v2.space.getNode | Get Wiki node |
-| wiki.v1.node.search | Search Wiki nodes |
-| docx.v1.document.rawContent | Get document content |
-| drive.v1.permissionMember.create | Add collaborator permissions |
-| docx.builtin.import | Import documents |
-| docx.builtin.search | Search documents |
-| bitable.v1.app.create | Create Bitable |
-| bitable.v1.appTable.create | Create Bitable data table |
-| bitable.v1.appTable.list | Get Bitable data table list |
-| bitable.v1.appTableField.list | Get Bitable data table field list |
-| bitable.v1.appTableRecord.search | Search Bitable data table records |
-| bitable.v1.appTableRecord.create | Create Bitable data table records |
-| bitable.v1.appTableRecord.update | Update Bitable data table records |
-| contact.v3.user.batchGetId | Batch get user IDs |
+    2. **SSE mode**: Provides an HTTP interface based on Server-Sent Events, suitable for scenarios where local execution is not possible.
+      
+      ```bash
+      # Default listens only on localhost
+      lark-mcp mcp -a <your_app_id> -s <your_app_secret> -m sse -p 3000
+      
+      # Listen on all network interfaces (allowing remote access)
+      lark-mcp mcp -a <your_app_id> -s <your_app_secret> -m sse --host 0.0.0.0 -p 3000
+      ```
+      
+      After startup, the SSE endpoint will be accessible at `http://<host>:<port>/sse`.
 
 ## FAQ
 
@@ -327,7 +344,7 @@ By default, the MCP service enables the following APIs:
   **Solution**: Check your network connection and ensure your APP_ID and APP_SECRET are correct. Verify that you can access the Feishu/Lark Open Platform API; you may need to configure a proxy.
 
 - **Issue**: Error when using user_access_token
-  **Solution**: Check if the token has expired. user_access_token usually has a validity period of 2 hours and needs to be refreshed periodically. You can implement an automatic token refresh mechanism or use app_access_token instead.
+  **Solution**: Check if the token has expired. user_access_token usually has a validity period of 2 hours and needs to be refreshed periodically. You can implement an automatic token refresh mechanism.
 
 - **Issue**: Unable to call certain APIs after starting the MCP service, with insufficient permissions errors
   **Solution**: Check if your application has obtained the corresponding API permissions. Some APIs require additional high-level permissions, which can be configured in the [Developer Console](https://open.feishu.cn/app) or [Lark Developer Console](https://open.larksuite.com/app). Ensure that permissions have been approved.

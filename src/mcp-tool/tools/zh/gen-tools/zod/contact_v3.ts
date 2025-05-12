@@ -115,7 +115,6 @@ export const contactV3DepartmentBatch = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -343,7 +342,6 @@ export const contactV3DepartmentList = {
       page_token: z.string().optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -378,7 +376,6 @@ export const contactV3DepartmentParent = {
         .optional(),
       page_size: z.number().describe('分页大小，用于限制一次请求所返回的数据条目数').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -511,7 +508,6 @@ export const contactV3DepartmentSearch = {
         .optional(),
       page_size: z.number().describe('分页大小，用于限制一次请求所返回的数据条目数').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -778,7 +774,6 @@ export const contactV3EmployeeTypeEnumUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({
       enum_id: z
         .string()
@@ -986,7 +981,6 @@ export const contactV3FunctionalRoleUpdate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ role_name: z.string().describe('角色名称。在同一租户下角色名称唯一，不能重复') }),
-
     path: z.object({
       role_id: z
         .string()
@@ -1131,7 +1125,6 @@ export const contactV3GroupMemberAdd = {
           '添加的用户 ID，ID 类型与 member_id_type 的取值保持一致。不同类型的 ID 获取方式可参见：- - - ',
         ),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1171,7 +1164,6 @@ export const contactV3GroupMemberBatchAdd = {
         .describe('待添加成员信息')
         .optional(),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1210,7 +1202,6 @@ export const contactV3GroupMemberBatchRemove = {
         )
         .describe('待移除成员信息'),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1242,7 +1233,6 @@ export const contactV3GroupMemberRemove = {
           '当 `member_type` 取值为 `user`时，通过该参数设置用户 ID 类型。 Options:open_id(OpenID 标识一个用户在某个应用中的身份。同一个用户在不同应用中的 Open ID 不同。),union_id(UnionID 标识一个用户在某个应用开发商下的身份。同一用户在同一开发商下的应用中的 Union ID 是相同的，在不同开发商下的应用中的 Union ID 是不同的。通过 Union ID，应用开发商可以把同个用户在多个应用中的身份关联起来。),user_id(UserID 标识一个用户在某个租户内的身份。同一个用户在租户 A 和租户 B 内的 User ID 是不同的。在同一个租户内，一个用户的 User ID 在所有应用中都保持一致。User ID 主要用于在不同的应用间打通用户数据。)',
         ),
     }),
-
     path: z.object({
       group_id: z
         .string()
@@ -1502,7 +1492,6 @@ export const contactV3JobFamilyUpdate = {
         .describe('多语言序列描述。**默认值**：空，表示不更新')
         .optional(),
     }),
-
     path: z.object({
       job_family_id: z
         .string()
@@ -1669,7 +1658,6 @@ export const contactV3JobLevelUpdate = {
         .describe('多语言职级描述')
         .optional(),
     }),
-
     path: z.object({
       job_level_id: z
         .string()
@@ -1719,7 +1707,6 @@ export const contactV3JobTitleList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1920,7 +1907,6 @@ export const contactV3UnitPatch = {
         )
         .optional(),
     }),
-
     path: z.object({
       unit_id: z
         .string()
@@ -1983,7 +1969,6 @@ export const contactV3UserBatch = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -2368,7 +2353,6 @@ export const contactV3UserFindByDepartment = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -2417,7 +2401,6 @@ export const contactV3UserList = {
       page_token: z.string().optional(),
       page_size: z.number().optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -2868,7 +2851,6 @@ export const contactV3WorkCityList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

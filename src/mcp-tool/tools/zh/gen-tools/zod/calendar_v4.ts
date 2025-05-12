@@ -211,7 +211,6 @@ export const calendarV4CalendarCreate = {
         .describe('日历备注名，设置该字段后（包括后续修改该字段）仅对当前身份生效。**默认值**：空')
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -526,7 +525,12 @@ export const calendarV4CalendarEventCreate = {
   accessTokens: ['tenant', 'user'],
   schema: {
     data: z.object({
-      summary: z.string().describe('日程标题').optional(),
+      summary: z
+        .string()
+        .describe(
+          '日程标题。**注意**：为确保数据安全，系统会自动检测日程标题内容，当包含 **晋升、绩效、述职、调薪、调级、复议、申诉、校准、答辩** 中任一关键词时，该日程不会生成会议纪要',
+        )
+        .optional(),
       description: z
         .string()
         .describe(
@@ -962,7 +966,7 @@ export const calendarV4CalendarEventList = {
       anchor_time: z
         .string()
         .describe(
-          '时间锚点，Unix 时间戳（秒）。anchor_time用于设置一个时间点，以便直接拉取该时间点之后的日程数据，从而避免拉取全量日程数据。你可以使用page_token或sync_token进行分页或增量拉取anchor_time之后的所有日程数据。**注意**：该参数不可与start_time和end_time一起使用。**默认值**：空',
+          '时间锚点，Unix 时间戳（秒）。anchor_time 用于设置一个时间点，以便直接拉取该时间点之后的日程数据，从而避免拉取全量日程数据。可使用 page_token 或 sync_token 进行分页或增量拉取 anchor_time 之后的所有日程数据。**使用说明**：- 对于单次日程，会获取到 **日程结束时间 >= anchor_time** 的日程信息。- 对于重复性日程，目前设置 anchor_time 后均会获取到，包括在 anchor_time 之前的已结束的历史重复性日程。- 对于例外日程，会获取到 **original_time >= anchor_time** 以及 **日程结束时间 >= anchor_time** 的日程信息，其中 original_time 从例外日程 ID 中获取，ID 结构为 `{uid}_{original_time}`。**注意**：该参数不可与 start_time 和 end_time 一起使用。**默认值**：空',
         )
         .optional(),
       page_token: z
@@ -1358,7 +1362,6 @@ export const calendarV4CalendarEventReply = {
         .enum(['accept', 'decline', 'tentative'])
         .describe('日程参与人 RSVP 状态，即日程回复状态。 Options:accept(接受),decline(拒绝),tentative(待定)'),
     }),
-
     path: z.object({
       calendar_id: z
         .string()
@@ -1569,7 +1572,6 @@ export const calendarV4CalendarList = {
         )
         .optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1603,7 +1605,6 @@ export const calendarV4CalendarPatch = {
         .describe('日历备注名，设置该字段后（包括后续修改该字段）仅对当前身份生效。- 不传表示不更新该字段')
         .optional(),
     }),
-
     path: z.object({
       calendar_id: z
         .string()
@@ -1624,7 +1625,6 @@ export const calendarV4CalendarPrimary = {
   accessTokens: ['tenant', 'user'],
   schema: {
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1650,7 +1650,6 @@ export const calendarV4CalendarSearch = {
         .optional(),
       page_size: z.number().describe('一次请求返回的最大日历数量').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1739,7 +1738,6 @@ export const calendarV4ExchangeBindingCreate = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1829,7 +1827,6 @@ export const calendarV4FreebusyList = {
         .optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1846,7 +1843,6 @@ export const calendarV4SettingGenerateCaldavConf = {
     data: z.object({
       device_name: z.string().describe('需要同步日历的设备名，在日历中用来展示。**默认值**：空').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };

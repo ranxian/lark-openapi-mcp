@@ -445,7 +445,6 @@ export const adminV1BadgeUpdate = {
         .describe('勋章的多语言描述文案，同explanation字段限制，最多100个字符')
         .optional(),
     }),
-
     path: z.object({ badge_id: z.string().describe('勋章ID') }),
   },
 };

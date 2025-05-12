@@ -36,7 +36,7 @@ export const approvalV4ApprovalCreate = {
   path: '/open-apis/approval/v4/approvals',
   httpMethod: 'POST',
   description:
-    '[Feishu/Lark]-Approval-Approval definition-Create an approval definition-This API is used to create a simple approval definition, whose basic information, form and process can be specified. This API is not recommended for custom apps. Contact the administrator to create definitions in the Approval Admin if necessary',
+    '[Feishu/Lark]-Approval-Approval definition-Create an approval definition-This interface is used to create an approval definition, allowing flexible specification of the basic information, forms, and processes of the approval definition',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
@@ -48,7 +48,7 @@ export const approvalV4ApprovalCreate = {
       approval_code: z
         .string()
         .describe(
-          'Approval definition Code. If this is left empty, it indicates creating a new approval. Passing a specified Code means overwriting the original definition content',
+          'Approval Definition Code. Usage instructions:- When this parameter is not provided, it indicates a new approval definition will be created, and the final response will return an auto-generated Approval Definition Code from the system.- When this parameter is provided with a specified Approval Definition Code, it indicates that the interface is being called to update the contents of the specified approval definition, with the update method being a full update that overwrites the original definition content.Approval Definition Code. Retrieval methods:- After calling the  interface, obtain the `approval_code` from the response parameters.- Log in to the approval management backend and retrieve it from the URL of the specified approval definition. For detailed instructions, see ',
         )
         .optional(),
       description: z
@@ -77,14 +77,14 @@ export const approvalV4ApprovalCreate = {
           }),
         )
         .describe(
-          'Visible scope of Approval Frontend(The maximum supported length of the list is 200). 1. When viewer_type is USER, viewer_user_id need to be filled in 2. When viewer_type is DEPARTMENT,viewer_department_id need to be filled in 3. When viewer_type is TENANT or NONE, viewer_user_id and viewer_department_id do not need to be filled in',
+          'The `viewers` field specifies who can initiate the approval from the frontend of the approval application. Usage instructions:- When `viewer_type` is `USER`, `viewer_user_id` needs to be provided.- When `viewer_type` is `DEPARTMENT`, `viewer_department_id` needs to be provided.- When `viewer_type` is `TENANT` or `NONE`, neither `viewer_user_id` nor `viewer_department_id` needs to be provided.**Note**: The maximum length of the list is 200',
         ),
       form: z
         .object({
           form_content: z
             .string()
             .describe(
-              'Approval definition form content, which is listed as a JSON array. See the field description below for details',
+              'Approval Definition Form. The form format is a JSON array. When actually passing the value, the JSON needs to be compressed and escaped into a String type. For descriptions of the JSON fields for each control within the form, refer to .**Note**: The example values below are not escaped. You can refer to the example code in the **Request Example** section below',
             ),
         })
         .describe('Approval definition form'),
@@ -94,7 +94,7 @@ export const approvalV4ApprovalCreate = {
             id: z
               .string()
               .describe(
-                "Node ID. The start node's ID is START, and the end node's ID is END. name, node_type, and approver are not required for the start and end nodes",
+                'Node ID.- The ID of the start node is `START`- The ID of the end node is `END`The start and end nodes do not require `name`, `node_type`, or `approver` to be specified',
               ),
             name: z
               .string()
@@ -105,7 +105,7 @@ export const approvalV4ApprovalCreate = {
             node_type: z
               .enum(['AND', 'OR', 'SEQUENTIAL'])
               .describe(
-                'Approval type enumeration. When node_type is SEQUENTIAL, the approver must be selected by the initiator. Options:AND(Everyone assigned),OR(Anyone assigned),SEQUENTIAL(Sequental Sequential)',
+                "Current Node Approval Method.**Note**: When the value of this parameter is set to sequential approval (`SEQUENTIAL`), the type of approver (`approver.type`) must be set to initiator's choice (`Free`). Options:AND(Consensus Approval: Requires agreement from all approvers for the approval to be passed.),OR(Alternative Approval: Approval will be granted as long as one approver agrees.),SEQUENTIAL(Sequental Sequential Approval: Approval is carried out in the order of the approvers one by one.)",
               )
               .optional(),
             approver: z
@@ -121,9 +121,14 @@ export const approvalV4ApprovalCreate = {
                       'Free',
                     ])
                     .describe(
-                      'Approver/Cc Type1. When the type is Supervisor, SupervisorTopDown, DepartmentManager , or DepartmentManagerTopDown, their level should be specified in the level. For example, for approval by third-level managers from bottom up, level is 3. 2. When the type is Personal, User id fill in according to user_id_type 3. When the type is Free (selected by the initiator), neither user_id nor level is required. 4. ccer does not support Free. Options:Supervisor(Manager (bottom up)),SupervisorTopDown(Manager (top down)),DepartmentManager(Department supervisor (bottom up)),DepartmentManagerTopDown(Department supervisor (top down)),Personal(Specified member),Free(Selected by the initiator)',
+                      'Types of Approvers. Instructions for Use:- When this parameter is set to Supervisor, SupervisorTopDown, DepartmentManager, or DepartmentManagerTopDown, the level parameter must be filled with the corresponding number of levels. For example, if there is a three-level approval from bottom to top, the parameter value should be Supervisor, and the level parameter value should be 3.- When this parameter is set to Personal, you need to fill in the corresponding user_id to specify the user.- When this parameter is set to Free, there is no need to specify user_id or level. Options:Supervisor(Manager (bottom up)),SupervisorTopDown(Manager (top down)),DepartmentManager(Department supervisor (bottom up)),DepartmentManagerTopDown(Department supervisor (top down)),Personal(Specified member),Free(Selected by the initiator)',
                     ),
-                  user_id: z.string().describe('User id, fill in according to user_id_type').optional(),
+                  user_id: z
+                    .string()
+                    .describe(
+                      'User ID:- When the type is set to Personal, this parameter is used to specify the designated user.- The ID type must match the value of the query parameter user_id_type',
+                    )
+                    .optional(),
                   level: z
                     .string()
                     .describe(
@@ -147,9 +152,14 @@ export const approvalV4ApprovalCreate = {
                       'Free',
                     ])
                     .describe(
-                      'Approver/Cc Type1. When the type is Supervisor, SupervisorTopDown, DepartmentManager , or DepartmentManagerTopDown, their level should be specified in the level. For example, for approval by third-level managers from bottom up, level is 3. 2. When the type is Personal, User id fill in according to user_id_type 3. When the type is Free (selected by the initiator), neither user_id nor level is required. 4. ccer does not support Free. Options:Supervisor(Manager (bottom up)),SupervisorTopDown(Manager (top down)),DepartmentManager(Department supervisor (bottom up)),DepartmentManagerTopDown(Department supervisor (top down)),Personal(Specified member),Free(Selected by the initiator)',
+                      "Types of Copy Recipients. Instructions for Use:- When this parameter is set to Supervisor, SupervisorTopDown, DepartmentManager, or DepartmentManagerTopDown, the level parameter must be filled with the corresponding number of levels. For example, if there is a copy to three levels of supervisors from bottom to top, the parameter value should be Supervisor, and the level parameter value should be 3.- When this parameter is set to Personal, you need to fill in the corresponding user_id to specify the user.- When this parameter is set to Free, there is no need to specify user_id or level.- The copy recipient type does not support being set to initiator's choice (Free). Options:Supervisor(Manager (bottom up)),SupervisorTopDown(Manager (top down)),DepartmentManager(Department supervisor (bottom up)),DepartmentManagerTopDown(Department supervisor (top down)),Personal(Specified member),Free(Selected by the initiator (Copy recipient type does not support this option))",
                     ),
-                  user_id: z.string().describe('User id, fill in according to user_id_type').optional(),
+                  user_id: z
+                    .string()
+                    .describe(
+                      'User ID:- When the type is set to Personal, this parameter is used to specify the designated user.- The ID type must match the value of the query parameter user_id_type',
+                    )
+                    .optional(),
                   level: z
                     .string()
                     .describe(
@@ -162,8 +172,16 @@ export const approvalV4ApprovalCreate = {
               .optional(),
             privilege_field: z
               .object({
-                writable: z.array(z.string()).describe('The id list of form entries with writable permissions'),
-                readable: z.array(z.string()).describe('The id list of table entries with readable permissions'),
+                writable: z
+                  .array(z.string())
+                  .describe(
+                    'A list of form control item IDs with write permissions. The IDs need to be consistent with the control ID values passed in the form parameters',
+                  ),
+                readable: z
+                  .array(z.string())
+                  .describe(
+                    'A list of form control item IDs with read permissions. The IDs need to be consistent with the control ID values passed in the form parameters',
+                  ),
               })
               .describe('Control permissions for table items')
               .optional(),
@@ -180,7 +198,12 @@ export const approvalV4ApprovalCreate = {
                       'Approver Type Options:ALL(all people),PERSONAL(Designated Approver),ROLE(Designated Roles)',
                     )
                     .optional(),
-                  id_list: z.array(z.string()).describe('Approver ID').optional(),
+                  id_list: z
+                    .array(z.string())
+                    .describe(
+                      'ID list.- When type is set to ALL, no value needs to be provided.- When type is set to PERSONAL, provide the user ID, and the ID type must be consistent with the value of user_id_type.- When type is set to ROLE, provide the role ID. Obtaining method: After successfully , you can obtain the role ID from the return result',
+                    )
+                    .optional(),
                 }),
               )
               .describe('Select range of self-selected approvers')
@@ -194,7 +217,7 @@ export const approvalV4ApprovalCreate = {
           }),
         )
         .describe(
-          'Approval definition nodes, which are listed as the map array. The start node should be the first element of the list and the end node should be the last element',
+          'Approval Definition Node List, used to set the various nodes required for the approval process. The start and end of the approval process are fixed as the start node and end node, respectively. Therefore, when passing values, the start node should be the first element of the list, and the end node should be the last element of the list',
         ),
       settings: z
         .object({
@@ -211,13 +234,13 @@ export const approvalV4ApprovalCreate = {
           reject_option: z
             .number()
             .describe(
-              'Reject settings Options:0(RejectDefault Default setting, process terminated),1(RejectSubmit Return to submitter, the submitter can edit the process and resubmit)',
+              'Settings after approval is rejected. Options:0(RejectDefault Default setting, process terminated),1(RejectSubmit Return to submitter, the submitter can edit the process and resubmit)',
             )
             .optional(),
           quick_approval_option: z
             .number()
             .describe(
-              'Quick approval configuration item. When it is enabled, approval can be directly approved on the card. The default value of 1 is enabled, 0 is disabled Options:0(Close disable),1(Open enable)',
+              'Quick approval configuration item, after enabling, approval can be done directly on the card.**Default value**: 1 Options:0(Close disable),1(Open enable)',
             )
             .optional(),
         })
@@ -239,13 +262,13 @@ export const approvalV4ApprovalCreate = {
             .optional(),
         })
         .describe(
-          'Approval definition configuration items, used to configure whether an approval definition can be modified by users in the Approval Admin',
+          'Approval definition configuration item, used to configure whether the corresponding approval definition can be modified by the user in the ',
         )
         .optional(),
       icon: z
         .number()
         .describe(
-          'Approval icon enumeration. It defaults to 0. For details, see ',
+          'Approval icon enumeration, default is 0. The icons from left to right and from top to bottom are numbered 0 to 24.',
         )
         .optional(),
       i18n_resources: z
@@ -256,11 +279,16 @@ export const approvalV4ApprovalCreate = {
               .describe('Language Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)'),
             texts: z
               .array(
-                z.object({ key: z.string().describe('Copywriting key'), value: z.string().describe('Copywriting') }),
+                z.object({
+                  key: z
+                    .string()
+                    .describe(
+                      "The copywriting key starts with `@i18n@`. This field is mainly used for internationalization, allowing users to provide copy in multiple languages simultaneously. The approval center will use the corresponding copy based on the user's current language environment. If the copy in the user's current language environment is not provided, the default language copy will be used",
+                    ),
+                  value: z.string().describe('Copywriting'),
+                }),
               )
-              .describe(
-                "Key, value, and i18n key of copy starts with @i18n@.This field is mainly used for internationalized text. Word order users can pass texts in multiple languages at the same time, and the Approval Center will use the corresponding text according to the user's language environment. If the text of the user's language environment isn't passed, the text of default language will be used",
-              ),
+              .describe('Copywriting key and value'),
             is_default: z
               .boolean()
               .describe(
@@ -272,7 +300,7 @@ export const approvalV4ApprovalCreate = {
       process_manager_ids: z
         .array(z.string())
         .describe(
-          'Process manager ids, fill in according to user_id_type(The maximum supported length of the list is 200)',
+          'The list of user IDs for the approval process administrators.- The ID type is consistent with the query parameter `user_id_type`.- The maximum length of the list is 200',
         )
         .optional(),
     }),
@@ -280,7 +308,7 @@ export const approvalV4ApprovalCreate = {
       department_id_type: z
         .enum(['department_id', 'open_department_id'])
         .describe(
-          'The type of department ID used in this call Options:department_id(DepartmentId Identify departments with custom department_id),open_department_id(OpenDepartmentId Identify departments by open_department_id)',
+          'The type of Department ID used in this call. For a detailed description of Department ID, see . Options:department_id(DepartmentId Supports user-defined configuration of Department ID. When custom configuring, a deleted `department_id` can be reused, therefore the `department_id` is unique within the scope of non-deleted departments.),open_department_id(OpenDepartmentId The Department ID automatically generated by the system has a fixed prefix of `od-` and is globally unique within the tenant.)',
         )
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
@@ -294,21 +322,31 @@ export const approvalV4ApprovalGet = {
   path: '/open-apis/approval/v4/approvals/:approval_code',
   httpMethod: 'GET',
   description:
-    '[Feishu/Lark]-Approval-Approval definition-View approval definitions-This API is used to get the details of an approval definition based on an Approval Code and create approval instance requests',
+    '[Feishu/Lark]-Approval-Approval definition-View approval definitions-Retrieve information about a specific approval definition based on filters such as approval definition code, language, user ID, etc. The information includes approval definition name, status, form controls, and nodes. After obtaining the approval definition information, you can construct a request to  based on the information',
   accessTokens: ['tenant'],
   schema: {
     params: z.object({
       locale: z
         .enum(['zh-CN', 'en-US', 'ja-JP'])
-        .describe('Language optional Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)')
+        .describe(
+          'Language options, defaulting to the default language defined in the approval configuration. Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)',
+        )
         .optional(),
       with_admin_id: z
         .boolean()
-        .describe('Optional Whether to return a list of admin IDs with data permissions for the approval process')
+        .describe(
+          'Optional Whether to return a list of admin IDs with data permissions for the approval process**Default value**: false',
+        )
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-    path: z.object({ approval_code: z.string().describe('Approval definition code') }),
+    path: z.object({
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+    }),
   },
 };
 export const approvalV4ApprovalSubscribe = {
@@ -344,35 +382,35 @@ export const approvalV4ExternalApprovalCreate = {
   path: '/open-apis/approval/v4/external_approvals',
   httpMethod: 'POST',
   description:
-    '[Feishu/Lark]-Approval-Third-party approval definition-Create a third-party approval definition-Approval definition is the description of an approval, including the approval title, description, and other basic information. After an approval definition is created, users can see the approval in the initiation page of the approval app. By clicking "Initiate", a user will be redirected to the configured system address for the third-party approval initiation to initiate an approval.In addition, the approval definition also configures the callback URL for approval operations. When the approver performs [Approve] or [Reject] action in the pending approval list, the Approval Center will call the callback URL to notify the third-party system',
+    '[Feishu/Lark]-Approval-Third-party approval definition-Create a third-party approval definition-The third-party approval definition is used to set the basic information of the approval, such as the name and description. At the same time, it is also necessary to set the approval initiation page, data callback URL and other information of the third-party approval system, so as to associate Feishu approval with the third-party approval system, so that enterprise employees can directly initiate the third-party approval within Feishu approval, and the approval center can send the approval data back to the third-party approval system',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
       approval_name: z
         .string()
         .describe(
-          'The international copy key of the approval name, starting with @i18n@, must not be less than 9 characters in length',
+          'The name of the third-party approval definition.- The internationalized text key (i.e. the key in the i18n_resources.texts parameter) is passed in here, and the value needs to be assigned in the i18n_resources.texts parameter in the Key:Value format.- This parameter needs to start with @i18n@ and be at least 9 characters long',
         ),
       approval_code: z
         .string()
         .describe(
-          'This value is used to determine whether calling the current interface is to create or update an approval definition. Specific description:- If the value passed in can be matched to an existing approval definition approval_code, calling this interface will update the corresponding approval definition.- If the value passed in cannot be matched to any approval definition approval_code, a new approval definition will be created and the real approval_code of the new approval definition will be returned (not the value you passed in through this parameter)',
+          'This value is used to determine whether calling the current interface is to create or update an approval definition. Specific description:- If the value passed in can be matched to an existing approval definition approval_code, calling this interface will update the corresponding approval definition.- If the value passed in cannot be matched to any approval definition approval_code, a new approval definition will be created and the real approval_code of the new approval definition will be returned (not the value passed in through this parameter)',
         ),
       group_code: z
         .string()
         .describe(
-          'The approval group to which the approval definition belongs, which is user-defined.If the group_code does not exist, a new approval group will be created.If the group_code already exists, the approval group name will be updated with the group_name',
+          'The approval group to which the approval definition belongs is user-defined. Specific description:- If the group_code passed in does not currently exist, a new approval group will be created.- If the group_code already exists, the approval group name will be updated using group_name',
         ),
       group_name: z
         .string()
         .describe(
-          'Group name. Its value is in the format of i18n key, and the text is in i18n_resource.If the group_code does not exist, the group_name is required. Otherwise, the group name will only be updated if it is entered.The group name of the approval definition in the approval initiation page is from this field',
+          'Approval group name. The approval definition group name on the approval initiation page comes from this field. Specific description:- The internationalized text key (i.e. the key in the i18n_resources.texts parameter) is passed in here, and it is also necessary to assign a value in the i18n_resources.texts parameter in the Key:Value format.- This parameter needs to start with @i18n@.- If group_code does not currently exist, group_name is required, which means that the group name is set when a new approval group is created.- If group_code exists, the group name will be updated. If it is not filled in, the group name will not be updated',
         )
         .optional(),
       description: z
         .string()
         .describe(
-          'Description. Its value is in the format of i18n key, and the text is in i18n_resource.The description of the approval definition in the approval initiation page is from this field',
+          'Description of the approval definition. When the company employee initiates the approval later, the description will be displayed on the approval initiation page.- The internationalized text key (i.e. the key in the i18n_resources.texts parameter) is passed in here, and the value needs to be assigned in the i18n_resources.texts parameter in the Key:Value format.- This parameter needs to start with @i18n@',
         )
         .optional(),
       external: z
@@ -380,64 +418,76 @@ export const approvalV4ExternalApprovalCreate = {
           biz_name: z
             .string()
             .describe(
-              'This field is used in the list to indicate where the approval comes from, whose value is in the format of i18n key. Please note that the prefix "From" is not required, since the prefix will be added by the Approval Center',
+              'The list is used to indicate which third-party system the approval comes from.**Note**:- The internationalized text key (i.e. the key in the i18n_resources.texts parameter) is passed in here, and the value needs to be assigned in the i18n_resources.texts parameter in the Key:Value format.- The parameter needs to start with @i18n@.- When assigning a value to this parameter in i18n_resources, there is no need to set the **from** prefix. The approval center will concatenate the **from** prefix by default',
             )
             .optional(),
           biz_type: z
             .string()
             .describe(
-              'This field is used to identify which business party the approval definition belongs to. It is user-defined , and the same value can be used for multiple approval definitions.The field is to attribute multiple approval definitions to the same business party. Therefore, when searching for approvals, if the business party has configured an external approval search with the same biz_type parameter, the parameters with biz_type will be filtered out from the search provided by the Approval Center, and the search will be performed from the configured URL',
+              'Approval definition business category, custom settings. Multiple approval definitions can be set to the same or different business types for classification',
             )
             .optional(),
           create_link_mobile: z
             .string()
             .describe(
-              'Initiation link in the mobile app. If the link is set, the approval will be displayed in the approval initiation page on the mobile, and users will be redirected to the link to initiate an approval after clicking.If this field is left empty, the approval will not be displayed in themobile app',
+              'The link for initiating a three-party approval on the mobile terminal.- If this link is set, when initiating an approval on the mobile terminal, it will jump to the three-party approval initiation page corresponding to this link.- If this link is not set, the approval will not be displayed on the mobile terminal',
             )
             .optional(),
           create_link_pc: z
             .string()
             .describe(
-              'Initiation link on PC. If the link is set, the approval will be displayed in the approval initiation page on PC, and users will be redirected to the link to initiate an approval after clicking.If this field is left empty, the approval will not be displayed on PC',
+              'The link for initiating a three-party approval on the PC side.- If this link is set, when initiating an approval on the PC side, it will jump to the three-party approval initiation page corresponding to this link.- If this link is not set, the approval will not be displayed on the PC side',
             )
             .optional(),
           support_pc: z
             .boolean()
             .describe(
-              'The support_pc parameter controls whether the approval definition is displayed on the PC initiation approval page. If it is set to true, it will be displayed; otherwise, it will not',
+              'Approval defines whether to display the approval page on the PC side. If true, it will be displayed, otherwise it will not be displayed.**Note**: support_pc and support_mobile cannot both be false',
             )
             .optional(),
           support_mobile: z
             .boolean()
             .describe(
-              'The support_mobile parameter controls whether the approval definition is displayed on the mobile initiation approval page. If it is set to true, it will be displayed; otherwise, it will not.Both support_pc and support_mobile parameters cannot be set to false simultaneously',
+              'Approval defines whether to display the approval page on the mobile terminal. If true, it will be displayed, otherwise it will not be displayed.**Note**: support_pc and support_mobile cannot both be false',
             )
             .optional(),
           support_batch_read: z.boolean().describe('Whether marking as read in batches is supported').optional(),
           enable_mark_readed: z
             .boolean()
-            .describe('Whether marking as read is supported（This field is invalid）')
+            .describe(
+              'Supports labeling readable**Note**: This field is invalid and is not supported for the time being',
+            )
             .optional(),
-          enable_quick_operate: z.boolean().describe('Whether quick action is supported').optional(),
+          enable_quick_operate: z
+            .boolean()
+            .describe(
+              'Whether to support quick operation**Note**: This field is invalid and is not supported for the time being',
+            )
+            .optional(),
           action_callback_url: z
             .string()
             .describe(
-              'Third-party\'s action callback URL. This URL is called by the Approval Center to notify the third-party system when the task approver of the [Pending] list clicks "Approve" or "Reject".Refer to ',
+              'The operation callback URL of the third-party system. After the task approver of the **pending approval** instance clicks to agree or reject the operation, the approval center calls this URL to notify the third-party system. For information about the callback address, see ',
             )
             .optional(),
           action_callback_token: z
             .string()
             .describe(
-              'Callback token, used for the business system to validate whether the request comes from Approval. Refer to ',
+              'The token brought during the callback is used by the business system to verify that the request comes from the approval center',
             )
             .optional(),
           action_callback_key: z
             .string()
             .describe(
-              'Request parameter encryption key. If this parameter is configured, the request parameters will be encrypted and the business party must decrypt the request. For the encryption and decryption methods, refer to ',
+              'Request parameter encryption key. If this parameter is configured, the request parameters will be encrypted and the request needs to be decrypted after receiving the request. For the encryption and decryption algorithm, refer to ',
             )
             .optional(),
-          allow_batch_operate: z.boolean().describe('Whether batch action is supported').optional(),
+          allow_batch_operate: z
+            .boolean()
+            .describe(
+              'Whether batch approval is supported. When the value is true, the approver can process multiple tasks in batches when processing the approval tasks under this definition',
+            )
+            .optional(),
           exclude_efficiency_statistics: z
             .boolean()
             .describe('Whether approval process data is not included in efficiency statistics')
@@ -464,7 +514,7 @@ export const approvalV4ExternalApprovalCreate = {
           }),
         )
         .describe(
-          'List of users who can view(Maximum supported length 200). Multiple viewers can be configured at the same time, and only users within the visible scope can see the approval in the approval initiation page',
+          'The list of people who can see the approval. The maximum length of the list is 200. Only users in the list of people who can see the approval can see the approval on the approval initiation page. If this parameter is not passed, it means that no one can see it',
         )
         .optional(),
       i18n_resources: z
@@ -475,10 +525,13 @@ export const approvalV4ExternalApprovalCreate = {
               .describe('Language Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)'),
             texts: z
               .array(
-                z.object({ key: z.string().describe('Copywriting key'), value: z.string().describe('Copywriting') }),
+                z.object({
+                  key: z.string().describe('The text key needs to match the key of each parameter'),
+                  value: z.string().describe('The copy Value is the parameter value corresponding to the copy Key'),
+                }),
               )
               .describe(
-                "Key, value, and i18n key of copy starts with @i18n@.This field is mainly used for internationalized text. Word order users can pass texts in multiple languages at the same time, and the Approval Center will use the corresponding text according to the user's language environment. If the text of the user's language environment isn't passed, the text of default language will be used",
+                "Key:Value of the text. The key needs to start with @i18n@ and the value must be passed in according to the requirements of each parameter.**Description**: This field is mainly used for internationalization adaptation. It allows texts in multiple languages ​​to be set at the same time. The approval center will use the matching text based on the actual user's current voice environment. If the user's current voice environment text is not set, the default language text will be used",
               ),
             is_default: z
               .boolean()
@@ -498,7 +551,7 @@ export const approvalV4ExternalApprovalCreate = {
       department_id_type: z
         .enum(['department_id', 'open_department_id'])
         .describe(
-          'The type of department ID used in this call Options:department_id(DepartmentId Identify departments with custom department_id),open_department_id(OpenDepartmentId Identify departments by open_department_id)',
+          'The department ID type in this call. For a detailed description of department IDs, see . Options:department_id(DepartmentId Supports user-defined department ID. When customizing the configuration, the deleted department_id can be reused, so the department_id is unique within the scope of the non-deleted department.),open_department_id(OpenDepartmentId The department ID is automatically generated by the system. The ID prefix is ​​fixed to `od-` and is globally unique within the tenant.)',
         )
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
@@ -512,7 +565,7 @@ export const approvalV4ExternalApprovalGet = {
   path: '/open-apis/approval/v4/external_approvals/:approval_code',
   httpMethod: 'GET',
   description:
-    '[Feishu/Lark]-Approval-Third-party approval definition-View third-party approval definition-This API is used to get the details of a third-party approval definition based on an Approval Code',
+    '[Feishu/Lark]-Approval-Third-party approval definition-View third-party approval definition-Call this interface to obtain detailed information of the approval definition using the third-party approval definition code. This includes the name of the third-party approval definition, description, third-party approval initiation link, callback URL, and the list of visible personnel for the approval definition',
   accessTokens: ['tenant'],
   schema: {
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
@@ -520,7 +573,7 @@ export const approvalV4ExternalApprovalGet = {
       approval_code: z
         .string()
         .describe(
-          'Approval definition code in response body after ',
+          'Third-party approval definition code can be obtained by:- Calling , which will return the approval definition code.- Logging into the approval management backend and obtaining it from the URL of the specified approval definition. For detailed instructions, see ',
         ),
     }),
   },
@@ -531,16 +584,32 @@ export const approvalV4ExternalInstanceCheck = {
   sdkName: 'approval.v4.externalInstance.check',
   path: '/open-apis/approval/v4/external_instances/check',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Approval-Third-party approval instances-Verify instances',
+  description:
+    '[Feishu/Lark]-Approval-Third-party approval instances-Verify instances-Call this interface to verify third-party approval instance data, used to determine whether server-side data is up to date. Submit the latest update time of the instance when making the request. If the server does not have the instance or the instance update time on the server is not the latest, the corresponding instance ID will be returned.For example, set a timed task every 5 minutes to compare the instances generated in the past 5 minutes using this interface. If the data does not exist on the server or is not the latest, you can go to  based on the instance ID and task ID returned by this interface',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
       instances: z
         .array(
           z.object({
-            instance_id: z.string(),
-            update_time: z.string(),
-            tasks: z.array(z.object({ task_id: z.string(), update_time: z.string() })),
+            instance_id: z
+              .string()
+              .describe(
+                'Approval instance ID. Custom configuration needs to ensure uniqueness within the current enterprise and application.**Note**: When calling this interface and the  interface for the same third-party approval instance, it is necessary to ensure that the instance ID used is consistent',
+              ),
+            update_time: z.string().describe('Latest update time of the approval instance, Unix millisecond timestamp'),
+            tasks: z
+              .array(
+                z.object({
+                  task_id: z
+                    .string()
+                    .describe(
+                      'Approval task ID within the approval instance. Custom configuration needs to ensure uniqueness within the current enterprise and application.**Note**: When calling this interface and the  interface for tasks within the same third-party approval instance, it is necessary to ensure that the task ID used is consistent',
+                    ),
+                  update_time: z.string().describe('Latest update time of the task, Unix millisecond timestamp'),
+                }),
+              )
+              .describe('Task information'),
           }),
         )
         .describe('Instance information'),
@@ -554,24 +623,24 @@ export const approvalV4ExternalInstanceCreate = {
   path: '/open-apis/approval/v4/external_instances',
   httpMethod: 'POST',
   description:
-    "[Feishu/Lark]-Approval-Third-party approval instances-Sync instances-Approval transfer lies in the third-party system instead of the Approval Center. The approval instances, approval tasks, and approval CC data generated after approval transfer are synced from the third-party system to the Approval Center. Users can browse the instances, tasks, and CC information synced from the third-party system in the Approval Center, and can redirect to the third-party system for more detailed viewing and action. The instance information is in the [Initiated] list, the task information is in the [Pending] and [Approved] lists, and the CC information is in the [CC'd] list.The third-party system can also configure the callback API for approval tasks, so that the approver can directly perform the approval action in the Approval Center, and the Approval Center will call back the third-party system. After receiving the callback, the third-party system will update the task information and sync the new task information back to the Approval Center to form a closed loop",
+    '[Feishu/Lark]-Approval-Third-party approval instances-Sync instances-The Approval Center does not handle the circulation of approvals; the circulation of approvals occurs within the third-party system. This interface is used to synchronize the approval instances, approval tasks, and approval forwarding data generated in the third-party system after the approval circulation to the Approval Center',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
       approval_code: z
         .string()
         .describe(
-          'Approval definition code, create the value returned by the approval definition, indicating which process the instance belongs to; this field will affect the title of the instance in the list, and the title is taken from the corresponding defined name field',
+          'Approval Definition Code. The return value from  is used to specify the approval definition to which the current instance belongs.**Note**: If the `title` parameter is set in the current interface, the approval instance name is displayed according to the `title`. If `title` is not set, the title of the approval instance is taken from the `name` parameter of the corresponding approval definition (`approval_code`)',
         ),
       status: z
         .enum(['PENDING', 'APPROVED', 'REJECTED', 'CANCELED', 'DELETED', 'HIDDEN', 'TERMINATED'])
         .describe(
-          'Approval instance status Options:PENDING(Approving),APPROVED(The approval process is over and the result is consent.),REJECTED(The approval process ends with a rejection),CANCELED(Approval sponsor withdraws),DELETED(Approval deleted),HIDDEN(Status hide (do not show status)),TERMINATED(Approval terminated)',
+          'Approval instance status Options:PENDING(Approving),APPROVED(The approval process has ended, and the result is approval.),REJECTED(The approval process has ended, and the result is rejection.),CANCELED(Approval sponsor withdraws),DELETED(Approval deleted),HIDDEN(Status hide (do not show status)),TERMINATED(Approval terminated)',
         ),
       extra: z
         .string()
         .describe(
-          'Approval instance extends JSON. The document number is achieved by passing business_key field. The following example values are not escaped, so please be aware of the escaping when using them. You can see an example after escaping in the request body example',
+          'Approval instance extension parameter, JSON format, needs to be compressed and escaped into a string when passing the value. The document number is realized by passing the business_key parameter.**Note**: The following example values ​​are not escaped, please pay attention to escape when using. You can view the escaped extra example value in the request body example',
         )
         .optional(),
       instance_id: z
@@ -584,29 +653,39 @@ export const approvalV4ExternalInstanceCreate = {
           pc_link: z
             .string()
             .describe(
-              'Jump link on the pc side, when the user uses the Feishu pc side, use this field to jump, and the hosted link remains unchanged',
+              'The PC-side third-party approval instance jump link.**Description**:- When users use the Feishu PC side to view instance details, they will jump through this link.- At least one of pc_link and mobile_link must be filled in',
             ),
           mobile_link: z
             .string()
             .describe(
-              'Mobile end jump link, when the user uses Feishu mobile end, use this field to jump, the hosted link remains the same',
+              'The mobile version of the third-party approval instance jump link.**Description**:- When users use the Feishu mobile version to view instance details, they will be redirected through this link.- At least one of pc_link and mobile_link must be filled in',
             )
             .optional(),
         })
         .describe(
-          'Approval instance link collection, used for the jump of the [initiated] list, jump back to the three-party system; pc_link and mobile_link must fill in one, which end of the link is filled in, that is, it will jump to the link, not affected by the platform',
+          'Approval instance link information. The set link is used to click in the **Initiated** list of the approval center to jump back to the third-party approval system to view the approval details',
         ),
       title: z
         .string()
         .describe(
-          'Approval display name, if this field is filled in, the approval title in the approval list uses this field, if this field is not filled in, the approval title uses the name of the approval definition',
+          'Approval display name.**Description**:- If this parameter is filled in, the approval name in the approval list uses this parameter. If this parameter is not filled in, the approval name uses the name defined by the approval.- The internationalized text Key (i.e. the Key in the i18n_resources.texts parameter) is passed in here, and the value needs to be assigned in the i18n_resources.texts parameter in the Key:Value format.- The Key needs to start with @i18n@',
         )
         .optional(),
       form: z
         .array(
           z.object({
-            name: z.string().describe('Form field name').optional(),
-            value: z.string().describe('form value').optional(),
+            name: z
+              .string()
+              .describe(
+                'The form field name.**Note**:- The internationalized text key (i.e. the key in the i18n_resources.texts parameter) is passed in here, and the value needs to be assigned in the i18n_resources.texts parameter in the Key:Value format.- The key needs to start with @i18n@',
+              )
+              .optional(),
+            value: z
+              .string()
+              .describe(
+                'Form Value.**Note**:- The value passed here is the key for internationalization texts (i.e., the Key from the `i18n_resources.texts` parameter), which also needs to be assigned in the `i18n_resources.texts` parameter in a Key:Value format.- The Key should start with `@i18n@`',
+              )
+              .optional(),
           }),
         )
         .describe(
@@ -616,26 +695,31 @@ export const approvalV4ExternalInstanceCreate = {
       user_id: z
         .string()
         .describe(
-          'Approval sponsor user_id, the sponsor can see all the approvals that have been initiated in the [Initiated] list; in the [Pending Approval], [Approved] [CC Me] list, this field shows who initiated the approval',
+          'Approval Initiator user_id. The initiator can see all initiated approvals in the "Initiated" list in the Approval Center. In the "Pending", "Completed", and "CC" lists, this field is used to display the initiator of the approval. For the method to obtain the user ID, see .**Note**: At least one of the initiator\'s `open_id` or `user_id` must be provided',
         )
         .optional(),
       user_name: z
         .string()
         .describe(
-          'Approval sponsor, username, if the sponsor is not a real user (for example, a department), there is no user_id, you can use this field to pass the name',
+          'Username of the approval initiator. If the initiator is not a real user (e.g., a department), and does not have a `user_id`, this parameter can be used to pass in a name.**Note**:- The value passed here is the key for internationalization texts (i.e., the Key from the `i18n_resources.texts` parameter), which also needs to be assigned in the `i18n_resources.texts` parameter in a Key:Value format.- The Key should start with `@i18n@`',
         )
         .optional(),
-      open_id: z.string().describe('Approval sponsor open id').optional(),
+      open_id: z
+        .string()
+        .describe(
+          'Approval Initiator open_id. The initiator can see all initiated approvals in the "Initiated" list in the Approval Center. In the "Pending", "Completed", and "CC" lists, this field is used to display the initiator of the approval. For the method to obtain the open ID, see .**Note**: At least one of the initiator\'s `open_id` or `user_id` must be provided',
+        )
+        .optional(),
       department_id: z
         .string()
         .describe(
-          'Promoter department, used to display the department to which the promoter belongs in the list. If it is not passed, it will not be displayed. If the user does not join any department, pass "", and pass the display tenant name department_name the display department name',
+          'Department ID of the initiator, which is used to display the department of the initiator in the Approval Center list. If the value is not provided, it will not be displayed. For the method to obtain the department ID, see .**Note**: If the user has not joined any department, pass an empty string `""`, and it will default to displaying the company name. If the `department_name` parameter is provided, the corresponding department name will be displayed',
         )
         .optional(),
       department_name: z
         .string()
         .describe(
-          'Approval sponsor, department, if the sponsor is not a real user (for example, a department), there is no department_id, you can use this field to pass the name',
+          'Department name of the approval initiator. If the initiator is not a real user or does not belong to a department, this parameter can be used to pass in the department name.**Note**:- The value passed here is the key for internationalization texts (i.e., the Key from the `i18n_resources.texts` parameter), which also needs to be assigned in the `i18n_resources.texts` parameter in a Key:Value format.- The Key should start with `@i18n@`',
         )
         .optional(),
       start_time: z.string().describe('Approval initiation time, Unix millisecond timestamp'),
@@ -645,18 +729,18 @@ export const approvalV4ExternalInstanceCreate = {
       update_time: z
         .string()
         .describe(
-          'The most recent update time of the approval instance; used to push data version control If the update_mode value is UPDATE, the approval instance information in the approval center will only be updated when the passed update_time changes (becomes larger). This field is mainly used to avoid concurrency when old data is updated with new data',
+          'The latest update time of the approval instance, used for data version control in push operations. If the `update_mode` value is set to `UPDATE`, the approval instance information in the Approval Center will only be updated when the provided `update_time` has changed (i.e., is greater than the previous value).**Note**: This parameter is mainly used to prevent old data from updating new data during concurrent operations',
         ),
       display_method: z
         .enum(['BROWSER', 'SIDEBAR', 'NORMAL', 'TRUSTEESHIP'])
         .describe(
-          'How to open an approval instance on the list page Options:BROWSER(Jump to the default browser of the system to open),SIDEBAR(Feishu middle side drawer open),NORMAL(Feishu inline page opens),TRUSTEESHIP(Open with hosting)',
+          'How to open an approval instance on the list page Options:BROWSER(Jump to the default browser of the system to open),SIDEBAR(Feishu middle side drawer open),NORMAL(Feishu inline page opens),TRUSTEESHIP(Open with hosting (i.e., hosting in the Feishu Approval Center))',
         )
         .optional(),
       update_mode: z
         .enum(['REPLACE', 'UPDATE'])
         .describe(
-          'Update mode, when update_mode = REPLACE, the current push data is used as the final data every time, and redundant tasks and cc data in the approval center will be deleted (not in the data pushed this time); when update_mode = UPDATE, The data of the approval center will not be deleted, but only the instance and task data will be added and updated Options:REPLACE(Full replacement, default),UPDATE(incremental update)',
+          'Update mode.- When `update_mode` is set to `REPLACE`, the current pushed data will always be used as the final data, and any extra tasks or copied data in the Approval Center that are not included in this push will be deleted.- When `update_mode` is set to `UPDATE`, the data in the Approval Center will not be deleted, but only new instances and task data will be added or updated.**Default value**: `REPLACE` Options:REPLACE(Full replacement, default),UPDATE(incremental update)',
         )
         .optional(),
       task_list: z
@@ -670,30 +754,42 @@ export const approvalV4ExternalInstanceCreate = {
             user_id: z
               .string()
               .describe(
-                "user_id approver, and fill in at least one of open_id. This task will appear in the approver's [Pending Approval] or [Approved] list",
+                "Approver's user_id, the method to obtain it can be found in .**Notes**:- This task will appear in the **Pending** or **Completed** list in the approver's Feishu Approval Center.- At least one of `user_id` or `open_id` must be provided",
               )
               .optional(),
-            open_id: z.string().describe('open_id, and at least one user_id').optional(),
-            title: z.string().describe('Approval task name').optional(),
+            open_id: z
+              .string()
+              .describe(
+                "Approver's open_id, the method to obtain it can be found in .**Notes**:- This task will appear in the **Pending** or **Completed** list in the approver's Feishu Approval Center.- At least one of `user_id` or `open_id` must be provided",
+              )
+              .optional(),
+            title: z
+              .string()
+              .describe(
+                'Approval task name.**Notes**:- The value passed here is an internationalization document key (i.e., the key in `i18n_resources.texts` parameter), and the key needs to be assigned in `i18n_resources.texts` parameter in Key:Value format.- The key must start with `@i18n@`',
+              )
+              .optional(),
             links: z
               .object({
                 pc_link: z
                   .string()
                   .describe(
-                    'The jump link on the pc side, when the user uses the Feishu pc side, use this field to jump',
+                    'PC-side redirection link.**Notes**:- When the user views task details on the Feishu PC side, this link will be used for redirection.- At least one of `pc_link` or `mobile_link` must be provided',
                   ),
                 mobile_link: z
                   .string()
-                  .describe('Mobile end jump link, when the user uses Feishu mobile end, use this field to jump')
+                  .describe(
+                    'Mobile-side redirection link.**Notes**:- When the user views task details on the Feishu mobile side, this link will be used for redirection.- At least one of `pc_link` or `mobile_link` must be provided',
+                  )
                   .optional(),
               })
               .describe(
-                'The jump link used in [Pending Approval] or [Approved] is used to jump back to the three-party system pc_link and mobile_link must fill in one, which end of the link is filled in, that is, it will jump to the link, not affected by the platform',
+                "A third-party approval redirection link used in the Approval Center's **To-do** and **Done** sections, which allows users to return to the third-party approval system to view task details",
               ),
             status: z
               .enum(['PENDING', 'APPROVED', 'REJECTED', 'TRANSFERRED', 'DONE'])
               .describe(
-                'task status Options:PENDING(Pending approval),APPROVED(Task agreed),REJECTED(Reject Task denied),TRANSFERRED(Transefrred Task transfer),DONE(The task passed but the approver did not operate it; the approver cannot see the task. If you want to see it, you can copy the person.)',
+                'Task status Options:PENDING(Pending approval),APPROVED(Task agreed),REJECTED(Reject Task denied),TRANSFERRED(Transefrred Task transfer),DONE(The task passed but the approver did not operate it; the approver cannot see the task. If you want to see it, you can copy the person.)',
               ),
             extra: z
               .string()
@@ -728,13 +824,13 @@ export const approvalV4ExternalInstanceCreate = {
                   action_name: z
                     .string()
                     .describe(
-                      'The operation name, i18n key is used for foreground presentation, if the action_type is not APPROVAL and REJECT, this field must be provided to display the specific operation name',
+                      'Action name. If `action_type` is not equal to `APPROVAL` or `REJECT`, this field must be provided to display the specific action name.**Notes**:- The value passed here is an internationalization text Key (i.e., the Key in the `i18n_resources.texts` parameter), which needs to be assigned in the `i18n_resources.texts` parameter in a Key:Value format.- The Key must start with `@i18n@`',
                     )
                     .optional(),
                   is_need_reason: z
                     .boolean()
                     .describe(
-                      'Whether you need an opinion, if true, when the user operates, it will jump to the opinion fill page',
+                      'Whether approval comments are required. When the value is `true`, after the approver operates on the task in the Approval Center, they will need to provide approval comments',
                     )
                     .optional(),
                   is_reason_required: z.boolean().describe('Approval comment is required').optional(),
@@ -744,7 +840,9 @@ export const approvalV4ExternalInstanceCreate = {
                     .optional(),
                 }),
               )
-              .describe('Task level operation configuration, fast approval currently supports mobile end operation')
+              .describe(
+                'Quick action configuration at the task level.**Note**: Shortcut keys are currently only supported on the Feishu mobile side',
+              )
               .optional(),
             display_method: z
               .enum(['BROWSER', 'SIDEBAR', 'NORMAL', 'TRUSTEESHIP'])
@@ -755,19 +853,19 @@ export const approvalV4ExternalInstanceCreate = {
             exclude_statistics: z
               .boolean()
               .describe(
-                'Tripartite mission support is not included in efficiency statistics.false: Include efficiency statistics.true: efficiency statistics are not included',
+                'Tripartite mission support is not included in efficiency statistics.- false: Include efficiency statistics.- true: efficiency statistics are not included',
               )
               .optional(),
             node_id: z
               .string()
               .describe(
-                'Node ID: must be satisfied at the same time- In a process, each node id is unique. For example, the Node_id of each node such as "direct manager" and "hierarchical superior" under a process are different- In the same process definition, the same node in different approval instances should Node_id remain unchanged. For example, Zhang San and Li Si initiated leave applications respectively, and the node_id of the "direct manager" node in these two approval instances should remain the same',
+                'Approval node ID. It must meet the following conditions:- Within an approval process, each node ID must be unique. For example, in a process, the node IDs for direct superior, senior superior, etc., must be different.- Within the same third-party approval definition, the node ID should remain consistent across different approval instances for the same nodes. For example, if User A and User B both initiate leave requests, the node ID for the direct superior node should be consistent in both approval instances',
               )
               .optional(),
             node_name: z
               .string()
               .describe(
-                'Node names, such as "Financial Approval" and "Legal Approval", support three languages: Chinese, English and Japanese. Example: i18n@name. The international copy corresponding to the name needs to be uploaded in the i18n_resources',
+                'Node name.**Notes**:- The value passed here is an internationalization text Key (i.e., the Key in the `i18n_resources.texts` parameter), which needs to be assigned in the `i18n_resources.texts` parameter in a Key:Value format.- The Key must start with `@i18n@`',
               )
               .optional(),
           }),
@@ -778,8 +876,18 @@ export const approvalV4ExternalInstanceCreate = {
         .array(
           z.object({
             cc_id: z.string().describe('Unique identity within the approval instance'),
-            user_id: z.string().describe('CC employee id').optional(),
-            open_id: z.string().describe('CC person open id, and fill in at least one of both user id').optional(),
+            user_id: z
+              .string()
+              .describe(
+                "CC recipient's `user_id`. For the method of obtaining, please refer to .**Note**: At least one of the CC recipient's `open_id` and `user_id` must be provided",
+              )
+              .optional(),
+            open_id: z
+              .string()
+              .describe(
+                "CC recipient's `open_id`. For the method of obtaining, please refer to .**Note**: At least one of the CC recipient's `open_id` and `user_id` must be provided",
+              )
+              .optional(),
             links: z
               .object({
                 pc_link: z
@@ -789,23 +897,32 @@ export const approvalV4ExternalInstanceCreate = {
                   ),
                 mobile_link: z
                   .string()
-                  .describe('Mobile end jump link, when the user uses Feishu mobile end, use this field to jump')
+                  .describe(
+                    'Third-party approval instance redirection link for mobile.**Note**:- When users view approval CC on Feishu mobile, this field is used for redirection.- At least one of `pc_link` and `mobile_link` must be provided',
+                  )
                   .optional(),
               })
               .describe(
-                'Jump link, used for the jump pc_link and mobile_link in the [CC My] list, you must fill in one, which end of the link is filled in, that is, you will jump to the link, not affected by the platform',
+                "Approval CC redirection link. The configured link is used to redirect when clicking within the **CC'd** list in the approval center, taking you back to the third-party approval system to view approval CC details",
               ),
             read_status: z
               .enum(['READ', 'UNREAD'])
               .describe(
-                'Read status, null value means read unread is not supported: Options:READ(read),UNREAD(unread)',
+                'Read status, null value means read unread is not supported. Options:READ(read),UNREAD(unread)',
               ),
-            extra: z.string().describe('Extend json').optional(),
+            extra: z
+              .string()
+              .describe(
+                'Extended fields. Use JSON format, and the values need to be compressed and escaped into a string when transmitting',
+              )
+              .optional(),
             title: z.string().describe('CC task name').optional(),
             create_time: z.string().describe('CC initiation time, Unix millisecond timestamp'),
             update_time: z
               .string()
-              .describe('CC last update time, used to push data versioning update policy same instance update_time'),
+              .describe(
+                'CC latest update time, used for pushing data versions. If the `update_mode` value is `UPDATE`, the approval instance information in the approval center will only be updated when the transmitted `update_time` changes (increases)',
+              ),
             display_method: z
               .enum(['BROWSER', 'SIDEBAR', 'NORMAL', 'TRUSTEESHIP'])
               .describe(
@@ -821,15 +938,13 @@ export const approvalV4ExternalInstanceCreate = {
           z.object({
             locale: z
               .enum(['zh-CN', 'en-US', 'ja-JP'])
-              .describe(
-                'Language options are: zh-CN: Chinese en-US: English ja-JP: Japanese Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)',
-              ),
+              .describe('Language Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)'),
             texts: z
               .array(
                 z.object({ key: z.string().describe('Copywriting key'), value: z.string().describe('copywriting') }),
               )
               .describe(
-                "Copywriting key, value, i18n key starts with @i18n @; this field is mainly used for internationalization, allowing users to transmit copywriting in multiple languages at the same time. The approval center will use the corresponding copywriting according to the user's current voice environment. If the user's current voice environment copywriting, the default language copywriting will be used",
+                "Copy Key:Value. Keys need to start with `@i18n@` and pass Values according to the requirements of each parameter. This field is mainly used for internationalization, allowing users to input copies in multiple languages simultaneously. The approval center will use the corresponding copy according to the user's current language environment. If the copy for the user's current language environment is not provided, the default language copy will be used",
               ),
             is_default: z
               .boolean()
@@ -971,13 +1086,25 @@ export const approvalV4InstanceCancel = {
   path: '/open-apis/approval/v4/instances/cancel',
   httpMethod: 'POST',
   description:
-    '[Feishu/Lark]-Approval-Approval instances-Revoke approval instances-If the administrator has set **Allow withdrawal of requests under approval** or **Allow withdrawal of approvals passed within x days** in the background, the submitter can call this interface to withdraw the approval instance when the rules are met',
+    '[Feishu/Lark]-Approval-Approval instances-Revoke approval instances-If the enterprise administrator selects **Allow to revoke a request awaiting approval** or **Allow to revoke requests within x days** in the **More** of a specific approval definition in the approval backend, you can call this interface to revoke the approval instance of the specified submitter under the conditions that meet the revocation rules',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string().describe('Approval definition code'),
-      instance_code: z.string().describe('Approval instance code'),
-      user_id: z.string().describe('Operation user, fill in according to user_id_type'),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
+        ),
+      user_id: z
+        .string()
+        .describe(
+          'The user ID of the individual submitting the approval, where the ID type matches the value of the query parameter user_id_type',
+        ),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
   },
@@ -988,17 +1115,30 @@ export const approvalV4InstanceCc = {
   sdkName: 'approval.v4.instance.cc',
   path: '/open-apis/approval/v4/instances/cc',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Approval-Approval instances-Notify someone of approval instances',
+  description:
+    "[Feishu/Lark]-Approval-Approval instances-Notify someone of approval instances-Calling this API will CC the current approval instance to the specified user. The CC'ed user can view the approval instance details. For example, they can see the approval instance in the Feishu client under **Workplace > Approval > Approval Center > CC'd** list",
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string(),
-      instance_code: z.string(),
-      user_id: z.string(),
-      cc_user_ids: z.array(z.string()),
-      comment: z.string().optional(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
+        ),
+      user_id: z
+        .string()
+        .describe('Fill in the user id of the person who initiated the cc according to the user_id_type'),
+      cc_user_ids: z
+        .array(z.string())
+        .describe('According to the user_id_type, fill in the user id list of the copied person'),
+      comment: z.string().describe('CC comment').optional(),
     }),
-    params: z.object({ user_id_type: z.enum(['user_id', 'union_id', 'open_id']).describe('User ID type').optional() }),
+    params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
   },
 };
 export const approvalV4InstanceCommentCreate = {
@@ -1012,16 +1152,25 @@ export const approvalV4InstanceCommentCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      content: z.string().describe('Comment content in json format').optional(),
+      content: z
+        .string()
+        .describe(
+          'Comment content in JSON format, which needs to be compressed and escaped to a string when passed in. The following example value is not escaped, you can refer to the example content in the request body to edit.**Parameter description within JSON**:- text: string type, comment text content.- files: Attachment[] type, attachment information. - url: string type, attachment link. - thumbnailURL: string type, thumbnail link. - fileSize: int64 type, file size. - title: string type, title. - type: string type, attachment type, value image indicates the image type.**Note**:- If you need to @user, set the username text in this parameter, for example `@username`, and implement the @ effect through the at_info_list parameter.- For attachments, using HTTP resource links to transfer image resources on the PC may cause thumbnail anomalies, it is recommended to use HTTPS to transfer resource attachments',
+        )
+        .optional(),
       at_info_list: z
         .array(
           z.object({
-            user_id: z.string().describe('ID of the member mentioned'),
+            user_id: z
+              .string()
+              .describe(
+                'The ID of the mentioned person should be consistent with the value of the query parameter user_id_type',
+              ),
             name: z.string().describe('Name of the member mentioned'),
             offset: z
               .string()
               .describe(
-                'The position of the person being mentioned in the comment, starting from 0. Used for offset override. For example:- Effect when the value is 0: @username text- Effect when the value is 2: te @username xt- Effect when the value is 4: text @username',
+                'The position of the person being mentioned in the comment, starting from 0. Used for offset override. For example:- Effect when the value is 0: @username text- Effect when the value is 2: te @username xt- Effect when the value is 4: text @username**Note**: This parameter takes effect by overwriting, so you need to first set the user name text content through the content parameter, and then use this parameter to overwrite the user name text content with the actual @effect',
               ),
           }),
         )
@@ -1030,29 +1179,36 @@ export const approvalV4InstanceCommentCreate = {
       parent_comment_id: z
         .string()
         .describe(
-          'Filling in parent_comment_id means to reply to this comment. (You can either fill in comment_id or parent_comment_id.)',
+          'Parent comment ID, if it is a reply comment, this value needs to be passed in. The method to obtain it:- Successfully calling the current interface will return the ID of this comment, you can save it for next use.- Call the  interface to get the comment ID',
         )
         .optional(),
       comment_id: z
         .string()
         .describe(
-          'Filling in comment_id means to modify this comment (You can either fill in comment_id or parent_comment_id)',
+          'Comment ID. If you need to edit or delete a comment, you need to pass the ID of that comment to the current parameter. The method to obtain it:- Successfully calling the current interface will return the ID of this comment, you can save it for next use.- Call the  interface to get the comment ID',
         )
         .optional(),
       disable_bot: z
         .boolean()
         .describe(
-          'Only publish comments without sending bot (For custom approvals in Feishu\'s Approval, fill in "False"; otherwise, fill in "True".)',
+          'Whether to disable Bot, when the value is true, only data is synchronized and Bot is not triggered.**Description**: In Feishu approval, enter false for custom approval and true for other cases',
         )
         .optional(),
-      extra: z.string().describe('Additional information').optional(),
+      extra: z
+        .string()
+        .describe('Additional fields in JSON format should be compressed and escaped into a string when passed in')
+        .optional(),
     }),
     params: z.object({
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
-      user_id: z.string().describe('User ID'),
+      user_id: z.string().describe('The user ID should be consistent with the value of user_id_type'),
     }),
     path: z.object({
-      instance_id: z.string().describe('Approval instance code (or tenant custom approval instance ID)'),
+      instance_id: z
+        .string()
+        .describe(
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code.**Note**: Custom approval instance ID is supported',
+        ),
     }),
   },
 };
@@ -1062,16 +1218,25 @@ export const approvalV4InstanceCommentDelete = {
   sdkName: 'approval.v4.instanceComment.delete',
   path: '/open-apis/approval/v4/instances/:instance_id/comments/:comment_id',
   httpMethod: 'DELETE',
-  description: '[Feishu/Lark]-Approval-Native approval comments-Delete comments',
+  description:
+    '[Feishu/Lark]-Approval-Native approval comments-Delete comments-Delete a comment or a reply under a specific approval instance (excluding additional reasons or opinions such as approval, rejection, transfer, etc.). After deletion, the comment will no longer be displayed in the approval instance in the approval center, but instead will show **Comment Deleted**',
   accessTokens: ['tenant'],
   schema: {
     params: z.object({
-      user_id_type: z.enum(['open_id', 'user_id', 'union_id']).describe('User ID type').optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
       user_id: z.string().describe('Fill in user ID according to user_id_type'),
     }),
     path: z.object({
-      instance_id: z.string().describe('Approval instance code (or tenant custom approval instance ID)'),
-      comment_id: z.string().describe('Comment ID'),
+      instance_id: z
+        .string()
+        .describe(
+          'Approval instance Code. The methods to obtain it are as follows:-  and retrieve the approval instance Code from the returned result.- Call  to obtain the approval instance Code within the specified approval definition.- Call  and set filter conditions to query the specified approval instance Code.**Note**: Custom approval instance IDs are supported',
+        ),
+      comment_id: z
+        .string()
+        .describe(
+          'Comment ID. The methods to obtain it are as follows:- Call , and the comment ID will be returned upon successful creation.- Call  to obtain the comment ID',
+        ),
     }),
   },
 };
@@ -1081,17 +1246,27 @@ export const approvalV4InstanceCommentList = {
   sdkName: 'approval.v4.instanceComment.list',
   path: '/open-apis/approval/v4/instances/:instance_id/comments',
   httpMethod: 'GET',
-  description: '[Feishu/Lark]-Approval-Native approval comments-Receive comments',
+  description:
+    '[Feishu/Lark]-Approval-Native approval comments-Receive comments-Obtain all comments and replies to comments under an approval instance according to Instance Code (excluding approved, rejected, transferred, and other additional reasons or opinions)',
   accessTokens: ['tenant'],
   schema: {
     params: z.object({
-      user_id_type: z.enum(['open_id', 'user_id', 'union_id']).describe('User ID type').optional(),
-      user_id: z.string().describe('User ID'),
-      page_token: z.string().optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
+      user_id: z.string().describe('User ID, the ID type should match the value of user_id_type'),
+      page_token: z
+        .string()
+        .describe(
+          'Page identifier. It is not filled in the first request, indicating traversal from the beginning; when there will be more groups, the new page_token will be returned at the same time, and the next traversal can use the page_token to get more groups',
+        )
+        .optional(),
       page_size: z.number().optional(),
     }),
     path: z.object({
-      instance_id: z.string().describe('Approval instance code (or tenant custom approval instance ID)'),
+      instance_id: z
+        .string()
+        .describe(
+          'Approval instance Code. The methods to obtain it are as follows:-  and retrieve the approval instance Code from the returned result.- Call  to obtain the approval instance Code within the specified approval definition.- Call  and set filter conditions to query the specified approval instance Code.**Note**: Custom approval instance IDs are supported',
+        ),
     }),
   },
 };
@@ -1101,15 +1276,20 @@ export const approvalV4InstanceCommentRemove = {
   sdkName: 'approval.v4.instanceComment.remove',
   path: '/open-apis/approval/v4/instances/:instance_id/comments/remove',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Approval-Native approval comments-Clear comments',
+  description:
+    '[Feishu/Lark]-Approval-Native approval comments-Clear comments-Delete all comments and replies to comments under an approval instance (excluding approved, rejected, transferred, and other additional reasons or opinions)',
   accessTokens: ['tenant'],
   schema: {
     params: z.object({
-      user_id_type: z.enum(['open_id', 'user_id', 'union_id']).describe('User ID type').optional(),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
       user_id: z.string().describe('Fill in user ID according to user_id_type').optional(),
     }),
     path: z.object({
-      instance_id: z.string().describe('Approval instance code (or tenant custom approval instance ID)'),
+      instance_id: z
+        .string()
+        .describe(
+          'Approval instance Code. The methods to obtain it are as follows:-  and retrieve the approval instance Code from the returned result.- Call  to obtain the approval instance Code within the specified approval definition.- Call  and set filter conditions to query the specified approval instance Code.**Note**: Custom approval instance IDs are supported',
+        ),
     }),
   },
 };
@@ -1120,69 +1300,121 @@ export const approvalV4InstanceCreate = {
   path: '/open-apis/approval/v4/instances',
   httpMethod: 'POST',
   description:
-    '[Feishu/Lark]-Approval-Approval instances-Create an approval instance-To create an approval instance, you must have a detailed understanding of the approval definition form. Then, you must pass values through the API based on the form structure',
+    '[Feishu/Lark]-Approval-Approval instances-Create an approval instance-To call this interface and create an approval instance using a specified approval definition code, the caller needs to have a detailed understanding of the approval definition form. According to the defined form structure, the form values should be passed in through this interface',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string().describe('Approval definition code'),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
       user_id: z
         .string()
         .describe(
-          'One of the user_id and open_id of the user who initiated the approval must be passed in. If user_id is passed in, user_id will be used first',
+          "The initiator's user_id or open_id must be passed in, with priority given to user_id if both are provided. For the way to get it, refer to ",
         )
         .optional(),
       open_id: z
         .string()
         .describe(
-          'One of the open_id and user_id of the user who initiated the approval must be passed in. If user_id is passed in, user_id will be used first',
+          "The initiator's open_id or user_id must be passed in, with priority given to user_id if both are provided. For the way to get it, refer to ",
         )
         .optional(),
       department_id: z
         .string()
         .describe(
-          'The department ID of the approval initiator. If the user only belongs to 1 department, this field can be left empty. If the user belongs to multiple departments, the first department in the department list is selected by default',
+          "The initiator's department ID. If the user belongs to only one department, this field can be left empty. If the user belongs to multiple departments and no value is provided, the first department in the list will be selected by default. For the way to get it, refer to .**Notes**:- Filling in the root department is not supported.- The department ID should be of open_department_id type",
         )
         .optional(),
-      form: z.string().describe('JSON array (need to be compressed and escaped into string), Widget value'),
+      form: z
+        .string()
+        .describe(
+          'Values of filled approval form controls must be provided as a JSON array, which needs to be compressed and escaped into a string when passed. Parameter descriptions for each control value can be found in ',
+        ),
       node_approver_user_id_list: z
         .array(
           z.object({
-            key: z.string().describe('Node id or custom node id').optional(),
-            value: z.array(z.string()).describe('View review definition to get value: reviewer list').optional(),
+            key: z
+              .string()
+              .describe(
+                "The node_id or custom_node_id of the node can be obtained by calling the  API and retrieving it from the node_list parameter in the interface's response",
+              )
+              .optional(),
+            value: z
+              .array(z.string())
+              .describe(
+                'The approver list requires the user_id of users. Refer to  for the method to acquire user_ids',
+              )
+              .optional(),
           }),
         )
         .describe(
-          'For a node selected by the initiator, the code approvers must be entered.key: node id or custom node id, obtained through value: Approver list',
+          'If the approval process definition includes a node where the initiator needs to select an approver, this parameter should be used to specify the approver for the corresponding node (by designating the approver using the user_id).**Notes**: If both node_approver_user_id_list and node_approver_open_id_list are provided, the approvers will be the union of both lists',
         )
         .optional(),
       node_approver_open_id_list: z
         .array(
           z.object({
-            key: z.string().describe('Node id or custom node id').optional(),
-            value: z.array(z.string()).describe('View review definition to get value: reviewer list').optional(),
+            key: z
+              .string()
+              .describe(
+                "The node_id or custom_node_id of the node can be obtained by calling the  API and retrieving it from the node_list parameter in the interface's response",
+              )
+              .optional(),
+            value: z
+              .array(z.string())
+              .describe(
+                "The approver list requires the user open_id. Refer to  for the method to acquire open_ids",
+              )
+              .optional(),
           }),
         )
-        .describe('Open ID selected by the approver and initiator, Create a union set with the above field')
+        .describe(
+          'If the approval process definition includes a node where the initiator needs to select an approver, this parameter should be used to specify the approver for the corresponding node (by designating the approver using the open_id).**Notes**: If both node_approver_user_id_list and node_approver_open_id_list are provided, the approvers will be the union of both lists',
+        )
         .optional(),
       node_cc_user_id_list: z
         .array(
           z.object({
-            key: z.string().describe('Node id').optional(),
-            value: z.array(z.string()).describe('View review definition to get value: reviewer list').optional(),
+            key: z
+              .string()
+              .describe(
+                "The node_id for a node can be obtained by calling the  API and retrieving it from the node_list parameter in the interface's response",
+              )
+              .optional(),
+            value: z
+              .array(z.string())
+              .describe(
+                "The CC recipient list requires the user_id. Refer to  for the method to acquire user_ids",
+              )
+              .optional(),
           }),
         )
         .describe(
-          'For a node selected by the initiator, you can enter CC senders for the nodekey: node id or custom node id, obtained through value: Approver listA single node can have up to 20 CC senders',
+          'If the approval process definition includes a node where the initiator needs to select the CC recipient, this parameter should be used to specify the CC recipient for the corresponding node (by designating the recipient using the user_id).**Notes**: If both node_cc_user_id_list and node_cc_open_id_list are provided, the CC recipients will be the union of both lists',
         )
         .optional(),
       node_cc_open_id_list: z
         .array(
           z.object({
-            key: z.string().describe('Node id').optional(),
-            value: z.array(z.string()).describe('View review definition to get value: reviewer list').optional(),
+            key: z
+              .string()
+              .describe(
+                'The node_id of a node can be obtained by calling the  API and retrieving it from the node_list parameter in the response of the API',
+              )
+              .optional(),
+            value: z
+              .array(z.string())
+              .describe(
+                "The CC recipient list requires the user's open_id. Refer to  for the method to acquire open_ids",
+              )
+              .optional(),
           }),
         )
-        .describe('Open ID selected by the CC recipient and initiatorA single node can have up to 20 CC senders')
+        .describe(
+          'If the approval process definition includes a node where the initiator needs to select the CC recipient, this parameter should be used to specify the CC recipient for the corresponding node (by designating the recipient using the open_id).**Notes**: If both node_cc_user_id_list and node_cc_open_id_list are provided, the CC recipients will be the union of both lists',
+        )
         .optional(),
       uuid: z
         .string()
@@ -1193,7 +1425,7 @@ export const approvalV4InstanceCreate = {
       allow_resubmit: z
         .boolean()
         .describe(
-          'The "Submit" button can be configured. This operation is suitable for the scenario where the approver returns, and the person submitting the document submits it in the same instance',
+          'Whether the **Submit** button is configured is applicable when the approver of the task returns the approval document, allowing the approval submitter to click **Submit** within the same approval instance to submit the document again',
         )
         .optional(),
       allow_submit_again: z
@@ -1217,10 +1449,13 @@ export const approvalV4InstanceCreate = {
               .describe('Language Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)'),
             texts: z
               .array(
-                z.object({ key: z.string().describe('Copywriting key'), value: z.string().describe('Copywriting') }),
+                z.object({
+                  key: z.string().describe('The copywriting Key needs to match the Keys of each parameter'),
+                  value: z.string().describe('Copywriting'),
+                }),
               )
               .describe(
-                "Key, value, and i18n key of copy starts with @i18n@.This field is mainly used for internationalized text. Word order users can pass texts in multiple languages at the same time, and the Approval Center will use the corresponding text according to the user's language environment. If the text of the user's language environment isn't passed, the text of default language will be used",
+                "Copywriting Key:Value. The Key needs to start with @i18n@ and the Value should be passed in according to the requirements of each parameter.**Explanation**: This field is mainly used for internationalization and allows setting copywriting for multiple languages simultaneously. The approval center will use the matched copywriting based on the actual language environment of the current user. If the copywriting for the user's current language environment is not set, the default language copywriting will be used",
               ),
             is_default: z
               .boolean()
@@ -1230,6 +1465,35 @@ export const approvalV4InstanceCreate = {
           }),
         )
         .describe('Internationalized text. Only the value of input and textarea are supported')
+        .optional(),
+      title: z
+        .string()
+        .describe(
+          'Display name of the approval instance. If this parameter is filled in, the approval name in the approval list will use this parameter. If this parameter is not filled in, the approval name will use the name defined by the approval.**Explanation**: The Key for the internationalized copywriting is passed here (i.e., the Key in the i18n_resources.texts parameter). It must start with @i18n@ and also needs to be assigned in the i18n_resources.texts parameter in the format of Key:Value',
+        )
+        .optional(),
+      title_display_method: z
+        .number()
+        .describe(
+          'Display mode for the title on the approval details page. Options:0(display_all If both the approval definition and approval instance have a title, display both, separated by a vertical line.),1(display_instance_title If both the approval definition and approval instance have a title, only display the title of the approval instance.)',
+        )
+        .optional(),
+      node_auto_approval_list: z
+        .array(
+          z.object({
+            node_id_type: z
+              .enum(['CUSTOM', 'NON_CUSTOM'])
+              .describe('Node ID type Options:CUSTOM(Custom node ID),NON_CUSTOM(NonCustom Non-custom node ID)')
+              .optional(),
+            node_id: z
+              .string()
+              .describe(
+                'The value of the node ID can be obtained by calling the  API. The node ID can be found in the node_list parameter of the API response',
+              )
+              .optional(),
+          }),
+        )
+        .describe('Set up auto-approval nodes')
         .optional(),
     }),
   },
@@ -1241,24 +1505,29 @@ export const approvalV4InstanceGet = {
   path: '/open-apis/approval/v4/instances/:instance_id',
   httpMethod: 'GET',
   description:
-    '[Feishu/Lark]-Approval-Approval instances-Obtain details of an approval instance-This API is used to obtain approval instance details through Instance Code. You can obtain Instance Code via the  API',
+    '[Feishu/Lark]-Approval-Approval instances-Obtain details of an approval instance-You can obtain detailed information about a specific approval instance using the Approval Instance Code, including the name of the approval instance, creation time, user who initiated the approval, status, and task list, among other information',
   accessTokens: ['tenant'],
   schema: {
     params: z.object({
       locale: z
         .enum(['zh-CN', 'en-US', 'ja-JP'])
         .describe(
-          'Language. The default value is the language configured in the i18n_resources field when . Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)',
+          'Language. The default value is the language configured with the value `true` for `is_default` in the `i18n_resources` parameter when . Options:zh-CN(Zhcn Chinese),en-US(Enus English),ja-JP(Jajp Japanese)',
         )
         .optional(),
-      user_id: z.string().describe('Initiate review user id，Only self-built applications can return').optional(),
+      user_id: z
+        .string()
+        .describe(
+          'The user ID of the person who initiated the approval, with the ID type specified by the `user_id_type` parameter',
+        )
+        .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
     path: z.object({
       instance_id: z
         .string()
         .describe(
-          'Approval instance code. If you pass in the uuid when creating the approval instance, you can also obtain the code by passing in the uuid',
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
         ),
     }),
   },
@@ -1269,15 +1538,33 @@ export const approvalV4InstanceList = {
   sdkName: 'approval.v4.instance.list',
   path: '/open-apis/approval/v4/instances',
   httpMethod: 'GET',
-  description: '[Feishu/Lark]-Approval-Approval instances-Obtain IDs of multiple approval instances',
+  description:
+    "[Feishu/Lark]-Approval-Approval instances-Obtain IDs of multiple approval instances-This API is used to obtain the instance_codes of multiple approval instances in batches based on a specified approval_code. This can be used to obtain all approval instances of a tenant's approval definition.The results are sorted by default in the order of when the approval was created",
   accessTokens: ['tenant'],
   schema: {
     params: z.object({
       page_size: z.number().optional(),
-      page_token: z.string().optional(),
-      approval_code: z.string().describe('Unique identifier of approval definition'),
-      start_time: z.string().describe('Approval instance creation time interval (in ms)'),
-      end_time: z.string().describe('Approval instance creation time interval (in ms)'),
+      page_token: z
+        .string()
+        .describe(
+          'Page identifier. It is not filled in the first request, indicating traversal from the beginning; when there will be more groups, the new page_token will be returned at the same time, and the next traversal can use the page_token to get more groups',
+        )
+        .optional(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      start_time: z
+        .string()
+        .describe(
+          'The start interval for the creation time of the approval instance, in milliseconds timestamp.**Note**: start_time and end_time form the time interval query condition. The interface will return the approval instance data created within this time interval',
+        ),
+      end_time: z
+        .string()
+        .describe(
+          'The end interval for the creation time of the approval instance, in milliseconds timestamp.**Note**: start_time and end_time form the time interval query condition. The interface will return the Codes of the approval instances created within this time interval',
+        ),
     }),
   },
 };
@@ -1314,35 +1601,64 @@ export const approvalV4InstanceQuery = {
   schema: {
     data: z.object({
       user_id: z.string().describe('Fill in the user id according to the user_id_type').optional(),
-      approval_code: z.string().describe('Review the code').optional(),
-      instance_code: z.string().describe('Review example code').optional(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval Instance Code. Obtaining method:- Call the  API and obtain the instance_code from the response parameters.- Call the  API to get the required approval instance code. **Note**:- user_id, approval_code, instance_code, instance_external_id, group_external_id cannot all be empty simultaneously.- Query results for instance_code and instance_external_id are a union set',
+        )
+        .optional(),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval Instance Code. Obtaining method:- Call the  API and obtain the instance_code from the response parameters.- Call the  API to get the required approval instance code.**Note**:- user_id, approval_code, instance_code, instance_external_id, and group_external_id cannot all be empty simultaneously.- Query results for instance_code and instance_external_id are a union set',
+        )
+        .optional(),
       instance_external_id: z
         .string()
-        .describe('Review example third party id note: and approval_code and set')
+        .describe(
+          'Third-party ID of the approval instance.**Note**:- user_id, approval_code, instance_code, instance_external_id, and group_external_id cannot all be empty simultaneously.- Query results for instance_code and instance_external_id are a union set',
+        )
         .optional(),
       group_external_id: z
         .string()
-        .describe('Review Definition Group 3rd party id Note: and instance_code take union')
+        .describe(
+          'Third-party ID of the approval definition group.**Note**:- user_id, approval_code, instance_code, instance_external_id, and group_external_id cannot all be empty simultaneously.- Query results for approval_code and group_external_id are a union set',
+        )
         .optional(),
-      instance_title: z.string().describe('Review instance title (only for third-party reviews)').optional(),
+      instance_title: z
+        .string()
+        .describe('Approval instance title.**Note**: The approval instance title only exists for third-party approvals')
+        .optional(),
       instance_status: z
         .enum(['PENDING', 'RECALL', 'REJECT', 'DELETED', 'APPROVED', 'ALL'])
         .describe(
-          'Review instance status, note: if not set, query all status, if not in the collection, report an error Options:PENDING(Under review),RECALL(Withdraw),REJECT(Reject),DELETED(Deleted),APPROVED(Approverd Pass),ALL(All states)',
+          'Approval instance status.**Default value**: ALL Options:PENDING(Under review),RECALL(Withdraw),REJECT(Reject),DELETED(Deleted),APPROVED(Approverd Pass),ALL(All states)',
         )
         .optional(),
       instance_start_time_from: z
         .string()
-        .describe('Instance query start time (unix millisecond timestamp)')
+        .describe(
+          'Instance query start time, Unix millisecond timestamp. Together with the `instance_start_time_to` parameter forms the time period query condition and will only return approval instances within this time period.**Note**: The query time span must not exceed 30 days, and the start and end times must either be both set or both unset',
+        )
         .optional(),
-      instance_start_time_to: z.string().describe('Instance query end time (unix millisecond timestamp)').optional(),
+      instance_start_time_to: z
+        .string()
+        .describe(
+          'Instance query end time, Unix millisecond timestamp. Together with the `instance_start_time_from` parameter forms the time period query condition and will only return approval instances within this time period.**Note**: The query time span must not exceed 30 days, and the start and end times must either be both set or both unset',
+        )
+        .optional(),
       locale: z
         .enum(['zh-CN', 'en-US', 'ja-JP'])
-        .describe('Area Options:zh-CN(ZhCn Chinese),en-US(EnUs English),ja-JP(JaJp Japanese)')
+        .describe('Language. Options:zh-CN(ZhCn Chinese),en-US(EnUs English),ja-JP(JaJp Japanese)')
         .optional(),
     }),
     params: z.object({
-      page_size: z.number().optional(),
+      page_size: z
+        .number()
+        .describe(
+          'Page size: If the current page contains revoked approval instances, the number of data entries per page in the query result might be less than the page_size value. For example, if page_size is set to 10, but the current page shows only 6 entries, it indicates that 4 entries are revoked approval instances',
+        )
+        .optional(),
       page_token: z
         .string()
         .describe(
@@ -1365,15 +1681,29 @@ export const approvalV4InstanceSearchCc = {
   schema: {
     data: z.object({
       user_id: z.string().describe('Fill in the user id according to the x_user_type').optional(),
-      approval_code: z.string().describe('Review the code').optional(),
-      instance_code: z.string().describe('Review example code').optional(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval Definition Code. The retrieval methods are as follows:- Call the  interface and obtain the `approval_code` from the response parameters.- Log in to the approval management backend and get it from the URL of the specified approval definition. For detailed operations, please refer to .**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- Query results for `approval_code` and `group_external_id` are obtained through union',
+        )
+        .optional(),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval Instance Code. The retrieval methods are as follows:- Call the  interface and obtain the `instance_code` from the response parameters.- Call the  interface to get the required approval instance code.**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- Query results for `instance_code` and `instance_external_id` are obtained through union',
+        )
+        .optional(),
       instance_external_id: z
         .string()
-        .describe('Review example third party id note: and approval_code and set')
+        .describe(
+          'Third-party ID of Approval Instance.**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- Query results for `instance_code` and `instance_external_id` are obtained through union',
+        )
         .optional(),
       group_external_id: z
         .string()
-        .describe('Review Definition Group 3rd party id Note: and instance_code take union')
+        .describe(
+          'Third-party ID of Approval Definition Group.**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- Query results for `approval_code` and `group_external_id` are obtained through union',
+        )
         .optional(),
       cc_title: z.string().describe('Approval CC title (only for third-party reviews)').optional(),
       read_status: z
@@ -1382,11 +1712,21 @@ export const approvalV4InstanceSearchCc = {
           'Approval CC status Note: if not in the collection, report an error Options:READ(Read),UNREAD(Unread),ALL(All states)',
         )
         .optional(),
-      cc_create_time_from: z.string().describe('CC query start time (unix millisecond timestamp)').optional(),
-      cc_create_time_to: z.string().describe('CC query end time (unix millisecond timestamp)').optional(),
+      cc_create_time_from: z
+        .string()
+        .describe(
+          'CC Query Start Time, Unix millisecond timestamp. Forms a time period query condition with the `cc_create_time_from` parameter, and will only return approval copies within that time period.**Note**: The query time span cannot exceed 30 days. Start and end times must both be set or both be unset',
+        )
+        .optional(),
+      cc_create_time_to: z
+        .string()
+        .describe(
+          'CC Query End Time, Unix millisecond timestamp. Forms a time period query condition with the `cc_create_time_from` parameter, and will only return approval copies within that time period.**Note**: The query time span cannot exceed 30 days. Start and end times must both be set or both be unset',
+        )
+        .optional(),
       locale: z
         .enum(['zh-CN', 'en-US', 'ja-JP'])
-        .describe('Area Options:zh-CN(ZhCn Chinese),en-US(EnUs English),ja-JP(JaJp Japanese)')
+        .describe('Language Options:zh-CN(ZhCn Chinese),en-US(EnUs English),ja-JP(JaJp Japanese)')
         .optional(),
     }),
     params: z.object({
@@ -1415,19 +1755,19 @@ export const approvalV4InstanceSpecifiedRollback = {
       user_id: z
         .string()
         .describe(
-          'The user ID of the approver of the current approval task, obtained from the task_list field in the instance details, and the status of the corresponding task must be PENDING',
+          'The user ID of the approver for the current approval task must match the ID type with the query parameter user_id_type. You can call  to retrieve the user ID from the task_list parameter in the returned result, where the task status must be PENDING',
         ),
       task_id: z
         .string()
         .describe(
-          'The task ID of the approval task that currently needs to be rolled back, obtained from the task_list field in the instance details, and the status of the corresponding task must be PENDING',
+          'The approval task ID that needs to be reverted. You can call  to retrieve the task ID from the task_list parameter in the returned result, where the task status must be PENDING',
         ),
       reason: z.string().describe('Reason for rollback').optional(),
       extra: z.string().describe('extra info').optional(),
       task_def_key_list: z
         .array(z.string())
         .describe(
-          'The task node_key that needs to be returned to. node_key is obtained from the timeline field in the instance details, and the status of the corresponding task must be PASS',
+          'The node_key of the task that needs to be reverted to. You can call  to retrieve the node_key from the timeline parameter in the returned result, where the dynamic type must be PASS',
         ),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
@@ -1444,15 +1784,27 @@ export const approvalV4TaskApprove = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string().describe('Approval definition code'),
-      instance_code: z.string().describe('Approval instance code'),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      instance_code: z
+        .string()
+        .describe(
+          'pproval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
+        ),
       user_id: z.string().describe('Fill in the operation user id according to the user_id_type'),
       comment: z.string().describe('Opinion').optional(),
-      task_id: z.string().describe('Task ID, approval instance details task_list id'),
+      task_id: z
+        .string()
+        .describe(
+          'Approval task ID, call  and retrieve the required ID from the `task_list` in the returned result',
+        ),
       form: z
         .string()
         .describe(
-          'JSON array, Widget value(Will affect the process, Required field verification, if some widget is missing)',
+          'If a conditional branch is added in the process design of the approval definition, it is necessary to pass in the control data required for the conditional branch (a JSON array), otherwise, it will affect the subsequent branch condition flow.**Note**: When passing the value, the JSON must be serialized into a string. The example parameter values are not escaped; the correct example for passing values can be found in the **Request Body Example** below',
         )
         .optional(),
     }),
@@ -1479,7 +1831,6 @@ export const approvalV4TaskQuery = {
         ),
       user_id_type: z.enum(['user_id', 'union_id', 'open_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -1489,18 +1840,36 @@ export const approvalV4TaskReject = {
   sdkName: 'approval.v4.task.reject',
   path: '/open-apis/approval/v4/tasks/reject',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Approval-Approval tasks-Refuse to approve tasks',
+  description:
+    '[Feishu/Lark]-Approval-Approval tasks-Refuse to approve tasks-Rejects a single approval task. This ends the approval process',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string(),
-      instance_code: z.string(),
-      user_id: z.string(),
-      comment: z.string().optional(),
-      task_id: z.string(),
-      form: z.string().optional(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
+        ),
+      user_id: z.string().describe('Fill in the operation user id according to the user_id_type'),
+      comment: z.string().describe('Opinion').optional(),
+      task_id: z
+        .string()
+        .describe(
+          'Approval task ID, call  and retrieve the required ID from the task_list in the returned result',
+        ),
+      form: z
+        .string()
+        .describe(
+          'If a conditional branch is added in the process design of the approval definition, it is necessary to pass in the control data required for the conditional branch (a JSON array), otherwise, it will affect the subsequent branch condition flow.**Note**: When passing the value, the JSON must be serialized into a string. The example parameter values are not escaped; the correct example for passing values can be found in the **Request Body Example** below',
+        )
+        .optional(),
     }),
-    params: z.object({ user_id_type: z.enum(['user_id', 'union_id', 'open_id']).describe('User ID type').optional() }),
+    params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
   },
 };
 export const approvalV4TaskResubmit = {
@@ -1509,18 +1878,35 @@ export const approvalV4TaskResubmit = {
   sdkName: 'approval.v4.task.resubmit',
   path: '/open-apis/approval/v4/tasks/resubmit',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Approval-Approval tasks-Resubmit the task for approval',
+  description:
+    '[Feishu/Lark]-Approval-Approval tasks-Resubmit the task for approval-For the approval tasks that are returned to the initiator, the reinitiation operation can be performed. After initiation, the approval process will move to the next approver',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string(),
-      instance_code: z.string(),
-      user_id: z.string(),
-      comment: z.string().optional(),
-      task_id: z.string(),
-      form: z.string(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
+        ),
+      user_id: z.string().describe('Fill in the operation user id according to the user_id_type'),
+      comment: z.string().describe('Opinion').optional(),
+      task_id: z
+        .string()
+        .describe(
+          'Approval task ID, call  and retrieve the required ID from the task_list in the returned result',
+        ),
+      form: z
+        .string()
+        .describe(
+          'Approval form control values in a JSON array, which need to be compressed and escaped into a string when passed. This parameter is used in the same way as the form parameter in ',
+        ),
     }),
-    params: z.object({ user_id_type: z.enum(['user_id', 'union_id', 'open_id']).describe('User ID type').optional() }),
+    params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
   },
 };
 export const approvalV4TaskSearch = {
@@ -1534,45 +1920,74 @@ export const approvalV4TaskSearch = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      user_id: z.string().describe('Fill in the Approver id according to the x_user_type').optional(),
-      approval_code: z.string().describe('Review the code').optional(),
-      instance_code: z.string().describe('Review example code').optional(),
+      user_id: z.string().describe('Fill in the Approver id according to the user_id_type').optional(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval Definition Code. Methods to obtain:- After calling the  interface, retrieve from the response parameter `approval_code`.- Log into the approval management backend and obtain from the URL of the specified approval definition. Detailed steps can be found in .**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- The query results for `approval_code` and `group_external_id` are the union of their results',
+        )
+        .optional(),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval Instance Code. Methods to obtain:- After calling the  interface, retrieve from the response parameter `instance_code`.- Call the  interface to obtain the required approval instance Code.**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- The query results for `instance_code` and `instance_external_id` are the union of their results',
+        )
+        .optional(),
       instance_external_id: z
         .string()
-        .describe('Review example third party id note: and approval_code and set')
+        .describe(
+          'Third-party ID of the approval instance.**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- The query results for `instance_code` and `instance_external_id` are the union of their results',
+        )
         .optional(),
       group_external_id: z
         .string()
-        .describe('Review Definition Group 3rd party id Note: and instance_code take union')
+        .describe(
+          'Third-party ID of the approval definition group.**Note**:- `user_id`, `approval_code`, `instance_code`, `instance_external_id`, and `group_external_id` cannot all be empty simultaneously.- The query results for `approval_code` and `group_external_id` are the union of their results',
+        )
         .optional(),
       task_title: z.string().describe('Review task title (only for third-party reviews)').optional(),
       task_status: z
         .enum(['PENDING', 'REJECTED', 'APPROVED', 'TRANSFERRED', 'DONE', 'RM_REPEAT', 'PROCESSED', 'ALL'])
         .describe(
-          'Review task status, note: if not in the collection, report an error Options:PENDING(Under review),REJECTED(Reject),APPROVED(Approverd Pass),TRANSFERRED(Transfer),DONE(Completed),RM_REPEAT(Deduplicate),PROCESSED(Processed),ALL(All states)',
+          'Review task statusNote: if not in the collection, report an error Options:PENDING(Under review),REJECTED(Reject),APPROVED(Approverd Pass),TRANSFERRED(Transfer),DONE(Completed),RM_REPEAT(Deduplicate),PROCESSED(Processed),ALL(All states)',
         )
         .optional(),
-      task_start_time_from: z.string().describe('task query start time (unix millisecond timestamp)').optional(),
-      task_start_time_to: z.string().describe('task query end time (unix millisecond timestamp)').optional(),
+      task_start_time_from: z
+        .string()
+        .describe(
+          'Task query start time, Unix millisecond timestamp. Together with the `task_start_time_to` parameter, it forms a time period query condition, and only approval tasks within this time period will be returned.**Note**: The query time span must not exceed 30 days, and the start and end times must either be both set or both unset',
+        )
+        .optional(),
+      task_start_time_to: z
+        .string()
+        .describe(
+          'Task query end time, Unix millisecond timestamp. Together with the `task_start_time_from` parameter, it forms a time period query condition, and only approval tasks within this time period will be returned.**Note**: The query time span must not exceed 30 days, and the start and end times must either be both set or both unset',
+        )
+        .optional(),
       locale: z
         .enum(['zh-CN', 'en-US', 'ja-JP'])
-        .describe('Area Options:zh-CN(ZhCn Chinese),en-US(EnUs English),ja-JP(JaJp Japanese)')
+        .describe('Language. Options:zh-CN(ZhCn Chinese),en-US(EnUs English),ja-JP(JaJp Japanese)')
         .optional(),
       task_status_list: z
         .array(z.string())
         .describe(
-          'Multiple states in the task_status can be selected, when this parameter is filled, the task_status invalidated',
+          'Query tasks with multiple statuses. When this parameter is filled, the `task_status` parameter will become invalid.**Optional values are**:- `PENDING`: In approval- `REJECTED`: Rejected- `APPROVED`: Approved- `TRANSFERRED`: Transferred- `DONE`: Completed- `RM_REPEAT`: Deduplicated- `PROCESSED`: Processed',
         )
         .optional(),
       order: z
         .number()
         .describe(
-          'Sort by task time Options:0(UpdateTimeDESC Reverse update_time),1(UpdateTimeASC Line up update_time),2(StartTimeDESC Reverse start_time),3(StartTimeASC Line up start_time)',
+          'Sort by task time Options:0(UpdateTimeDESC Sort by approval task update time (`update_time`) in descending order.),1(UpdateTimeASC Sort by approval task update time (`update_time`) in ascending order.),2(StartTimeDESC Sort by approval task start time (`start_time`) in descending order.),3(StartTimeASC Sort by approval task start time (`start_time`) in ascending order.)',
         )
         .optional(),
     }),
     params: z.object({
-      page_size: z.number().describe('Page size').optional(),
+      page_size: z
+        .number()
+        .describe(
+          'Page size. If the current page contains tasks within revoked instances, the number of data entries per page in the query result may be less than the `page_size` value. For example, if `page_size` is set to 10, but the actual query result on the current page only shows 6 entries, this indicates that 4 entries are tasks within revoked instances',
+        )
+        .optional(),
       page_token: z
         .string()
         .describe(
@@ -1589,18 +2004,33 @@ export const approvalV4TaskTransfer = {
   sdkName: 'approval.v4.task.transfer',
   path: '/open-apis/approval/v4/tasks/transfer',
   httpMethod: 'POST',
-  description: '[Feishu/Lark]-Approval-Approval tasks-Transfer the approval task',
+  description:
+    '[Feishu/Lark]-Approval-Approval tasks-Transfer the approval task-Transfers a single approval task. After that, the approval process will be transferred to the transfer recipient',
   accessTokens: ['tenant'],
   schema: {
     data: z.object({
-      approval_code: z.string(),
-      instance_code: z.string(),
-      user_id: z.string(),
-      comment: z.string().optional(),
-      transfer_user_id: z.string(),
-      task_id: z.string(),
+      approval_code: z
+        .string()
+        .describe(
+          'Approval definition Code. Acquisition methods:- Call the  API, and get the approval_code from the response parameters.- Log in to the approval management backend, and retrieve it from the URL of the specified approval definition. For specific operations, refer to ',
+        ),
+      instance_code: z
+        .string()
+        .describe(
+          'Approval instance Code. Acquisition methods:- After , obtain the approval instance code from the returned results.- Call  to get the approval instance code within the specified approval definition.- Call  and set filtering criteria to query the specified approval instance code',
+        ),
+      user_id: z.string().describe('Fill in the operation user id according to the user_id_type'),
+      comment: z.string().describe('Opinion').optional(),
+      transfer_user_id: z
+        .string()
+        .describe('Fill in the unique ID of the transferred person according to the user_id_type'),
+      task_id: z
+        .string()
+        .describe(
+          'Approval task ID, call  and retrieve the required ID from the task_list in the returned result',
+        ),
     }),
-    params: z.object({ user_id_type: z.enum(['user_id', 'union_id', 'open_id']).describe('User ID type').optional() }),
+    params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional() }),
   },
 };
 export const approvalV4Tools = [

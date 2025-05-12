@@ -16353,7 +16353,6 @@ export const docxV1DocumentCreate = {
         .optional(),
       title: z.string().describe('Document title. Only supports plain text').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

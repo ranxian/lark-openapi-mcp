@@ -32,7 +32,6 @@ export const lingoV1ClassificationList = {
         .optional(),
       repo_id: z.string().describe('repo id (it will be organization repo by default when not passing it)').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -201,7 +200,6 @@ export const lingoV1DraftCreate = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -514,7 +512,6 @@ export const lingoV1EntityHighlight = {
         .string()
         .describe('A sentence that requires the content of the entity word to be recognized (no more than 1000 words)'),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -543,7 +540,6 @@ export const lingoV1EntityList = {
         .optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -561,7 +557,6 @@ export const lingoV1EntityMatch = {
     params: z.object({
       repo_id: z.string().describe('repo_id (search in the organization repo by default when not passing)').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };
@@ -603,7 +598,6 @@ export const lingoV1EntitySearch = {
       repo_id: z.string().describe('repo_id (search in the organization repo by default when not passing)').optional(),
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
     }),
-
     useUAT: z.boolean().describe('Use user access token, otherwise use tenant access token').optional(),
   },
 };

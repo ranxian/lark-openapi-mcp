@@ -10,6 +10,7 @@ export type docxBuiltinToolName = 'docx.builtin.search' | 'docx.builtin.import';
 export const larkDocxBuiltinSearchTool: McpTool = {
   project: 'docx',
   name: 'docx.builtin.search',
+  accessTokens: ['user'],
   description: '[飞书/Lark] - 云文档-文档 - 搜索文档 - 搜索云文档，只支持user_access_token',
   schema: {
     data: z.object({
@@ -77,6 +78,7 @@ export const larkDocxBuiltinSearchTool: McpTool = {
 export const larkDocxBuiltinImportTool: McpTool = {
   project: 'docx',
   name: 'docx.builtin.import',
+  accessTokens: ['user', 'tenant'],
   description: '[飞书/Lark] - 云文档-文档 - 导入文档 - 导入云文档，最大20MB',
   schema: {
     data: z

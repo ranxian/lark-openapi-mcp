@@ -44,7 +44,27 @@ export type mailV1ToolName =
   | 'mail.v1.userMailboxAlias.delete'
   | 'mail.v1.userMailboxAlias.list'
   | 'mail.v1.userMailbox.delete'
+  | 'mail.v1.userMailboxEvent.subscribe'
+  | 'mail.v1.userMailboxEvent.subscription'
+  | 'mail.v1.userMailboxEvent.unsubscribe'
+  | 'mail.v1.userMailboxFolder.create'
+  | 'mail.v1.userMailboxFolder.delete'
+  | 'mail.v1.userMailboxFolder.list'
+  | 'mail.v1.userMailboxFolder.patch'
+  | 'mail.v1.userMailboxMailContact.create'
+  | 'mail.v1.userMailboxMailContact.delete'
+  | 'mail.v1.userMailboxMailContact.list'
+  | 'mail.v1.userMailboxMailContact.patch'
+  | 'mail.v1.userMailboxMessageAttachment.downloadUrl'
+  | 'mail.v1.userMailboxMessage.get'
+  | 'mail.v1.userMailboxMessage.getByCard'
+  | 'mail.v1.userMailboxMessage.list'
   | 'mail.v1.userMailboxMessage.send'
+  | 'mail.v1.userMailboxRule.create'
+  | 'mail.v1.userMailboxRule.delete'
+  | 'mail.v1.userMailboxRule.list'
+  | 'mail.v1.userMailboxRule.reorder'
+  | 'mail.v1.userMailboxRule.update'
   | 'mail.v1.user.query';
 export const mailV1MailgroupAliasCreate = {
   project: 'mail',
@@ -56,7 +76,6 @@ export const mailV1MailgroupAliasCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ email_alias: z.string().describe('邮箱别名').optional() }),
-
     path: z.object({ mailgroup_id: z.string().describe('邮件组id或邮件组邮箱地址').optional() }),
   },
 };
@@ -273,7 +292,6 @@ export const mailV1MailgroupMemberBatchDelete = {
         .describe('本次调用删除的成员ID列表')
         .optional(),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('The unique ID or email address of a mail group').optional() }),
   },
 };
@@ -396,7 +414,6 @@ export const mailV1MailgroupPatch = {
         )
         .optional(),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('邮件组ID或者邮件组地址').optional() }),
   },
 };
@@ -454,7 +471,6 @@ export const mailV1MailgroupPermissionMemberBatchDelete = {
         .array(z.string().describe('The unique ID of a member in this permission group'))
         .describe('本次调用删除的权限成员ID列表'),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('The unique ID or email address of a mail group').optional() }),
   },
 };
@@ -577,7 +593,6 @@ export const mailV1MailgroupUpdate = {
         )
         .optional(),
     }),
-
     path: z.object({ mailgroup_id: z.string().describe('邮件组ID或者邮件组地址').optional() }),
   },
 };
@@ -591,7 +606,6 @@ export const mailV1PublicMailboxAliasCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ email_alias: z.string().describe('邮箱别名').optional() }),
-
     path: z.object({ public_mailbox_id: z.string().describe('公共邮箱id或公共邮箱地址').optional() }),
   },
 };
@@ -681,7 +695,6 @@ export const mailV1PublicMailboxList = {
         .optional(),
       page_size: z.number().describe('分页大小').optional(),
     }),
-
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -723,7 +736,6 @@ export const mailV1PublicMailboxMemberBatchDelete = {
         .array(z.string().describe('The unique ID of a member in this public mailbox'))
         .describe('本次调用删除的公共邮箱成员ID列表'),
     }),
-
     path: z.object({
       public_mailbox_id: z.string().describe('The unique ID or email address of a public mailbox').optional(),
     }),
@@ -827,7 +839,6 @@ export const mailV1PublicMailboxPatch = {
       email: z.string().describe('公共邮箱地址').optional(),
       name: z.string().describe('公共邮箱名称').optional(),
     }),
-
     path: z.object({ public_mailbox_id: z.string().describe('公共邮箱唯一标识或公共邮箱地址').optional() }),
   },
 };
@@ -844,7 +855,6 @@ export const mailV1PublicMailboxUpdate = {
       email: z.string().describe('公共邮箱地址').optional(),
       name: z.string().describe('公共邮箱名称').optional(),
     }),
-
     path: z.object({ public_mailbox_id: z.string().describe('公共邮箱唯一标识或公共邮箱地址').optional() }),
   },
 };
@@ -858,7 +868,6 @@ export const mailV1UserMailboxAliasCreate = {
   accessTokens: ['tenant'],
   schema: {
     data: z.object({ email_alias: z.string().describe('邮箱别名').optional() }),
-
     path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址').optional() }),
   },
 };
@@ -912,6 +921,321 @@ export const mailV1UserMailboxDelete = {
     path: z.object({ user_mailbox_id: z.string().describe('要释放的邮箱地址') }),
   },
 };
+export const mailV1UserMailboxEventSubscribe = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxEvent.subscribe',
+  sdkName: 'mail.v1.userMailboxEvent.subscribe',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/event/subscribe',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-邮箱-事件-订阅事件-订阅事件',
+  accessTokens: ['user'],
+  schema: {
+    data: z.object({ event_type: z.number().describe('事件类型 Options:1(Message 邮件相关事件)') }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址，使用 user_access_token 时可使用 me') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxEventSubscription = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxEvent.subscription',
+  sdkName: 'mail.v1.userMailboxEvent.subscription',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/event/subscription',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-事件-获取订阅状态-获取订阅状态',
+  accessTokens: ['user'],
+  schema: {
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址，使用 user_access_token 时可使用 me') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxEventUnsubscribe = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxEvent.unsubscribe',
+  sdkName: 'mail.v1.userMailboxEvent.unsubscribe',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/event/unsubscribe',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-邮箱-事件-取消订阅-取消订阅',
+  accessTokens: ['user'],
+  schema: {
+    data: z.object({ event_type: z.number().describe('事件类型 Options:1(Message 邮件相关事件)') }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址，使用 user_access_token 时可使用 me') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxFolderCreate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.create',
+  sdkName: 'mail.v1.userMailboxFolder.create',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-邮箱-邮箱文件夹-创建邮箱文件夹-创建邮箱文件夹',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe('文件夹名称'),
+      parent_folder_id: z
+        .string()
+        .describe(
+          '父文件夹 id，该值为 0 表示根文件夹，id 获取方式见 ',
+        ),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxFolderDelete = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.delete',
+  sdkName: 'mail.v1.userMailboxFolder.delete',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders/:folder_id',
+  httpMethod: 'DELETE',
+  description: '[Feishu/Lark]-邮箱-邮箱文件夹-删除邮箱文件夹-删除邮箱文件夹',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      folder_id: z
+        .string()
+        .describe(
+          '文件夹 id，id 获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxFolderList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.list',
+  sdkName: 'mail.v1.userMailboxFolder.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-邮箱文件夹-列出邮箱文件夹-列出邮箱文件夹',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      folder_type: z.number().describe('文件夹类型 Options:1(System 系统文件夹),2(User 用户文件夹)').optional(),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxFolderPatch = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxFolder.patch',
+  sdkName: 'mail.v1.userMailboxFolder.patch',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/folders/:folder_id',
+  httpMethod: 'PATCH',
+  description: '[Feishu/Lark]-邮箱-邮箱文件夹-修改邮箱文件夹-修改邮箱文件夹',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe('文件夹名称').optional(),
+      parent_folder_id: z
+        .string()
+        .describe(
+          '父文件夹 id，该值为 0 表示根文件夹，id 获取方式见 ',
+        )
+        .optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      folder_id: z
+        .string()
+        .describe(
+          '文件夹 id，id 获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactCreate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.create',
+  sdkName: 'mail.v1.userMailboxMailContact.create',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-邮箱-邮箱联系人-创建邮箱联系人-创建一个邮箱联系人',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe('联系人姓名'),
+      company: z.string().describe('联系人公司').optional(),
+      phone: z.string().describe('联系人手机号').optional(),
+      mail_address: z.string().describe('联系人邮箱').optional(),
+      tag: z.string().describe('联系人标签').optional(),
+      remark: z.string().describe('联系人备注').optional(),
+      position: z.string().describe('联系人职位').optional(),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址，使用 user_access_token 时可使用 me') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactDelete = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.delete',
+  sdkName: 'mail.v1.userMailboxMailContact.delete',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts/:mail_contact_id',
+  httpMethod: 'DELETE',
+  description: '[Feishu/Lark]-邮箱-邮箱联系人-删除邮箱联系人-删除一个邮箱联系人',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      mail_contact_id: z
+        .string()
+        .describe(
+          '邮箱联系人 id，获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.list',
+  sdkName: 'mail.v1.userMailboxMailContact.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-邮箱联系人-列出邮箱联系人-列出邮箱联系人列表',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      page_size: z.number().describe('分页大小'),
+      page_token: z
+        .string()
+        .describe(
+          '分页标记，第一次请求不填，表示从头开始遍历；分页查询结果还有更多项时会同时返回新的 page_token，下次遍历可采用该 page_token 获取查询结果',
+        )
+        .optional(),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMailContactPatch = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMailContact.patch',
+  sdkName: 'mail.v1.userMailboxMailContact.patch',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/mail_contacts/:mail_contact_id',
+  httpMethod: 'PATCH',
+  description: '[Feishu/Lark]-邮箱-邮箱联系人-修改邮箱联系人信息-修改一个邮箱联系人的信息',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      name: z.string().describe('联系人姓名'),
+      company: z.string().describe('联系人公司').optional(),
+      phone: z.string().describe('联系人手机号').optional(),
+      mail_address: z.string().describe('联系人邮箱').optional(),
+      tag: z.string().describe('联系人标签').optional(),
+      remark: z.string().describe('联系人备注').optional(),
+      position: z.string().describe('联系人职位').optional(),
+    }),
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      mail_contact_id: z
+        .string()
+        .describe(
+          '邮箱联系人 id，获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMessageAttachmentDownloadUrl = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessageAttachment.downloadUrl',
+  sdkName: 'mail.v1.userMailboxMessageAttachment.downloadUrl',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages/:message_id/attachments/download_url',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-用户邮件-邮件附件-获取附件下载链接-获取附件下载链接',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({ attachment_ids: z.array(z.string()).describe('附件 id 列表') }),
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      message_id: z
+        .string()
+        .describe(
+          '用户邮件 id，获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMessageGet = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessage.get',
+  sdkName: 'mail.v1.userMailboxMessage.get',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages/:message_id',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-用户邮件-获取邮件详情-获取邮件详情',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      message_id: z
+        .string()
+        .describe(
+          '用户邮件 id，获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMessageGetByCard = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessage.getByCard',
+  sdkName: 'mail.v1.userMailboxMessage.getByCard',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages/get_by_card',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-用户邮件-获取邮件卡片的邮件列表-获取邮件卡片下的邮件列表',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      card_id: z
+        .string()
+        .describe(
+          '邮件卡片ID，可通过事件的推送获取',
+        ),
+      owner_id: z
+        .string()
+        .describe(
+          '邮件卡片OwnerID，可通过[接收消息]( https://open.feishu.cn/document/server-docs/im-v1/message/events/receive)事件的推送获取（与`user_id_type`无关）',
+        ),
+      user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxMessageList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxMessage.list',
+  sdkName: 'mail.v1.userMailboxMessage.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/messages',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-用户邮件-列出邮件-列出邮件',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    params: z.object({
+      page_size: z.number().describe('分页大小'),
+      page_token: z
+        .string()
+        .describe(
+          '分页标记，第一次请求不填，表示从头开始遍历；分页查询结果还有更多项时会同时返回新的 page_token，下次遍历可采用该 page_token 获取查询结果',
+        )
+        .optional(),
+      folder_id: z
+        .string()
+        .describe(
+          '文件夹 id， 获取方式见 ',
+        ),
+      only_unread: z.boolean().describe('是否只查询未读邮件').optional(),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
 export const mailV1UserMailboxMessageSend = {
   project: 'mail',
   name: 'mail.v1.userMailboxMessage.send',
@@ -958,8 +1282,181 @@ export const mailV1UserMailboxMessageSend = {
         .optional(),
       thread_id: z.string().describe('会话id').optional(),
     }),
-
     path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxRuleCreate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.create',
+  sdkName: 'mail.v1.userMailboxRule.create',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-邮箱-收信规则-创建收信规则-创建收信规则',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      condition: z
+        .object({
+          match_type: z.number().describe('匹配类型 Options:1(MatchAll 满足所有条件),2(MatchAny 满足任意条件)'),
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    '匹配条件左值 Options:1(From 发件人地址),2(To 收件人地址),3(Cc 抄送地址),4(ToOrCc 收件人或抄送地址),6(Subject 主题),7(Body 正文),8(AttachmentName 附件名字),9(AttachmentType 附件类型),10(AnyAddress 任意地址),12(MatchAllMessage 所有邮件),13(IsExternal 是外部邮件),14(IsSpam 是垃圾邮件),15(IsNotSpam 不是垃圾邮件),16(HasAttachment 有附件)',
+                  ),
+                operator: z
+                  .number()
+                  .describe(
+                    '匹配条件操作符 Options:1(Contains 包含),2(DoesNotContains 不包含),3(StartsWith 开头是),4(EndsWith 结尾是),5(Is 是),6(IsNot 不是),7(IncludesMe 包含自己),10(IsEmpty 为空)',
+                  )
+                  .optional(),
+                input: z.string().describe('匹配条件右值').optional(),
+              }),
+            )
+            .describe('匹配规则列表'),
+        })
+        .describe('匹配条件'),
+      action: z
+        .object({
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    '操作类型 Options:1(ArchiveMessage 归档),2(DeleteMessage 删除邮件),3(MarkAsRead 标记为已读),4(MarkAsSpam 移至垃圾邮件),5(NeverMarkAsSpam 不移至垃圾邮件),8(ApplyLabel 添加用户标签（暂不支持）),9(Flag 添加旗标),10(NeverPushNotification 不弹出通知),11(MoveToFolder 移至用户文件夹),12(AutoTransfer 自动转发（暂不支持）),13(SendToChat 分享到会话（暂不支持）)',
+                  ),
+                input: z.string().describe('当 type 为移动到文件夹时，该字段填文件夹的 id').optional(),
+              }),
+            )
+            .describe('匹配中规则后的操作列表'),
+        })
+        .describe('匹配命中后的操作'),
+      ignore_the_rest_of_rules: z.boolean().describe('是否终点规则'),
+      name: z.string().describe('规则名称'),
+      is_enable: z.boolean().describe('是否启用'),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址，使用 user_access_token 时可使用 me') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxRuleDelete = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.delete',
+  sdkName: 'mail.v1.userMailboxRule.delete',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules/:rule_id',
+  httpMethod: 'DELETE',
+  description: '[Feishu/Lark]-邮箱-收信规则-删除收信规则-删除收信规则',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      rule_id: z
+        .string()
+        .describe(
+          '规则 id，获取方式见 ',
+        ),
+    }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxRuleList = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.list',
+  sdkName: 'mail.v1.userMailboxRule.list',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules',
+  httpMethod: 'GET',
+  description: '[Feishu/Lark]-邮箱-收信规则-列出收信规则-列出收信规则',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxRuleReorder = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.reorder',
+  sdkName: 'mail.v1.userMailboxRule.reorder',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules/reorder',
+  httpMethod: 'POST',
+  description: '[Feishu/Lark]-邮箱-收信规则-对收信规则进行排序-对收信规则进行排序',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      rule_ids: z
+        .array(z.string())
+        .describe(
+          '规则 id 列表，获取方式见 ',
+        ),
+    }),
+    path: z.object({ user_mailbox_id: z.string().describe('用户邮箱地址，使用 user_access_token 时可使用 me') }),
+    useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
+  },
+};
+export const mailV1UserMailboxRuleUpdate = {
+  project: 'mail',
+  name: 'mail.v1.userMailboxRule.update',
+  sdkName: 'mail.v1.userMailboxRule.update',
+  path: '/open-apis/mail/v1/user_mailboxes/:user_mailbox_id/rules/:rule_id',
+  httpMethod: 'PUT',
+  description: '[Feishu/Lark]-邮箱-收信规则-更新收信规则-更新收信规则',
+  accessTokens: ['tenant', 'user'],
+  schema: {
+    data: z.object({
+      condition: z
+        .object({
+          match_type: z.number().describe('匹配类型 Options:1(MatchAll 满足所有条件),2(MatchAny 满足任意条件)'),
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    '匹配条件左值 Options:1(From 发件人地址),2(To 收件人地址),3(Cc 抄送地址),4(ToOrCc 收件人或抄送地址),6(Subject 主题),7(Body 正文),8(AttachmentName 附件名字),9(AttachmentType 附件类型),10(AnyAddress 任意地址),12(MatchAllMessage 所有邮件),13(IsExternal 是外部邮件),14(IsSpam 是垃圾邮件),15(IsNotSpam 不是垃圾邮件),16(HasAttachment 有附件)',
+                  ),
+                operator: z
+                  .number()
+                  .describe(
+                    '匹配条件操作符 Options:1(Contains 包含),2(DoesNotContains 不包含),3(StartsWith 开头是),4(EndsWith 结尾是),5(Is 是),6(IsNot 不是),7(IncludesMe 包含自己),10(IsEmpty 为空)',
+                  )
+                  .optional(),
+                input: z.string().describe('匹配条件右值').optional(),
+              }),
+            )
+            .describe('匹配规则列表'),
+        })
+        .describe('匹配条件'),
+      action: z
+        .object({
+          items: z
+            .array(
+              z.object({
+                type: z
+                  .number()
+                  .describe(
+                    '操作类型 Options:1(ArchiveMessage 归档),2(DeleteMessage 删除邮件),3(MarkAsRead 标记为已读),4(MarkAsSpam 移至垃圾邮件),5(NeverMarkAsSpam 不移至垃圾邮件),8(ApplyLabel 添加用户标签（暂不支持）),9(Flag 添加旗标),10(NeverPushNotification 不弹出通知),11(MoveToFolder 移至用户文件夹),12(AutoTransfer 自动转发（暂不支持）),13(SendToChat 分享到会话（暂不支持）)',
+                  ),
+                input: z.string().describe('当 type 为移动到文件夹时，该字段填文件夹的 id').optional(),
+              }),
+            )
+            .describe('匹配中规则后的操作列表'),
+        })
+        .describe('匹配命中后的操作'),
+      ignore_the_rest_of_rules: z.boolean().describe('是否终点规则'),
+      name: z.string().describe('规则名称'),
+      is_enable: z.boolean().describe('是否启用'),
+    }),
+    path: z.object({
+      user_mailbox_id: z.string().describe('用户邮箱地址 或 输入me代表当前调用接口用户'),
+      rule_id: z
+        .string()
+        .describe(
+          '规则 id，获取方式见 ',
+        ),
+    }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
   },
 };
@@ -1021,6 +1518,26 @@ export const mailV1Tools = [
   mailV1UserMailboxAliasDelete,
   mailV1UserMailboxAliasList,
   mailV1UserMailboxDelete,
+  mailV1UserMailboxEventSubscribe,
+  mailV1UserMailboxEventSubscription,
+  mailV1UserMailboxEventUnsubscribe,
+  mailV1UserMailboxFolderCreate,
+  mailV1UserMailboxFolderDelete,
+  mailV1UserMailboxFolderList,
+  mailV1UserMailboxFolderPatch,
+  mailV1UserMailboxMailContactCreate,
+  mailV1UserMailboxMailContactDelete,
+  mailV1UserMailboxMailContactList,
+  mailV1UserMailboxMailContactPatch,
+  mailV1UserMailboxMessageAttachmentDownloadUrl,
+  mailV1UserMailboxMessageGet,
+  mailV1UserMailboxMessageGetByCard,
+  mailV1UserMailboxMessageList,
   mailV1UserMailboxMessageSend,
+  mailV1UserMailboxRuleCreate,
+  mailV1UserMailboxRuleDelete,
+  mailV1UserMailboxRuleList,
+  mailV1UserMailboxRuleReorder,
+  mailV1UserMailboxRuleUpdate,
   mailV1UserQuery,
 ];
