@@ -158,7 +158,6 @@ The following table details each API tool and its inclusion in different preset 
 | im.v1.chat.create | Create a group chat | ✓ | ✓ | | | | | |
 | im.v1.chat.list | Get group chat list | ✓ | ✓ | | | | | |
 | im.v1.chatMembers.get | Get group members | ✓ | ✓ | | | | | |
-| im.v1.chatMembers.create | Add group members | ✓ | ✓ | | | | | |
 | im.v1.message.create | Send messages | ✓ | ✓ | | | | | |
 | im.v1.message.list | Get message list | ✓ | ✓ | | | | | |
 | bitable.v1.app.create | Create base | ✓ | | ✓ | ✓ | | | |
@@ -167,9 +166,9 @@ The following table details each API tool and its inclusion in different preset 
 | bitable.v1.appTableField.list | Get base data table field list | ✓ | | ✓ | ✓ | | | |
 | bitable.v1.appTableRecord.search | Search base data table records | ✓ | | ✓ | ✓ | | | |
 | bitable.v1.appTableRecord.create | Create base data table records | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchCreate | Batch create base data table records | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.batchCreate | Batch create base data table records | | | | ✓ | | | |
 | bitable.v1.appTableRecord.update | Update base data table records | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchUpdate | Batch update base data table records | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.batchUpdate | Batch update base data table records | | | | ✓ | | | |
 | docx.v1.document.rawContent | Get document content | ✓ | | | | ✓ | | |
 | docx.builtin.import | Import documents | ✓ | | | | ✓ | | |
 | docx.builtin.search | Search documents | ✓ | | | | ✓ | | |

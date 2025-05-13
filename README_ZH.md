@@ -159,7 +159,6 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 | im.v1.chat.create | 创建群 | ✓ | ✓ | | | | | |
 | im.v1.chat.list | 获取群列表 | ✓ | ✓ | | | | | |
 | im.v1.chatMembers.get | 获取群成员 | ✓ | ✓ | | | | | |
-| im.v1.chatMembers.create | 添加群成员 | ✓ | ✓ | | | | | |
 | im.v1.message.create | 发送消息 | ✓ | ✓ | | | | | |
 | im.v1.message.list | 获取消息列表 | ✓ | ✓ | | | | | |
 | bitable.v1.app.create | 创建多维表格 | ✓ | | ✓ | ✓ | | | |
@@ -168,9 +167,9 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 | bitable.v1.appTableField.list | 获取多维表格数据表字段列表 | ✓ | | ✓ | ✓ | | | |
 | bitable.v1.appTableRecord.search | 搜索多维表格数据表记录 | ✓ | | ✓ | ✓ | | | |
 | bitable.v1.appTableRecord.create | 创建多维表格数据表记录 | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchCreate | 批量创建多维表格数据表记录 | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.batchCreate | 批量创建多维表格数据表记录 | | | | ✓ | | | |
 | bitable.v1.appTableRecord.update | 更新多维表格数据表记录 | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchUpdate | 批量更新多维表格数据表记录 | ✓ | | | ✓ | | | |
+| bitable.v1.appTableRecord.batchUpdate | 批量更新多维表格数据表记录 | | | | ✓ | | | |
 | docx.v1.document.rawContent | 获取文档内容 | ✓ | | | | ✓ | | |
 | docx.builtin.import | 导入文档 | ✓ | | | | ✓ | | |
 | docx.builtin.search | 搜索文档 | ✓ | | | | ✓ | | |
