@@ -200,7 +200,7 @@ export const bitableV1AppRoleCreate = {
               .describe('Record filter rule')
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
               .describe(
                 'Permission of fields, only valid when `table_perm` is 2. The type is map, key is field name, value is permission of field.**Optional values are**:- `1`: View only- `2`: Can edit records',
               )
@@ -457,7 +457,8 @@ export const bitableV1AppRoleUpdate = {
               .describe('Record filter rule')
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'Permission of fields, only valid when `table_perm` is 2. The type is map, key is field name, value is permission of field.**Optional values are**:- `1`: View only- `2`: Can edit records',
               )
@@ -1367,7 +1368,7 @@ export const bitableV1AppTableRecordBatchCreate = {
       records: z
         .array(
           z.object({
-            fields: z.record(z.any()).describe('fields'),
+            fields: z.object({}).catchall(z.any()).describe('fields'),
             shared_url: z.string().describe('shared link').optional(),
             record_url: z.string().describe('record link').optional(),
           }),
@@ -1458,7 +1459,7 @@ export const bitableV1AppTableRecordBatchUpdate = {
       records: z
         .array(
           z.object({
-            fields: z.record(z.any()).describe('fields'),
+            fields: z.object({}).catchall(z.any()).describe('fields'),
             record_id: z.string().describe('Base unique record identifier').optional(),
             shared_url: z.string().describe('shared link').optional(),
             record_url: z.string().describe('record link').optional(),
@@ -1493,7 +1494,8 @@ export const bitableV1AppTableRecordCreate = {
   schema: {
     data: z.object({
       fields: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           "To add new records to the data table, you need to first specify the fields in the table (i.e., specify the columns) and then pass the correctly formatted data as a record.**Note**:The supported field types and their descriptions are as follows:- Text: Enter a value in string format- Number: Enter a value in number format- Single choice: Enter an option value; for new option values, a new option will be created- Multiple choices: Enter multiple option values; for new option values, multiple new options will be created if multiple identical new option values are entered- Date: Enter a timestamp in milliseconds- Checkbox: Enter true or false- Barcode- Person: Enter the user's ,  or ; the type must match the type specified by user_id_type- Phone number: Enter text content- Hyperlink: Refer to the following example, text is the text value, link is the URL link- Attachment: Enter the attachment token; you need to first call the  or  interface to upload the attachment to this Base- One-way association: Enter the record ID of the associated table- Two-way association: Enter the record ID of the associated table- Location: Enter the latitude and longitude coordinatesFor the data structure of different types of fields, please refer to the ",
         ),
@@ -1678,7 +1680,12 @@ export const bitableV1AppTableRecordSearch = {
           'Refer to the  to learn how to fill in the filter',
         )
         .optional(),
-      automatic_fields: z.boolean().describe('need automatic fields').optional(),
+      automatic_fields: z
+        .boolean()
+        .describe(
+          'Whether to automatically calculate and return the four types of fields: creation time (`created_time`), modification time (`last_modified_time`), creator (`created_by`), and modifier (`last_modified_by`). The default is false, indicating they will not be returned',
+        )
+        .optional(),
     }),
     params: z.object({
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
@@ -1706,7 +1713,7 @@ export const bitableV1AppTableRecordUpdate = {
   description: '[Feishu/Lark]-Docs-Base-record-Update a record-Update a record',
   accessTokens: ['tenant', 'user'],
   schema: {
-    data: z.object({ fields: z.record(z.any()).describe('fields') }),
+    data: z.object({ fields: z.object({}).catchall(z.any()).describe('fields') }),
     params: z.object({
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('User ID type').optional(),
       ignore_consistency_check: z

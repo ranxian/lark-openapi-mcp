@@ -177,7 +177,7 @@ export const docxV1ChatAnnouncementBlockBatchUpdate = {
                           .optional(),
                       })
                       .optional(),
-                    undefined: z.record(z.any()).optional(),
+                    undefined: z.object({}).optional(),
                     inline_block: z
                       .object({
                         block_id: z.string(),
@@ -464,7 +464,7 @@ export const docxV1ChatAnnouncementBlockBatchUpdate = {
                           .optional(),
                       })
                       .optional(),
-                    undefined: z.record(z.any()).optional(),
+                    undefined: z.object({}).optional(),
                     inline_block: z
                       .object({
                         block_id: z.string(),
@@ -4507,7 +4507,7 @@ export const docxV1ChatAnnouncementBlockChildrenCreate = {
                 align: z.number().describe('Options:1(Left ),2(Center ),3(Right )').optional(),
               })
               .optional(),
-            divider: z.record(z.any()).optional(),
+            divider: z.object({}).optional(),
             file: z.object({ view_type: z.number().describe('Options:1(Card ),2(Preview )').optional() }).optional(),
             grid: z.object({ column_size: z.number() }).optional(),
             iframe: z
@@ -4526,7 +4526,7 @@ export const docxV1ChatAnnouncementBlockChildrenCreate = {
             image: z
               .object({ align: z.number().describe('Options:1(Left ),2(Center ),3(Right )').optional() })
               .optional(),
-            isv: z.record(z.any()).optional(),
+            isv: z.object({}).optional(),
             add_ons: z
               .object({
                 component_id: z.string().optional(),
@@ -4549,7 +4549,7 @@ export const docxV1ChatAnnouncementBlockChildrenCreate = {
                 }),
               })
               .optional(),
-            quote_container: z.record(z.any()).optional(),
+            quote_container: z.object({}).optional(),
             task: z.object({ folded: z.boolean().optional() }).optional(),
             okr: z
               .object({
@@ -4900,7 +4900,7 @@ export const docxV1DocumentBlockBatchUpdate = {
                         })
                         .describe('Internal connection accessories')
                         .optional(),
-                      undefined: z.record(z.any()).describe('Unsupported TextElements').optional(),
+                      undefined: z.object({}).describe('Unsupported TextElements').optional(),
                       inline_block: z
                         .object({
                           block_id: z.string().describe('Block ID'),
@@ -5342,7 +5342,7 @@ export const docxV1DocumentBlockBatchUpdate = {
                         })
                         .describe('Internal connection accessories')
                         .optional(),
-                      undefined: z.record(z.any()).describe('Unsupported TextElements').optional(),
+                      undefined: z.object({}).describe('Unsupported TextElements').optional(),
                       inline_block: z
                         .object({
                           block_id: z.string().describe('Block ID'),
@@ -10822,8 +10822,8 @@ export const docxV1DocumentBlockChildrenCreate = {
               })
               .describe('Group Chat Card Block')
               .optional(),
-            divider: z.record(z.any()).describe('Divider line Block').optional(),
-            file: z.record(z.any()).describe('File Block').optional(),
+            divider: z.object({}).describe('Divider line Block').optional(),
+            file: z.object({}).describe('File Block').optional(),
             grid: z
               .object({ column_size: z.number().describe('Number of columns') })
               .describe('Column Block')
@@ -10844,8 +10844,8 @@ export const docxV1DocumentBlockChildrenCreate = {
               })
               .describe('Embedded Block')
               .optional(),
-            image: z.record(z.any()).describe('Picture Block').optional(),
-            isv: z.record(z.any()).describe('Tripartite Block').optional(),
+            image: z.object({}).describe('Picture Block').optional(),
+            isv: z.object({}).describe('Tripartite Block').optional(),
             add_ons: z
               .object({
                 component_id: z.string().describe('Document widget ID').optional(),
@@ -10891,7 +10891,7 @@ export const docxV1DocumentBlockChildrenCreate = {
               })
               .describe('Form Block')
               .optional(),
-            quote_container: z.record(z.any()).describe('Quote Container Block').optional(),
+            quote_container: z.object({}).describe('Quote Container Block').optional(),
             okr: z
               .object({
                 okr_id: z
@@ -11008,7 +11008,7 @@ export const docxV1DocumentBlockDescendantCreate = {
           block_type: z
             .number()
             .describe(
-              'Options:1(Page 页面 Block),2(Text 文本 Block),3(Heading1 标题 1 Block),4(Heading2 标题 2 Block),5(Heading3 标题 3 Block),6(Heading4 标题 4 Block),7(Heading5 标题 5 Block),8(Heading6 标题 6 Block),9(Heading7 标题 7 Block),10(Heading8 标题 8 Block),11(Heading9 标题 9 Block),12(Bullet 无序列表 Block),13(Ordered 有序列表 Block),14(Code 代码块 Block),15(Quote 引用 Block),17(Todo 待办事项 Block),18(Bitable 多维表格 Block),19(Callout 高亮块 Block),20(ChatCard 会话卡片 Block),21(Diagram 流程图 & UML Block),22(Divider 分割线 Block),23(File 文件 Block),24(Grid 分栏 Block),25(GridColumn 分栏列 Block),26(Iframe 内嵌 Block Block),27(Image 图片 Block),28(ISV 开放平台小组件 Block),29(Mindnote 思维笔记 Block),30(Sheet 电子表格 Block),31(Table 表格 Block),32(TableCell 表格单元格 Block),33(View 视图 Block),34(QuoteContainer 引用容器 Block),35(Task 任务 Block),36(Okr OKR Block),37(OkrObjective OKR Objective),38(OkrKeyResult OKR Key Result),39(OkrProgress OKR 进展),40(AddOns 文档小组件),41(JiraIssue Jira Issue),42(WikiCatalog Wiki 子目录 Block),43(Board 画板 Block),44(Agenda 议程 Block),45(AgendaItem 议程项 Block),46(AgendaItemTitle 议程项标题 Block),47(AgendaItemContent 议程项内容 Block),48(LinkPreview 链接预览 Block),49(SourceSynced 源同步块),50(ReferenceSynced 引用同步块),999(Undefined 未支持 Block)',
+              'Options:1(Page 页面 Block),2(Text 文本 Block),3(Heading1 标题 1 Block),4(Heading2 标题 2 Block),5(Heading3 标题 3 Block),6(Heading4 标题 4 Block),7(Heading5 标题 5 Block),8(Heading6 标题 6 Block),9(Heading7 标题 7 Block),10(Heading8 标题 8 Block),11(Heading9 标题 9 Block),12(Bullet 无序列表 Block),13(Ordered 有序列表 Block),14(Code 代码块 Block),15(Quote 引用 Block),17(Todo 待办事项 Block),18(Bitable 多维表格 Block),19(Callout 高亮块 Block),20(ChatCard 会话卡片 Block),21(Diagram 流程图 & UML Block),22(Divider 分割线 Block),23(File 文件 Block),24(Grid 分栏 Block),25(GridColumn 分栏列 Block),26(Iframe 内嵌 Block Block),27(Image 图片 Block),28(ISV 开放平台小组件 Block),29(Mindnote 思维笔记 Block),30(Sheet 电子表格 Block),31(Table 表格 Block),32(TableCell 表格单元格 Block),33(View 视图 Block),34(QuoteContainer 引用容器 Block),35(Task 任务 Block),36(Okr OKR Block),37(OkrObjective OKR Objective),38(OkrKeyResult OKR Key Result),39(OkrProgress OKR 进展),40(AddOns 文档小组件),41(JiraIssue Jira Issue),42(WikiCatalog Wiki 子目录 Block),43(Board 画板 Block),44(Agenda 议程 Block),45(AgendaItem 议程项 Block),46(AgendaItemTitle 议程项标题 Block),47(AgendaItemContent 议程项内容 Block),48(LinkPreview 链接预览 Block),49(SourceSynced 源同步块),50(ReferenceSynced 引用同步块),51(SubPageList 新版 Wiki 子目录 Block),52(AITemplate AI 模板 Block),999(Undefined 未支持 Block)',
             ),
           text: z
             .object({
@@ -11121,7 +11121,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -11144,6 +11145,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -11378,7 +11385,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -11401,6 +11409,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -11635,7 +11649,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -11658,6 +11673,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -11892,7 +11913,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -11915,6 +11937,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -12149,7 +12177,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -12172,6 +12201,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -12406,7 +12441,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -12429,6 +12465,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -12663,7 +12705,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -12686,6 +12729,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -12920,7 +12969,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -12943,6 +12993,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -13177,7 +13233,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -13200,6 +13257,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -13434,7 +13497,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -13457,6 +13521,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -13691,7 +13761,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -13714,6 +13785,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -13948,7 +14025,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -13971,6 +14049,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -14205,7 +14289,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -14228,6 +14313,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -14462,7 +14553,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -14485,6 +14577,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -14719,7 +14817,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -14742,6 +14841,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -14976,7 +15081,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                         .describe(
                           'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                         ),
-                      url: z.string(),
+                      url: z.string().optional(),
+                      title: z.string().optional(),
                       text_element_style: z
                         .object({
                           bold: z.boolean().optional(),
@@ -14999,6 +15105,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                           link: z.object({ url: z.string() }).optional(),
                           comment_ids: z.array(z.string()).optional(),
                         })
+                        .optional(),
+                      fallback_type: z
+                        .enum(['FallbackToLink', 'FallbackToText'])
+                        .describe(
+                          'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                        )
                         .optional(),
                     })
                     .optional(),
@@ -15153,12 +15265,12 @@ export const docxV1DocumentBlockDescendantCreate = {
               align: z.number().describe('Options:1(Left ),2(Center ),3(Right )').optional(),
             })
             .optional(),
-          divider: z.record(z.any()).optional(),
+          divider: z.object({}).optional(),
           file: z
             .object({ view_type: z.number().describe('Options:1(Card 卡片视图),2(Preview 预览视图)').optional() })
             .optional(),
           grid: z.object({ column_size: z.number() }).optional(),
-          grid_column: z.record(z.any()).optional(),
+          grid_column: z.object({}).optional(),
           iframe: z
             .object({
               component: z.object({
@@ -15175,9 +15287,10 @@ export const docxV1DocumentBlockDescendantCreate = {
           image: z
             .object({
               align: z.number().describe('Options:1(Left 居左排版),2(Center 居中排版),3(Right 居右排版)').optional(),
+              caption: z.object({ content: z.string().optional() }).optional(),
             })
             .optional(),
-          isv: z.record(z.any()).optional(),
+          isv: z.object({}).optional(),
           add_ons: z
             .object({
               component_id: z.string().optional(),
@@ -15200,9 +15313,9 @@ export const docxV1DocumentBlockDescendantCreate = {
               }),
             })
             .optional(),
-          table_cell: z.record(z.any()).optional(),
-          view: z.record(z.any()).optional(),
-          quote_container: z.record(z.any()).optional(),
+          table_cell: z.object({}).optional(),
+          view: z.object({}).optional(),
+          quote_container: z.object({}).optional(),
           task: z.object({ folded: z.boolean().optional() }).optional(),
           okr: z
             .object({
@@ -15298,7 +15411,8 @@ export const docxV1DocumentBlockDescendantCreate = {
                           .describe(
                             'Options:1(Doc),3(Sheet),8(Bitable),11(MindNote),12(File),15(Slide),16(Wiki),22(Docx)',
                           ),
-                        url: z.string(),
+                        url: z.string().optional(),
+                        title: z.string().optional(),
                         text_element_style: z
                           .object({
                             bold: z.boolean().optional(),
@@ -15321,6 +15435,12 @@ export const docxV1DocumentBlockDescendantCreate = {
                             link: z.object({ url: z.string() }).optional(),
                             comment_ids: z.array(z.string()).optional(),
                           })
+                          .optional(),
+                        fallback_type: z
+                          .enum(['FallbackToLink', 'FallbackToText'])
+                          .describe(
+                            'Options:FallbackToLink(降级为超链接形式写入，超链接的文本内容为当前传入的文档标题，链接为当前传入的云文档链接（需要 url_encode）),FallbackToText(降级为文本形式写入，文本内容为当前传入的云文档链接进行 URL 解码后的结果)',
+                          )
                           .optional(),
                       })
                       .optional(),
@@ -15449,6 +15569,8 @@ export const docxV1DocumentBlockDescendantCreate = {
           reference_synced: z
             .object({ source_document_id: z.string().optional(), source_block_id: z.string().optional() })
             .optional(),
+          sub_page_list: z.object({ wiki_token: z.string() }).optional(),
+          ai_template: z.object({}).optional(),
         }),
       ),
     }),

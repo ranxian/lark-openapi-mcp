@@ -409,7 +409,7 @@ export const taskV2CustomFieldCreate = {
         .describe('multiple select setting')
         .optional(),
       text_setting: z
-        .record(z.any())
+        .object({})
         .describe('text field setting (currently text_setting has no settable items)')
         .optional(),
     }),
@@ -635,7 +635,7 @@ export const taskV2CustomFieldPatch = {
             })
             .describe('mult_select setting')
             .optional(),
-          text_setting: z.record(z.any()).describe('text field setting').optional(),
+          text_setting: z.object({}).describe('text field setting').optional(),
         })
         .describe('custom field data to update')
         .optional(),

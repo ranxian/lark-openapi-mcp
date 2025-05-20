@@ -213,7 +213,7 @@ export const docxV1ChatAnnouncementBlockBatchUpdate = {
                         })
                         .describe('内联附件')
                         .optional(),
-                      undefined: z.record(z.any()).describe('未支持的 TextElement').optional(),
+                      undefined: z.object({}).describe('未支持的 TextElement').optional(),
                       inline_block: z
                         .object({
                           block_id: z.string().describe('关联的内联状态的 block 的 block_id'),
@@ -612,7 +612,7 @@ export const docxV1ChatAnnouncementBlockBatchUpdate = {
                         })
                         .describe('内联附件')
                         .optional(),
-                      undefined: z.record(z.any()).describe('未支持的 TextElement').optional(),
+                      undefined: z.object({}).describe('未支持的 TextElement').optional(),
                       inline_block: z
                         .object({
                           block_id: z.string().describe('关联的内联状态的 block 的 block_id'),
@@ -5673,7 +5673,7 @@ export const docxV1ChatAnnouncementBlockChildrenCreate = {
               })
               .describe('群聊卡片 Block')
               .optional(),
-            divider: z.record(z.any()).describe('分割线 Block').optional(),
+            divider: z.object({}).describe('分割线 Block').optional(),
             file: z
               .object({
                 view_type: z
@@ -5712,7 +5712,7 @@ export const docxV1ChatAnnouncementBlockChildrenCreate = {
               })
               .describe('图片 Block')
               .optional(),
-            isv: z.record(z.any()).describe('三方 Block').optional(),
+            isv: z.object({}).describe('三方 Block').optional(),
             add_ons: z
               .object({
                 component_id: z.string().describe('团队互动应用唯一ID').optional(),
@@ -5751,7 +5751,7 @@ export const docxV1ChatAnnouncementBlockChildrenCreate = {
               })
               .describe('表格 Block')
               .optional(),
-            quote_container: z.record(z.any()).describe('引用容器 Block').optional(),
+            quote_container: z.object({}).describe('引用容器 Block').optional(),
             task: z
               .object({ folded: z.boolean().describe('折叠状态').optional() })
               .describe('任务 Block')
@@ -6162,7 +6162,7 @@ export const docxV1DocumentBlockBatchUpdate = {
                         })
                         .describe('内联附件')
                         .optional(),
-                      undefined: z.record(z.any()).describe('未支持的 TextElement').optional(),
+                      undefined: z.object({}).describe('未支持的 TextElement').optional(),
                       inline_block: z
                         .object({
                           block_id: z.string().describe('关联的内联状态的 block 的 block_id'),
@@ -6561,7 +6561,7 @@ export const docxV1DocumentBlockBatchUpdate = {
                         })
                         .describe('内联附件')
                         .optional(),
-                      undefined: z.record(z.any()).describe('未支持的 TextElement').optional(),
+                      undefined: z.object({}).describe('未支持的 TextElement').optional(),
                       inline_block: z
                         .object({
                           block_id: z.string().describe('关联的内联状态的 block 的 block_id'),
@@ -11731,8 +11731,8 @@ export const docxV1DocumentBlockChildrenCreate = {
               })
               .describe('群聊卡片 Block')
               .optional(),
-            divider: z.record(z.any()).describe('分割线 Block').optional(),
-            file: z.record(z.any()).describe('文件 Block').optional(),
+            divider: z.object({}).describe('分割线 Block').optional(),
+            file: z.object({}).describe('文件 Block').optional(),
             grid: z
               .object({ column_size: z.number().describe('分栏列数量') })
               .describe('分栏 Block')
@@ -11753,8 +11753,8 @@ export const docxV1DocumentBlockChildrenCreate = {
               })
               .describe('内嵌 Block')
               .optional(),
-            image: z.record(z.any()).describe('图片 Block').optional(),
-            isv: z.record(z.any()).describe('三方 Block').optional(),
+            image: z.object({}).describe('图片 Block').optional(),
+            isv: z.object({}).describe('三方 Block').optional(),
             add_ons: z
               .object({
                 component_id: z.string().describe('文档小组件 ID').optional(),
@@ -11792,7 +11792,7 @@ export const docxV1DocumentBlockChildrenCreate = {
               })
               .describe('表格 Block')
               .optional(),
-            quote_container: z.record(z.any()).describe('引用容器 Block').optional(),
+            quote_container: z.object({}).describe('引用容器 Block').optional(),
             okr: z
               .object({
                 okr_id: z
@@ -16332,7 +16332,7 @@ export const docxV1DocumentBlockDescendantCreate = {
               })
               .describe('群聊卡片 Block')
               .optional(),
-            divider: z.record(z.any()).describe('分割线 Block').optional(),
+            divider: z.object({}).describe('分割线 Block').optional(),
             file: z
               .object({
                 view_type: z
@@ -16371,7 +16371,7 @@ export const docxV1DocumentBlockDescendantCreate = {
               })
               .describe('图片 Block')
               .optional(),
-            isv: z.record(z.any()).describe('三方 Block').optional(),
+            isv: z.object({}).describe('三方 Block').optional(),
             add_ons: z
               .object({
                 component_id: z.string().describe('团队互动应用唯一ID').optional(),
@@ -16410,7 +16410,7 @@ export const docxV1DocumentBlockDescendantCreate = {
               })
               .describe('表格 Block')
               .optional(),
-            quote_container: z.record(z.any()).describe('引用容器 Block').optional(),
+            quote_container: z.object({}).describe('引用容器 Block').optional(),
             okr: z
               .object({
                 okr_id: z.string().describe('OKR ID').optional(),
