@@ -7,6 +7,7 @@ import { currentVersion } from './utils/version';
 import { initStdioServer, initSSEServer, initMcpServer } from './mcp-server';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { RecallTool } from './mcp-tool/document-tool/recall';
+import { OAPI_MCP_DEFAULT_ARGS, OAPI_MCP_ENV_ARGS } from './utils/constants';
 
 dotenv.config();
 
@@ -19,15 +20,15 @@ program
   .description('Start Feishu/Lark MCP Service')
   .option('-a, --app-id <appId>', 'Feishu/Lark App ID')
   .option('-s, --app-secret <appSecret>', 'Feishu/Lark App Secret')
-  .option('-d, --domain <domain>', 'Feishu/Lark Domain', 'https://open.feishu.cn')
+  .option('-d, --domain <domain>', 'Feishu/Lark Domain (default: "https://open.feishu.cn")')
   .option('-t, --tools <tools>', 'Allowed Tools List, separated by commas')
-  .option('-c, --tool-name-case <toolNameCase>', 'Tool Name Case, snake or camel or kebab or dot', 'snake')
-  .option('-l, --language <language>', 'Tools Language, zh or en', 'en')
+  .option('-c, --tool-name-case <toolNameCase>', 'Tool Name Case, snake or camel or kebab or dot (default: "snake")')
+  .option('-l, --language <language>', 'Tools Language, zh or en (default: "en")')
   .option('-u, --user-access-token <userAccessToken>', 'User Access Token (beta)')
-  .option('--token-mode <tokenMode>', 'Token Mode, auto or user_access_token or tenant_access_token', 'auto')
-  .option('-m, --mode <mode>', 'Transport Mode, stdio or sse', 'stdio')
-  .option('--host <host>', 'Host to listen', 'localhost')
-  .option('-p, --port <port>', 'Port to listen in sse mode', '3000')
+  .option('--token-mode <tokenMode>', 'Token Mode, auto or user_access_token or tenant_access_token (default: "auto")')
+  .option('-m, --mode <mode>', 'Transport Mode, stdio or sse (default: "stdio")')
+  .option('--host <host>', 'Host to listen (default: "localhost")')
+  .option('-p, --port <port>', 'Port to listen in sse mode (default: "3000")')
   .option('--config <configPath>', 'Config file path (JSON)')
   .action(async (options) => {
     let fileOptions = {};
@@ -40,7 +41,7 @@ program
         process.exit(1);
       }
     }
-    const mergedOptions = { ...fileOptions, ...options };
+    const mergedOptions = { ...OAPI_MCP_DEFAULT_ARGS, ...OAPI_MCP_ENV_ARGS, ...fileOptions, ...options };
     const { mcpServer } = initMcpServer(mergedOptions);
     if (mergedOptions.mode === 'stdio') {
       initStdioServer(mcpServer);

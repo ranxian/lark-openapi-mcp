@@ -6,9 +6,7 @@ import * as larkmcp from '../../mcp-tool';
 import { oapiHttpInstance } from '../../utils/http-instance';
 
 export function initMcpServer(options: McpServerOptions) {
-  const appId = options.appId || process.env.APP_ID;
-  const appSecret = options.appSecret || process.env.APP_SECRET;
-  const userAccessToken = options.userAccessToken || process.env.USER_ACCESS_TOKEN;
+  const { appId, appSecret, userAccessToken } = options;
 
   if (!appId || !appSecret) {
     console.error(
