@@ -153,38 +153,38 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 
 The following table details each API tool and its inclusion in different preset collections, helping you choose the appropriate preset for your needs:
 
-| Tool Name | Function Description | preset.default (Default) | preset.im.default | preset.base.default | preset.base.batch | preset.doc.default | preset.task.default | preset.calendar.default |
-| --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| im.v1.chat.create | Create a group chat | ✓ | ✓ | | | | | |
-| im.v1.chat.list | Get group chat list | ✓ | ✓ | | | | | |
-| im.v1.chatMembers.get | Get group members | ✓ | ✓ | | | | | |
-| im.v1.message.create | Send messages | ✓ | ✓ | | | | | |
-| im.v1.message.list | Get message list | ✓ | ✓ | | | | | |
-| bitable.v1.app.create | Create base | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTable.create | Create base data table | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTable.list | Get base data table list | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTableField.list | Get base data table field list | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTableRecord.search | Search base data table records | ✓ | | ✓ | ✓ | | | |
-| bitable.v1.appTableRecord.create | Create base data table records | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchCreate | Batch create base data table records | | | | ✓ | | | |
-| bitable.v1.appTableRecord.update | Update base data table records | ✓ | | ✓ | | | | |
-| bitable.v1.appTableRecord.batchUpdate | Batch update base data table records | | | | ✓ | | | |
-| docx.v1.document.rawContent | Get document content | ✓ | | | | ✓ | | |
-| docx.builtin.import | Import documents | ✓ | | | | ✓ | | |
-| docx.builtin.search | Search documents | ✓ | | | | ✓ | | |
-| drive.v1.permissionMember.create | Add collaborator permissions | ✓ | | | | ✓ | | |
-| wiki.v2.space.getNode | Get Wiki node | ✓ | | | | ✓ | | |
-| wiki.v1.node.search | Search Wiki nodes | ✓ | | | | ✓ | | |
-| contact.v3.user.batchGetId | Batch get user IDs | ✓ | | | | | | |
-| task.v2.task.create | Create task | | | | | | ✓ | |
-| task.v2.task.patch | Modify task | | | | | | ✓ | |
-| task.v2.task.addMembers | Add task members | | | | | | ✓ | |
-| task.v2.task.addReminders | Add task reminders | | | | | | ✓ | |
-| calendar.v4.calendarEvent.create | Create calendar event | | | | | | | ✓ |
-| calendar.v4.calendarEvent.patch | Modify calendar event | | | | | | | ✓ |
-| calendar.v4.calendarEvent.get | Get calendar event | | | | | | | ✓ |
-| calendar.v4.freebusy.list | Query free/busy status | | | | | | | ✓ |
-| calendar.v4.calendar.primary | Get primary calendar | | | | | | | ✓ |
+| Tool Name | Function Description | preset.light | preset.default (Default) | preset.im.default | preset.base.default | preset.base.batch | preset.doc.default | preset.task.default | preset.calendar.default |
+| --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| im.v1.chat.create | Create a group chat | | ✓ | ✓ | | | | | |
+| im.v1.chat.list | Get group chat list | ✓ | ✓ | ✓ | | | | | |
+| im.v1.chatMembers.get | Get group members | | ✓ | ✓ | | | | | |
+| im.v1.message.create | Send messages | | ✓ | ✓ | | | | | |
+| im.v1.message.list | Get message list | ✓ | ✓ | ✓ | | | | | |
+| bitable.v1.app.create | Create base | | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.create | Create base data table | | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTable.list | Get base data table list | | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableField.list | Get base data table field list | | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.search | Search base data table records | ✓ | ✓ | | ✓ | ✓ | | | |
+| bitable.v1.appTableRecord.create | Create base data table records | | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchCreate | Batch create base data table records | ✓ | | | | ✓ | | | |
+| bitable.v1.appTableRecord.update | Update base data table records | | ✓ | | ✓ | | | | |
+| bitable.v1.appTableRecord.batchUpdate | Batch update base data table records | | | | | ✓ | | | |
+| docx.v1.document.rawContent | Get document content | ✓ | ✓ | | | | ✓ | | |
+| docx.builtin.import | Import documents | ✓ | ✓ | | | | ✓ | | |
+| docx.builtin.search | Search documents | ✓ | ✓ | | | | ✓ | | |
+| drive.v1.permissionMember.create | Add collaborator permissions | | ✓ | | | | ✓ | | |
+| wiki.v2.space.getNode | Get Wiki node | ✓ | ✓ | | | | ✓ | | |
+| wiki.v1.node.search | Search Wiki nodes | ✓ | ✓ | | | | ✓ | | |
+| contact.v3.user.batchGetId | Batch get user IDs | ✓ | ✓ | | | | | | |
+| task.v2.task.create | Create task | | | | | | | ✓ | |
+| task.v2.task.patch | Modify task | | | | | | | ✓ | |
+| task.v2.task.addMembers | Add task members | | | | | | | ✓ | |
+| task.v2.task.addReminders | Add task reminders | | | | | | | ✓ | |
+| calendar.v4.calendarEvent.create | Create calendar event | | | | | | | | ✓ |
+| calendar.v4.calendarEvent.patch | Modify calendar event | | | | | | | | ✓ |
+| calendar.v4.calendarEvent.get | Get calendar event | | | | | | | | ✓ |
+| calendar.v4.freebusy.list | Query free/busy status | | | | | | | | ✓ |
+| calendar.v4.calendar.primary | Get primary calendar | | | | | | | | ✓ |
 
 > **Note**: In the table, "✓" indicates the tool is included in that preset. Using `-t preset.xxx` will only enable tools marked with "✓" in the corresponding column.
 
@@ -247,10 +247,11 @@ The `lark-mcp mcp` tool provides various command line parameters for flexible MC
    ```
 
    > **Note**: The `-t` parameter supports the following preset tool collections:
+   > - `preset.light` - Lightweight tool set with fewer but commonly used tools, suitable for scenarios that require reduced token usage
    > - `preset.default` - Default tool set containing all preset tools
    > - `preset.im.default` - Instant messaging related tools, such as group management, message sending, etc.
-   > - `preset.bitable.default` - Bitable related tools, such as table creation, record management, etc.
-   > - `preset.bitable.batch` - Bitable batch operation tools, including batch create and update record functions
+   > - `preset.base.default` - Base related tools, such as table creation, record management, etc.
+   > - `preset.base.batch` - Base batch operation tools, including batch create and update record functions
    > - `preset.doc.default` - Document related tools, such as document content reading, permission management, etc.
    > - `preset.task.default` - Task management related tools, such as task creation, member management, etc.
    > - `preset.calendar.default` - Calendar event management tools, such as creating calendar events, querying free/busy status, etc.

@@ -8,6 +8,10 @@ export enum PresetName {
   /**
    * Default preset including IM, Bitable, Doc and Contact tools
    */
+  LIGHT = 'preset.light',
+  /**
+   * Default preset including IM, Bitable, Doc and Contact tools
+   */
   DEFAULT = 'preset.default',
   /**
    * IM related tools for chat and message operations
@@ -34,6 +38,19 @@ export enum PresetName {
    */
   CALENDAR_DEFAULT = 'preset.calendar.default',
 }
+
+export const presetLightToolNames: ToolName[] = [
+  'im.v1.message.list',
+  'im.v1.message.create',
+  'im.v1.chat.search',
+  'contact.v3.user.batchGetId',
+  'docx.v1.document.rawContent',
+  'docx.builtin.import',
+  'docx.builtin.search',
+  'wiki.v2.space.getNode',
+  'bitable.v1.appTableRecord.search',
+  'bitable.v1.appTableRecord.batchCreate',
+];
 
 export const presetContactToolNames: ToolName[] = ['contact.v3.user.batchGetId'];
 
@@ -97,6 +114,7 @@ export const defaultToolNames: ToolName[] = [
 ];
 
 export const presetTools: Record<PresetName, ToolName[]> = {
+  [PresetName.LIGHT]: presetLightToolNames,
   [PresetName.DEFAULT]: defaultToolNames,
   [PresetName.IM_DEFAULT]: presetImToolNames,
   [PresetName.BASE_DEFAULT]: presetBaseToolNames,
