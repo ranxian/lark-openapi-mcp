@@ -112,7 +112,7 @@ export const imV2AppFeedCardBatchUpdate = {
                             .enum(['default', 'primary', 'success'])
                             .describe('button type Options:default(default),primary(primary),success(success)')
                             .optional(),
-                          action_map: z.record(z.any()).describe('action map').optional(),
+                          action_map: z.object({}).catchall(z.any()).describe('action map').optional(),
                         }),
                       )
                       .describe('button'),
@@ -238,7 +238,7 @@ export const imV2AppFeedCardCreate = {
                       .enum(['default', 'primary', 'success'])
                       .describe('button type Options:default(default),primary(primary),success(success)')
                       .optional(),
-                    action_map: z.record(z.any()).describe('action map').optional(),
+                    action_map: z.object({}).catchall(z.any()).describe('action map').optional(),
                   }),
                 )
                 .describe('button'),
@@ -384,7 +384,7 @@ export const imV2ChatButtonUpdate = {
                   .enum(['default', 'primary', 'success'])
                   .describe('button type Options:default(default),primary(primary),success(success)')
                   .optional(),
-                action_map: z.record(z.any()).describe('action map').optional(),
+                action_map: z.object({}).catchall(z.any()).describe('action map').optional(),
               }),
             )
             .describe(

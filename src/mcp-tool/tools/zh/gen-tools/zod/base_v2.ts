@@ -91,7 +91,8 @@ export const baseV2AppRoleCreate = {
               )
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '字段权限，仅在 `table_perm` 为 1和 2 时生效。用于设置字段可编辑或可阅读。类型为 map，key 是字段名称，value 是字段权限。对于未设置的字段，默认无权限。value 枚举值有：- `1`：可阅读- `2`：可添加- `3`：可编辑',
               )
@@ -106,13 +107,15 @@ export const baseV2AppRoleCreate = {
               .optional(),
             view_perm: z.number().describe('设置视图的权限。 Options:1(Read 可阅读),2(Edit 可编辑)').optional(),
             view_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '可读的视图集合，仅在 view_perm 为 1 （视图为可阅读）时生效。- 未设置时，表示所有视图可读。- 设置后，表示设置的视图可读，未设置的视图无权限。该参数类型为 map，其中 key 是，value 是视图对应的权限。value 枚举值有：- `0`：无权限- `1`：可阅读**注意**：仅高级权限为 v2 版本的多维表格支持该参数。是否是 v2 版本可调用查看',
               )
               .optional(),
             field_action_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '设置字段的权限，仅可配置单多选字段、附件字段。可选的点位有：- `select_option_edit` : 选项配置点位，配置是否可增删改单、多选选项，未设置表示无权限。- `attachment_export`: 附件操作权限点位，配置是否可导出附件，未设置表示可导出。该参数类型为两层 map 结构，其中 key 是字段点位权限，value 是字段权限集合。字段权限集合也是一个 map 结构，其中 key 是字段名称，value 是字段点位权限：- `0`：无权限- `1`：有权限**注意**：仅高级权限为 v2 版本的多维表格支持该参数。是否是 v2 版本可调用查看',
               )
@@ -134,7 +137,8 @@ export const baseV2AppRoleCreate = {
         .describe('针对仪表盘的权限设置')
         .optional(),
       base_rule: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           '多维表格点位的权限。- 未设置时，表示自定义角色拥有所有点位权限。- 设置时，可设置以下两种权限： - `base_complex_edit` : 设置是否可以创建副本、下载、打印多维表格 - `copy`: 设置是否可以复制多维表格内容该参数类型为 map，其中 key 是权限点位名称，value 是权限开关。value 枚举值有：- `0`：无权限- `1`：有权限**注意**：仅高级权限为 v2 版本的多维表格支持该参数。是否是 v2 版本可调用查看',
         )
@@ -271,7 +275,8 @@ export const baseV2AppRoleUpdate = {
               )
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '字段权限，仅在 `table_perm` 为 1和 2 时生效。用于设置字段可编辑或可阅读。类型为 map，key 是字段名称，value 是字段权限。对于未设置的多维表格字段，则为无权限。更新时，`field_perm` 未传值时，将保留旧值不变。`field_perm` 传{}时，则将所有字段设置为默认值可编辑或者可阅读，默认值需结合`table_perm `字段。value 枚举值有：- `1`：可阅读- `2`：可添加- `3`：可编辑',
               )
@@ -286,13 +291,15 @@ export const baseV2AppRoleUpdate = {
               .optional(),
             view_perm: z.number().describe('设置视图的编辑权限。 Options:1(Read 可阅读),2(Edit 可编辑)').optional(),
             view_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '可读的视图集合，仅在 `view_perm` 为 1 （视图为可阅读）时生效。更新时，未设置该字段`view_rules `，且 `view_perm` 未变化的情况下，将保留旧值。设置该字段`view_rules `为{}，且 `view_perm` 为1的情况下，会将所有视图置为可读。该参数类型为 map，其中 key 是，value 是视图对应的权限。value 枚举值有：- `0`：无权限- `1`：可阅读**注意**：仅高级权限为 v2 版本的多维表格支持该参数。是否是 v2 版本可调用查看',
               )
               .optional(),
             field_action_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '更新字段的权限，仅可配置单多选字段、附件字段。可选的点位有：- `select_option_edit` : 选项配置点位，配置是否可增删改单、多选选项，未设置表示无权限。- `attachment_export`: 附件操作权限点位，配置是否可导出附件，未设置表示可导出。该参数类型为两层 map 结构，其中 key 是字段点位权限，value 是字段权限集合。字段权限集合也是一个 map 结构，其中 key 是字段名称，value 是字段点位权限：- `0`：无权限- `1`：有权限**注意**：仅高级权限为 v2 版本的多维表格支持该参数。是否是 v2 版本可调用查看',
               )
@@ -316,7 +323,8 @@ export const baseV2AppRoleUpdate = {
         )
         .optional(),
       base_rule: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           '多维表格点位的权限。更新时，未设置`base_rule`字段时，所有点位保持旧值。设置`base_rule`字段为{}时，会将所有点位设置为默认值，即所有点位有权限。可设置以下两种权限：- `base_complex_edit` : 设置是否可以创建副本、下载、打印多维表格- `copy`: 设置是否可以复制多维表格内容该参数类型为 map，其中 key 是权限点位名称，value 是权限开关。value 枚举值有：- `0`：无权限- `1`：有权限**注意**：仅高级权限为 v2 版本的多维表格支持该参数。是否是 v2 版本可调用查看',
         )

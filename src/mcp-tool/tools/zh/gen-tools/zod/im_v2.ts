@@ -107,7 +107,7 @@ export const imV2AppFeedCardBatchUpdate = {
                             .enum(['default', 'primary', 'success'])
                             .describe('按钮类型 Options:default(默认),primary(主要),success(成功)')
                             .optional(),
-                          action_map: z.record(z.any()).describe('action 字典').optional(),
+                          action_map: z.object({}).catchall(z.any()).describe('action 字典').optional(),
                         }),
                       )
                       .describe('按钮组合'),
@@ -220,7 +220,7 @@ export const imV2AppFeedCardCreate = {
                       .enum(['default', 'primary', 'success'])
                       .describe('按钮类型 Options:default(默认),primary(主要),success(成功)')
                       .optional(),
-                    action_map: z.record(z.any()).describe('action 字典').optional(),
+                    action_map: z.object({}).catchall(z.any()).describe('action 字典').optional(),
                   }),
                 )
                 .describe('按钮组合'),
@@ -353,7 +353,7 @@ export const imV2ChatButtonUpdate = {
                   .enum(['default', 'primary', 'success'])
                   .describe('按钮类型 Options:default(默认),primary(主要),success(成功)')
                   .optional(),
-                action_map: z.record(z.any()).describe('action 字典').optional(),
+                action_map: z.object({}).catchall(z.any()).describe('action 字典').optional(),
               }),
             )
             .describe(

@@ -361,7 +361,7 @@ export const taskV2CustomFieldCreate = {
         })
         .describe('多选设置')
         .optional(),
-      text_setting: z.record(z.any()).describe('文本类型设置（目前文本类型没有可设置项）').optional(),
+      text_setting: z.object({}).describe('文本类型设置（目前文本类型没有可设置项）').optional(),
     }),
     params: z.object({ user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional() }),
     useUAT: z.boolean().describe('使用用户身份请求, 否则使用应用身份').optional(),
@@ -561,7 +561,7 @@ export const taskV2CustomFieldPatch = {
             })
             .describe('多选设置')
             .optional(),
-          text_setting: z.record(z.any()).describe('文本类型设置').optional(),
+          text_setting: z.object({}).describe('文本类型设置').optional(),
         })
         .describe('要修改的自定义字段数据')
         .optional(),

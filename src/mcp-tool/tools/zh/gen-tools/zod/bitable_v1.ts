@@ -213,7 +213,8 @@ export const bitableV1AppRoleCreate = {
               .describe('记录筛选条件，当 `table_perm` 为 1 或 2 时生效。用于指定可编辑或可阅读的记录')
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '字段权限，仅在 `table_perm` 为 2 时生效。用于设置字段可编辑或可阅读。类型为 map，key 是字段名称，value 是字段权限。value 枚举值有：- `1`：可阅读- `2`：可编辑',
               )
@@ -512,7 +513,8 @@ export const bitableV1AppRoleUpdate = {
               .describe('记录筛选条件，当 `table_perm` 为 1 或 2 时生效。用于指定可编辑或可阅读的记录')
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '字段权限，仅在 `table_perm` 为 2 时生效。用于设置字段可编辑或可阅读。类型为 map，key 是字段名称，value 是字段权限。value 枚举值有：- `1`：可阅读- `2`：可编辑',
               )
@@ -1463,7 +1465,8 @@ export const bitableV1AppTableRecordBatchCreate = {
         .array(
           z.object({
             fields: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '要新增的记录的数据。你需先指定数据表中的字段（即指定列），再传入正确格式的数据作为一条记录。**注意**：该接口支持的字段类型及其描述如下所示：- 文本：原值展示，不支持 markdown 语法- 数字：填写数字格式的值- 单选：填写选项值，对于新的选项值，将会创建一个新的选项- 多选：填写多个选项值，对于新的选项值，将会创建一个新的选项。如果填写多个相同的新选项值，将会创建多个相同的选项- 日期：填写毫秒级时间戳- 复选框：填写 true 或 false- 条码- 人员：：填写用户的、 或 ，类型需要与 user_id_type 指定的类型一致- 电话号码：填写文本内容- 超链接：参考以下示例，text 为文本值，link 为 URL 链接- 附件：填写附件 token，需要先调用或接口将附件上传至该多维表格中- 单向关联：填写被关联表的记录 ID- 双向关联：填写被关联表的记录 ID- 地理位置：填写经纬度坐标不同类型字段的数据结构请参考',
               ),
@@ -1571,7 +1574,8 @@ export const bitableV1AppTableRecordBatchUpdate = {
         .array(
           z.object({
             fields: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 '要更新的记录的数据。你需先指定数据表中的字段（即指定列），再传入正确格式的数据作为一条记录。**注意**：该接口支持的字段类型及其描述如下所示：- 文本：原值展示，不支持 markdown 语法- 数字：填写数字格式的值- 单选：填写选项值，对于新的选项值，将会创建一个新的选项- 多选：填写多个选项值，对于新的选项值，将会创建一个新的选项。如果填写多个相同的新选项值，将会创建多个相同的选项- 日期：填写毫秒级时间戳- 复选框：填写 true 或 false- 条码- 人员：填写用户的 open_id、union_id 或 user_id，类型需要与 user_id_type 指定的类型一致- 电话号码：填写文本内容- 超链接：参考以下示例，text 为文本值，link 为 URL 链接- 附件：填写附件 token，需要先调用或接口将附件上传至该多维表格中- 单向关联：填写被关联表的记录 ID- 双向关联：填写被关联表的记录 ID- 地理位置：填写经纬度坐标不同类型字段的数据结构请参考',
               ),
@@ -1609,7 +1613,8 @@ export const bitableV1AppTableRecordCreate = {
   schema: {
     data: z.object({
       fields: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           '要新增的记录的数据。你需先指定数据表中的字段（即指定列），再传入正确格式的数据作为一条记录。**注意**：该接口支持的字段类型及其描述如下所示：- 文本： 填写字符串格式的值- 数字：填写数字格式的值- 单选：填写选项值，对于新的选项值，将会创建一个新的选项- 多选：填写多个选项值，对于新的选项值，将会创建一个新的选项。如果填写多个相同的新选项值，将会创建多个相同的选项- 日期：填写毫秒级时间戳- 复选框：填写 true 或 false- 条码- 人员：填写用户的、 或 ，类型需要与 user_id_type 指定的类型一致- 电话号码：填写文本内容- 超链接：参考以下示例，text 为文本值，link 为 URL 链接- 附件：填写附件 token，需要先调用或接口将附件上传至该多维表格中- 单向关联：填写被关联表的记录 ID- 双向关联：填写被关联表的记录 ID- 地理位置：填写经纬度坐标不同类型字段的数据结构请参考',
         ),
@@ -1817,7 +1822,12 @@ export const bitableV1AppTableRecordSearch = {
           '包含条件筛选信息的对象。了解 filter 填写指南和使用示例（如怎样同时使用 `and` 和 `or` 逻辑链接词），参考',
         )
         .optional(),
-      automatic_fields: z.boolean().describe('是否返回自动计算的字段。默认为 false，表示不返回').optional(),
+      automatic_fields: z
+        .boolean()
+        .describe(
+          '是否自动计算并返回创建时间（created_time）、修改时间（last_modified_time）、创建人（created_by）、修改人（last_modified_by）这四类字段。默认为 false，表示不返回',
+        )
+        .optional(),
     }),
     params: z.object({
       user_id_type: z.enum(['open_id', 'union_id', 'user_id']).describe('用户ID类型').optional(),
@@ -1847,7 +1857,8 @@ export const bitableV1AppTableRecordUpdate = {
   schema: {
     data: z.object({
       fields: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           '要更新的记录的数据。你需先指定数据表中的字段（即指定列），再传入正确格式的数据作为一条记录。**注意**：该接口支持的字段类型及其描述如下所示：- 文本：原值展示，不支持 markdown 语法- 数字：填写数字格式的值- 单选：填写选项值，对于新的选项值，将会创建一个新的选项- 多选：填写多个选项值，对于新的选项值，将会创建一个新的选项。如果填写多个相同的新选项值，将会创建多个相同的选项- 日期：填写毫秒级时间戳- 复选框：填写 true 或 false- 条码- 人员：填写用户的 open_id、union_id 或 user_id，类型需要与 user_id_type 指定的类型一致- 电话号码：填写文本内容- 超链接：参考以下示例，text 为文本值，link 为 URL 链接- 附件：填写附件 token，需要先调用或接口将附件上传至该多维表格中- 单向关联：填写被关联表的记录 ID- 双向关联：填写被关联表的记录 ID- 地理位置：填写经纬度坐标不同类型字段的数据结构请参考',
         ),
@@ -1887,7 +1898,9 @@ export const bitableV1AppTableViewCreate = {
         ),
       view_type: z
         .enum(['grid', 'kanban', 'gallery', 'gantt', 'form'])
-        .describe('视图类型 Options:grid(表格视图),kanban(看板视图),gallery(画册视图),gantt(甘特视图),form(表单视图)')
+        .describe(
+          '视图类型，不填默认为表格视图。 Options:grid(表格视图),kanban(看板视图),gallery(画册视图),gantt(甘特视图),form(表单视图)',
+        )
         .optional(),
     }),
     path: z.object({

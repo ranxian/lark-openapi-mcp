@@ -72,7 +72,8 @@ export const baseV2AppRoleCreate = {
               )
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'Permission of fields, only valid when `table_perm` is 2. The type is map, key is field name, value is permission of field.**Optional values are**:- `1`: View only- `2`: Can add records- `3`: Can edit records',
               )
@@ -91,13 +92,15 @@ export const baseV2AppRoleCreate = {
               .optional(),
             view_perm: z.number().describe('View permission Options:1(Read Can read),2(Edit Can edit)').optional(),
             view_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'A readable view collection. This is only meaningful when view_perm is 1. If it is not set, all views are readable. If it is set, it means that only views in the collection are readable, and views outside the collection have no permission.The parameter type is a map, where the key is the view id and the value is the permission corresponding to the view. The value enumeration values ​​are:- `0`: No access- `1`: Read only',
               )
               .optional(),
             field_action_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'Field point permission configuration, optional points are:`select_option_edit`: Option configuration point, configure whether to add, delete, or modify single-select and multiple-select option values`attachment_export`: Attachment operation permission point, configure whether to export attachmentsThis parameter type is a two-layer map structure, where the key is the field point permission and the value is the field permission set. The field permission set is also a map structure, where the key is the field name and the value is the field point permission:- `0`: No access- `1`: Can access',
               )
@@ -115,7 +118,8 @@ export const baseV2AppRoleCreate = {
         .describe('Block role')
         .optional(),
       base_rule: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           'base role`base_complex_edit`: Set whether you can create copies, download, and print multidimensional tables`copy`: Set whether you can copy the contents of multidimensional tablesThe parameter type is map, where key is the permission point name and value is the permission switch. The value enumeration values ​​are:- `0`: No access- `1`: Can access',
         )
@@ -231,7 +235,8 @@ export const baseV2AppRoleUpdate = {
               )
               .optional(),
             field_perm: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'Permission of fields, only valid when `table_perm` is 2. The type is map, key is field name, value is permission of field.**Optional values are**:- `1`: View only- `2`: Can add records- `3`: Can edit records',
               )
@@ -250,13 +255,15 @@ export const baseV2AppRoleUpdate = {
               .optional(),
             view_perm: z.number().describe('View permission Options:1(Read Can read),2(Edit Can edit)').optional(),
             view_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'A readable view collection. This is only meaningful when view_perm is 1. If it is not set, all views are readable. If it is set, it means that only views in the collection are readable, and views outside the collection have no permission.The parameter type is a map, where the key is the view id and the value is the permission corresponding to the view. The value enumeration values ​​are:- `0`: No access- `1`: Read only',
               )
               .optional(),
             field_action_rules: z
-              .record(z.any())
+              .object({})
+              .catchall(z.any())
               .describe(
                 'Field point permission configuration, optional points are:`select_option_edit`: Option configuration point, configure whether to add, delete, or modify single-select and multiple-select option values`attachment_export`: Attachment operation permission point, configure whether to export attachmentsThis parameter type is a two-layer map structure, where the key is the field point permission and the value is the field permission set. The field permission set is also a map structure, where the key is the field name and the value is the field point permission:- `0`: No access- `1`: Can access',
               )
@@ -274,7 +281,8 @@ export const baseV2AppRoleUpdate = {
         .describe('Block role')
         .optional(),
       base_rule: z
-        .record(z.any())
+        .object({})
+        .catchall(z.any())
         .describe(
           'base role`base_complex_edit`: Set whether you can create copies, download, and print multidimensional tables`copy`: Set whether you can copy the contents of multidimensional tablesThe parameter type is map, where key is the permission point name and value is the permission switch. The value enumeration values ​​are:- `0`: No access- `1`: Can access',
         )
