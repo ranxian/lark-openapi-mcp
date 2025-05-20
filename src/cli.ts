@@ -42,12 +42,12 @@ program
     }
     const mergedOptions = { ...fileOptions, ...options };
     const { mcpServer } = initMcpServer(mergedOptions);
-    if (options.mode === 'stdio') {
+    if (mergedOptions.mode === 'stdio') {
       initStdioServer(mcpServer);
-    } else if (options.mode === 'sse') {
+    } else if (mergedOptions.mode === 'sse') {
       initSSEServer(mcpServer, mergedOptions);
     } else {
-      console.error('Invalid mode:', options.mode);
+      console.error('Invalid mode:', mergedOptions.mode);
       process.exit(1);
     }
   });
@@ -55,21 +55,18 @@ program
 program
   .command('recall-developer-documents')
   .description('Start Feishu/Lark Open Platform Recall MCP Service')
-  .option("-d, --domain <domain>", "Feishu Open Platform Domain", "https://open.feishu.cn")
+  .option('-d, --domain <domain>', 'Feishu Open Platform Domain', 'https://open.feishu.cn')
   .option('-m, --mode <mode>', 'Transport Mode, stdio or sse', 'stdio')
   .option('--host <host>', 'Host to listen', 'localhost')
   .option('-p, --port <port>', 'Port to listen in sse mode', '3001')
   .action((options) => {
-    const server = new McpServer({ 
-      id: 'lark-recall-mcp-server', 
-      name: 'Lark Recall MCP Service', 
-      version: currentVersion 
+    const server = new McpServer({
+      id: 'lark-recall-mcp-server',
+      name: 'Lark Recall MCP Service',
+      version: currentVersion,
     });
-    server.tool(
-      RecallTool.name, 
-      RecallTool.description, 
-      RecallTool.schema, 
-      (params) => RecallTool.handler(params, options)
+    server.tool(RecallTool.name, RecallTool.description, RecallTool.schema, (params) =>
+      RecallTool.handler(params, options),
     );
     if (options.mode === 'stdio') {
       initStdioServer(server);
