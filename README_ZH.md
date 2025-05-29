@@ -157,9 +157,10 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 | 工具名称 | 功能描述 | preset.light | preset.default (默认) | preset.im.default | preset.base.default | preset.base.batch | preset.doc.default | preset.task.default | preset.calendar.default |
 | --- | --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | im.v1.chat.create | 创建群 | | ✓ | ✓ | | | | | |
-| im.v1.chat.list | 获取群列表 | ✓ | ✓ | ✓ | | | | | |
+| im.v1.chat.list | 获取群列表 | | ✓ | ✓ | | | | | |
+| im.v1.chat.search | 搜索群 | ✓ | | | | | | | |
 | im.v1.chatMembers.get | 获取群成员 | | ✓ | ✓ | | | | | |
-| im.v1.message.create | 发送消息 | | ✓ | ✓ | | | | | |
+| im.v1.message.create | 发送消息 | ✓ | ✓ | ✓ | | | | | |
 | im.v1.message.list | 获取消息列表 | ✓ | ✓ | ✓ | | | | | |
 | bitable.v1.app.create | 创建多维表格 | | ✓ | | ✓ | ✓ | | | |
 | bitable.v1.appTable.create | 创建多维表格数据表 | | ✓ | | ✓ | ✓ | | | |
@@ -175,7 +176,7 @@ lark-mcp mcp -a <your_app_id> -s <your_app_secret> -t im.v1.message.create,im.v1
 | docx.builtin.search | 搜索文档 | ✓ | ✓ | | | | ✓ | | |
 | drive.v1.permissionMember.create | 添加协作者权限 | | ✓ | | | | ✓ | | |
 | wiki.v2.space.getNode | 获取知识库节点 | ✓ | ✓ | | | | ✓ | | |
-| wiki.v1.node.search | 搜索知识库节点 | ✓ | ✓ | | | | ✓ | | |
+| wiki.v1.node.search | 搜索知识库节点 | | ✓ | | | | ✓ | | |
 | contact.v3.user.batchGetId | 批量获取用户ID | ✓ | ✓ | | | | | | |
 | task.v2.task.create | 创建任务 | | | | | | | ✓ | |
 | task.v2.task.patch | 修改任务 | | | | | | | ✓ | |
