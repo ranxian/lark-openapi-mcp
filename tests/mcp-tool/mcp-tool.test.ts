@@ -54,6 +54,8 @@ describe('LarkMcpTool', () => {
     });
 
     mockClient = new Client({ appId: 'test-app-id', appSecret: 'test-app-secret' }) as jest.Mocked<Client>;
+    // Add config property to mock client for OAuth helper
+    (mockClient as any).config = { appId: 'test-app-id', appSecret: 'test-app-secret', domain: 'https://open.feishu.cn' };
     larkMcpTool = new LarkMcpTool({
       client: mockClient,
       tokenMode: TokenMode.AUTO,
@@ -252,7 +254,7 @@ describe('LarkMcpTool', () => {
   });
 
   describe('处理USER_ACCESS_TOKEN模式错误情况', () => {
-    it('当tokenMode为USER_ACCESS_TOKEN但没有userAccessToken时应返回错误', async () => {
+    it('当tokenMode为USER_ACCESS_TOKEN但没有userAccessToken时应返回OAuth URL', async () => {
       const tool = new LarkMcpTool({
         client: mockClient,
         tokenMode: TokenMode.USER_ACCESS_TOKEN,
@@ -267,7 +269,8 @@ describe('LarkMcpTool', () => {
       const result = await handlerFunction({ content: 'test' });
 
       expect(result.isError).toBe(true);
-      expect(result.content[0].text).toBe('Invalid UserAccessToken');
+      expect(result.content[0].text).toContain('Authentication required');
+      expect(result.content[0].text).toContain('https://open.feishu.cn/open-apis/authen/v1/authorize');
     });
   });
 

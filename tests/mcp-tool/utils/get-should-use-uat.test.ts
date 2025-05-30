@@ -8,9 +8,9 @@ describe('getShouldUseUAT', () => {
       expect(getShouldUseUAT(TokenMode.USER_ACCESS_TOKEN, 'token', true)).toBe(true);
     });
 
-    it('当没有 userAccessToken 时应抛出错误', () => {
-      expect(() => getShouldUseUAT(TokenMode.USER_ACCESS_TOKEN, undefined, false)).toThrow('Invalid UserAccessToken');
-      expect(() => getShouldUseUAT(TokenMode.USER_ACCESS_TOKEN, undefined, true)).toThrow('Invalid UserAccessToken');
+    it('当没有 userAccessToken 时仍应返回 true', () => {
+      expect(getShouldUseUAT(TokenMode.USER_ACCESS_TOKEN, undefined, false)).toBe(true);
+      expect(getShouldUseUAT(TokenMode.USER_ACCESS_TOKEN, undefined, true)).toBe(true);
     });
   });
 

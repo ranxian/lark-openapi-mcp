@@ -13,6 +13,7 @@ export enum TokenMode {
 export interface McpHandlerOptions {
   userAccessToken?: string;
   tool?: McpTool;
+  larkMcpTool?: any; // Reference to LarkMcpTool instance for token management
 }
 
 export type McpHandler = (
