@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:open.feishu.cn)",
+      "WebFetch(domain:open.larkoffice.com)",
+      "Bash(yarn install)",
+      "Bash(npm run test:*)",
+      "Bash(yarn build)",
+      "Bash(git checkout:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

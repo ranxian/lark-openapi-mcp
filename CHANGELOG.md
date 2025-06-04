@@ -1,3 +1,12 @@
+# 0.3.1
+Fix: 修复使用 configFile 配置 mode 参数不生效的问题
+Fix: 修复由于使用了z.record(z.any())类型的字段导致直接传给豆包模型无法使用的问题
+Feat: 新增 preset.light 预设
+
+Fix: Fix the problem that the mode parameter configured by configFile does not take effect
+Fix: Fix the problem that the z.record(z.any()) type field is passed directly to the doubao model and cannot be used
+Feat: Add preset.light preset
+
 # 0.3.0
 
 New: 开放平台开发文档检索 MCP，旨在帮助用户输入自身诉求后迅速检索到自己需要的开发文档，帮助开发者在AI IDE中编写与飞书集成的代码

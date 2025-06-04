@@ -14,6 +14,7 @@ jest.mock('../../../src/mcp-tool', () => {
     LarkMcpTool: jest.fn().mockImplementation(() => ({
       updateUserAccessToken: jest.fn(),
       registerMcpServer: jest.fn(),
+      setOAuthCallbackUrl: jest.fn(),
     })),
     defaultToolNames: ['default-tool-1', 'default-tool-2'],
     presetTools: {
@@ -21,6 +22,24 @@ jest.mock('../../../src/mcp-tool', () => {
     },
   };
 });
+
+// 模拟 OAuth 相关模块
+jest.mock('../../../src/utils/oauth', () => ({
+  FeishuOAuth: jest.fn().mockImplementation(() => ({
+    refreshAccessToken: jest.fn().mockResolvedValue({
+      access_token: 'new-token',
+      refresh_token: 'new-refresh-token',
+      expires_in: 3600,
+      token_type: 'Bearer'
+    })
+  }))
+}));
+
+jest.mock('../../../src/utils/token-storage', () => ({
+  TokenStorage: jest.fn().mockImplementation(() => ({
+    getValidAccessToken: jest.fn().mockResolvedValue(null)
+  }))
+}));
 
 // 保存原始的环境变量和console.error
 const originalEnv = process.env;
@@ -49,7 +68,7 @@ describe('initMcpServer', () => {
     process.exit = originalProcessExit;
   });
 
-  it('应该使用提供的凭证初始化服务器', () => {
+  it('应该使用提供的凭证初始化服务器', async () => {
     const options = {
       appId: 'test-app-id',
       appSecret: 'test-app-secret',
@@ -57,7 +76,7 @@ describe('initMcpServer', () => {
       port: 3000,
     };
 
-    const { mcpServer, larkClient } = initMcpServer(options);
+    const { mcpServer, larkClient } = await initMcpServer(options);
 
     expect(McpServer).toHaveBeenCalled();
     // 从mcp-tool模块导入LarkMcpTool
@@ -70,16 +89,15 @@ describe('initMcpServer', () => {
     );
   });
 
-  it('应该使用环境变量中的凭证', () => {
-    process.env.APP_ID = 'env-app-id';
-    process.env.APP_SECRET = 'env-app-secret';
-
+  it('应该正确传递appId和appSecret参数', async () => {
     const options = {
+      appId: 'env-app-id',
+      appSecret: 'env-app-secret',
       host: 'localhost',
       port: 3000,
     };
 
-    const { mcpServer, larkClient } = initMcpServer(options);
+    const { mcpServer, larkClient } = await initMcpServer(options);
 
     // 从mcp-tool模块导入LarkMcpTool
     const { LarkMcpTool } = require('../../../src/mcp-tool');
@@ -91,7 +109,7 @@ describe('initMcpServer', () => {
     );
   });
 
-  it('如果提供了userAccessToken，应该调用updateUserAccessToken', () => {
+  it('如果提供了userAccessToken，应该调用updateUserAccessToken', async () => {
     const options = {
       appId: 'test-app-id',
       appSecret: 'test-app-secret',
@@ -100,12 +118,12 @@ describe('initMcpServer', () => {
       port: 3000,
     };
 
-    const { larkClient } = initMcpServer(options);
+    const { larkClient } = await initMcpServer(options);
 
     expect(larkClient.updateUserAccessToken).toHaveBeenCalledWith('test-user-access-token');
   });
 
-  it('应该处理数组形式的tools参数', () => {
+  it('应该处理数组形式的tools参数', async () => {
     const options = {
       appId: 'test-app-id',
       appSecret: 'test-app-secret',
@@ -114,7 +132,7 @@ describe('initMcpServer', () => {
       port: 3000,
     };
 
-    const { larkClient } = initMcpServer(options);
+    const { larkClient } = await initMcpServer(options);
 
     // 从mcp-tool模块导入LarkMcpTool
     const { LarkMcpTool } = require('../../../src/mcp-tool');
@@ -127,7 +145,7 @@ describe('initMcpServer', () => {
     );
   });
 
-  it('应该处理字符串形式的tools参数', () => {
+  it('应该处理字符串形式的tools参数', async () => {
     const options = {
       appId: 'test-app-id',
       appSecret: 'test-app-secret',
@@ -136,7 +154,7 @@ describe('initMcpServer', () => {
       port: 3000,
     };
 
-    const { larkClient } = initMcpServer(options);
+    const { larkClient } = await initMcpServer(options);
 
     // 从mcp-tool模块导入LarkMcpTool
     const { LarkMcpTool } = require('../../../src/mcp-tool');
@@ -149,7 +167,7 @@ describe('initMcpServer', () => {
     );
   });
 
-  it('如果凭证缺失，应该退出程序', () => {
+  it('如果凭证缺失，应该退出程序', async () => {
     const options = {
       host: 'localhost',
       port: 3000,
@@ -159,13 +177,13 @@ describe('initMcpServer', () => {
     delete process.env.APP_ID;
     delete process.env.APP_SECRET;
 
-    initMcpServer(options);
+    await initMcpServer(options);
 
     expect(console.error).toHaveBeenCalled();
     expect(process.exit).toHaveBeenCalledWith(1);
   });
 
-  it('应该处理preset.default工具集', () => {
+  it('应该处理preset.default工具集', async () => {
     const options = {
       appId: 'test-app-id',
       appSecret: 'test-app-secret',
@@ -177,7 +195,7 @@ describe('initMcpServer', () => {
     // 从模块导入默认工具列表
     const { defaultToolNames } = require('../../../src/mcp-tool');
 
-    const { larkClient } = initMcpServer(options);
+    const { larkClient } = await initMcpServer(options);
 
     // 从mcp-tool模块导入LarkMcpTool
     const { LarkMcpTool } = require('../../../src/mcp-tool');

@@ -9,6 +9,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { RecallTool } from './mcp-tool/document-tool/recall';
 import { OAPI_MCP_DEFAULT_ARGS, OAPI_MCP_ENV_ARGS } from './utils/constants';
 
+
 dotenv.config();
 
 const program = new Command();
@@ -42,7 +43,7 @@ program
       }
     }
     const mergedOptions = { ...OAPI_MCP_DEFAULT_ARGS, ...OAPI_MCP_ENV_ARGS, ...fileOptions, ...options };
-    const { mcpServer } = initMcpServer(mergedOptions);
+    const { mcpServer } = await initMcpServer(mergedOptions);
     if (mergedOptions.mode === 'stdio') {
       initStdioServer(mcpServer);
     } else if (mergedOptions.mode === 'sse') {
@@ -78,6 +79,7 @@ program
       process.exit(1);
     }
   });
+
 
 if (process.argv.length === 2) {
   program.help();

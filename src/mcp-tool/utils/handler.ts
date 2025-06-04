@@ -26,7 +26,7 @@ const sdkFuncCall = async (client: lark.Client, params: any, options: McpHandler
 
   if (params?.useUAT) {
     if (!userAccessToken) {
-      throw new Error('Invalid UserAccessToken');
+      throw new Error('UserAccessToken required for this operation');
     }
     return await func(params, lark.withUserAccessToken(userAccessToken));
   }

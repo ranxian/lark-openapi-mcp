@@ -13,6 +13,8 @@ export enum TokenMode {
 export interface McpHandlerOptions {
   userAccessToken?: string;
   tool?: McpTool;
+  appId?: string;
+  appSecret?: string;
 }
 
 export type McpHandler = (
@@ -71,4 +73,5 @@ export interface LarkMcpToolOptions extends LarkClientOptions {
   // 工具选项
   toolsOptions?: ToolsFilterOptions;
   tokenMode?: TokenMode;
+  callbackUrl?: string;
 }

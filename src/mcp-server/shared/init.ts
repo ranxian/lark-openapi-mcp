@@ -1,11 +1,11 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import * as larkmcp from '../../mcp-tool';
+import { oapiHttpInstance } from '../../utils/http-instance';
 import { noop } from '../../utils/noop';
 import { currentVersion } from '../../utils/version';
 import { McpServerOptions } from './types';
-import * as larkmcp from '../../mcp-tool';
-import { oapiHttpInstance } from '../../utils/http-instance';
 
-export function initMcpServer(options: McpServerOptions) {
+export async function initMcpServer(options: McpServerOptions) {
   const { appId, appSecret, userAccessToken } = options;
 
   if (!appId || !appSecret) {
@@ -39,11 +39,8 @@ export function initMcpServer(options: McpServerOptions) {
       ? { allowTools: allowTools as larkmcp.ToolName[], language: options.language }
       : { language: options.language },
     tokenMode: options.tokenMode,
+    callbackUrl: `http://${options.host}:${options.port}/oauth/callback`,
   });
-
-  if (userAccessToken) {
-    larkClient.updateUserAccessToken(userAccessToken);
-  }
 
   larkClient.registerMcpServer(mcpServer, { toolNameCase: options.toolNameCase });
 
